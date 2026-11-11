@@ -106,3 +106,7 @@
     @apply border-t border-[#E2E8F0];
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
