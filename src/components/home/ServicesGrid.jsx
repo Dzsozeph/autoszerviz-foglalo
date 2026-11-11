@@ -4,7 +4,7 @@ import { SERVICE_ICONS } from '@/lib/serviceIcons';
 
 export default function ServicesGrid({ services = [] }) {
   return (
-    <div className="grid gap-px overflow-hidden rounded-xl border border-brand-silver bg-brand-silver sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line shadow-[0_24px_60px_-48px_rgba(11,31,58,0.5)] sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => {
         const Icon = SERVICE_ICONS[service.icon] || SERVICE_ICONS.wrench;
         return (

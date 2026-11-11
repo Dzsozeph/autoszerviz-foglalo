@@ -40,7 +40,7 @@ export default function WhyUs() {
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-xl border border-brand-silver bg-brand-silver sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line shadow-[0_20px_50px_-40px_rgba(11,31,58,0.55)] sm:grid-cols-2">
           {ITEMS.map(({ icon: Icon, title, text }) => (
             <div key={title} className="bg-white p-7">
               <Icon className="h-6 w-6 text-brand-ember" strokeWidth={1.6} />

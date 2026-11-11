@@ -1,6 +1,6 @@
 export default function PageHeader({ eyebrow, title, intro, children }) {
   return (
-    <section className="border-b border-white/10 bg-brand text-white">
+    <section className="relative bg-brand text-white">
       <div className="container-page py-14 sm:py-16">
         {eyebrow && (
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
@@ -13,6 +13,10 @@ export default function PageHeader({ eyebrow, title, intro, children }) {
         {intro && <p className="mt-5 max-w-2xl text-[16px] leading-[1.65] text-white/75">{intro}</p>}
         {children}
       </div>
+      <div
+        aria-hidden="true"
+        className="h-[2px] w-full bg-gradient-to-r from-brand-ember/0 via-brand-honey/70 to-brand-ember/0"
+      />
     </section>
   );
 }

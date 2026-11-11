@@ -17,7 +17,11 @@ module.exports = {
   				light: '#132C4F',
   				ember: '#F97316',
   				silver: '#E2E8F0',
-  				engine: '#475569'
+  				engine: '#475569',
+  				honey: '#FBBF24',
+  				cream: '#FFFCF6',
+  				sand: '#FCF4E8',
+  				line: '#F0E4D4'
   			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

@@ -5,7 +5,7 @@ import ChatWidget from './ChatWidget';
 
 export default function PublicLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-brand-cream">
       <SiteHeader />
       <main className="flex-1">
         <Outlet />

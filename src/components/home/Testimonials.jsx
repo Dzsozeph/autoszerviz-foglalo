@@ -20,7 +20,7 @@ const REVIEWS = [
 
 export default function Testimonials() {
   return (
-    <section className="border-y border-brand-silver bg-[#F8FAFC] py-16 sm:py-20">
+    <section className="bg-brand-sand py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -38,7 +38,10 @@ export default function Testimonials() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {REVIEWS.map((r) => (
-            <figure key={r.name} className="flex h-full flex-col rounded-xl border border-brand-silver bg-white p-7">
+            <figure
+              key={r.name}
+              className="flex h-full flex-col rounded-xl border border-brand-line bg-white p-7 shadow-[0_18px_40px_-32px_rgba(11,31,58,0.5)]"
+            >
               <div className="flex gap-1 text-brand-ember" aria-label="5 csillag">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" />
@@ -47,7 +50,7 @@ export default function Testimonials() {
               <blockquote className="mt-5 flex-1 text-[15px] leading-[1.65] text-brand">
                 „{r.text}”
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-brand-silver pt-5">
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-brand-line pt-5">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-[13px] font-semibold text-white">
                   {r.name.charAt(0)}
                 </span>

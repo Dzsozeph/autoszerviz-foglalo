@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Hero from '@/components/public/Hero';
+import SectionDivider from '@/components/public/SectionDivider';
 import StatsStrip from '@/components/home/StatsStrip';
 import IntroSection from '@/components/home/IntroSection';
 import ServicesGrid from '@/components/home/ServicesGrid';
@@ -29,9 +30,11 @@ export default function Home() {
     <>
       <Hero />
       <StatsStrip />
+      <SectionDivider />
       <IntroSection />
+      <SectionDivider />
 
-      <section className="border-y border-brand-silver bg-[#F8FAFC] py-16 sm:py-20">
+      <section className="bg-brand-sand py-16 sm:py-20">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -56,8 +59,11 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
       <WhyUs />
+      <SectionDivider />
       <Testimonials />
+      <SectionDivider />
       <CtaBand />
     </>
   );

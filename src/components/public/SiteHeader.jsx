@@ -18,7 +18,7 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-silver bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
       <div className="container-page flex h-[72px] items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-brand-ember">

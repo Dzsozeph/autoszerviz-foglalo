@@ -60,7 +60,7 @@ export default function Gyik() {
             )}
           </div>
 
-          <aside className="h-fit rounded-xl border border-brand-silver bg-[#F8FAFC] p-7">
+          <aside className="h-fit rounded-xl border border-brand-line bg-brand-sand p-7">
             <h2 className="font-heading text-[19px] font-semibold text-brand">
               Nem találta a választ?
             </h2>

@@ -65,7 +65,7 @@ export default function Kapcsolat() {
       <section className="container-page py-14 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
-            <div className="grid gap-px overflow-hidden rounded-xl border border-brand-silver bg-brand-silver sm:grid-cols-2">
+            <div className="grid gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line sm:grid-cols-2">
               {INFO.map(({ icon: Icon, label, value, note }) => (
                 <div key={label} className="bg-white p-6">
                   <Icon className="h-5 w-5 text-brand-ember" strokeWidth={1.7} />
@@ -78,7 +78,7 @@ export default function Kapcsolat() {
               ))}
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-xl border border-brand-silver">
+            <div className="mt-6 overflow-hidden rounded-xl border border-brand-line">
               <iframe
                 title="Profi Autószerviz – minta cím a térképen"
                 src="https://www.google.com/maps?q=1117+Budapest+Minta+utca+12&output=embed"
@@ -89,7 +89,7 @@ export default function Kapcsolat() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-brand-silver bg-white p-7 sm:p-8">
+          <div className="rounded-xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-55px_rgba(11,31,58,0.55)] sm:p-8">
             <h2 className="font-heading text-[22px] font-semibold tracking-tight text-brand">
               Írjon nekünk
             </h2>

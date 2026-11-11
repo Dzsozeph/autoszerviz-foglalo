@@ -34,7 +34,25 @@ function Field({ id, label, error, children, className = '' }) {
   );
 }
 
-const inputClass = 'h-12 w-full';
+const inputClass =
+  'h-12 w-full rounded-lg border-brand-line bg-brand-cream text-[15px] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
+
+const selectClass =
+  'h-12 w-full rounded-lg border border-brand-line bg-brand-cream px-3 text-[15px] text-brand outline-none transition-colors focus:border-brand-ember focus:ring-2 focus:ring-brand-ember/20';
+
+const textareaClass =
+  'rounded-lg border-brand-line bg-brand-cream text-[15px] leading-[1.6] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
+
+function Legend({ step, children }) {
+  return (
+    <legend className="flex items-center gap-3 font-heading text-[18px] font-semibold text-brand">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-brand-ember/35 bg-brand-sand text-[13px] font-semibold text-brand-ember">
+        {step}
+      </span>
+      {children}
+    </legend>
+  );
+}
 
 export default function Idopont() {
   const [params] = useSearchParams();
@@ -152,12 +170,14 @@ export default function Idopont() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="rounded-2xl border border-brand-silver bg-white p-6 sm:p-8"
+              className="rounded-2xl border border-brand-line bg-white p-6 shadow-[0_30px_70px_-50px_rgba(11,31,58,0.55)] sm:p-8"
             >
+              <div
+                aria-hidden="true"
+                className="-mx-6 -mt-6 mb-7 h-1 bg-gradient-to-r from-brand-ember via-brand-honey to-brand-ember/40 sm:-mx-8 sm:-mt-8"
+              />
               <fieldset className="border-0 p-0">
-                <legend className="font-heading text-[18px] font-semibold text-brand">
-                  1. Adatai
-                </legend>
+                <Legend step="1">Adatai</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <Field id="customer_name" label="Név *" error={errors.customer_name}>
                     <Input
@@ -194,10 +214,12 @@ export default function Idopont() {
                 </div>
               </fieldset>
 
-              <fieldset className="mt-9 border-0 border-t border-brand-silver p-0 pt-8">
-                <legend className="font-heading text-[18px] font-semibold text-brand">
-                  2. Az autó
-                </legend>
+              <div
+                aria-hidden="true"
+                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
+              />
+              <fieldset className="mt-8 border-0 p-0">
+                <Legend step="2">Az autó</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-3">
                   <Field id="car_brand" label="Márka *" error={errors.car_brand}>
                     <Input
@@ -229,17 +251,19 @@ export default function Idopont() {
                 </div>
               </fieldset>
 
-              <fieldset className="mt-9 border-0 border-t border-brand-silver p-0 pt-8">
-                <legend className="font-heading text-[18px] font-semibold text-brand">
-                  3. Miben segíthetünk?
-                </legend>
+              <div
+                aria-hidden="true"
+                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
+              />
+              <fieldset className="mt-8 border-0 p-0">
+                <Legend step="3">Miben segíthetünk?</Legend>
                 <div className="mt-5 grid gap-5">
                   <Field id="service" label="Kért szolgáltatás *" error={errors.service}>
                     <select
                       id="service"
                       value={form.service}
                       onChange={(e) => setField('service', e.target.value)}
-                      className="h-12 w-full rounded-md border border-input bg-white px-3 text-[15px] text-brand outline-none focus:border-brand-ember"
+                      className={selectClass}
                     >
                       <option value="">Válasszon szolgáltatást…</option>
                       {services.map((service) => (
@@ -257,6 +281,7 @@ export default function Idopont() {
                     <Textarea
                       id="problem_description"
                       rows={5}
+                      className={textareaClass}
                       value={form.problem_description}
                       onChange={(e) => setField('problem_description', e.target.value)}
                       placeholder="Írja le, mit tapasztal az autónál: mikor jelentkezik a hiba, milyen hangot ad, világít-e valamilyen visszajelző lámpa…"
@@ -265,10 +290,12 @@ export default function Idopont() {
                 </div>
               </fieldset>
 
-              <fieldset className="mt-9 border-0 border-t border-brand-silver p-0 pt-8">
-                <legend className="font-heading text-[18px] font-semibold text-brand">
-                  4. Preferált időpont
-                </legend>
+              <div
+                aria-hidden="true"
+                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
+              />
+              <fieldset className="mt-8 border-0 p-0">
+                <Legend step="4">Preferált időpont</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <Field id="preferred_date" label="Preferált nap *" error={errors.preferred_date}>
                     <Input
@@ -285,7 +312,7 @@ export default function Idopont() {
                       id="preferred_time"
                       value={form.preferred_time}
                       onChange={(e) => setField('preferred_time', e.target.value)}
-                      className="h-12 w-full rounded-md border border-input bg-white px-3 text-[15px] text-brand outline-none focus:border-brand-ember"
+                      className={selectClass}
                     >
                       <option value="">Válasszon időpontot…</option>
                       {TIME_SLOTS.map((time) => (
@@ -302,7 +329,7 @@ export default function Idopont() {
                 <p className="mt-6 rounded-lg bg-red-50 p-4 text-[14px] text-red-700">{serverError}</p>
               )}
 
-              <div className="mt-8 flex flex-col gap-4 border-t border-brand-silver pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mt-9 flex flex-col gap-4 border-t border-brand-line pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-[13px] leading-[1.5] text-brand-engine">
                   A beküldés nem jár fizetési kötelezettséggel.
                 </p>
@@ -316,8 +343,10 @@ export default function Idopont() {
               </div>
             </form>
 
-            <aside className="h-fit rounded-2xl border border-brand-silver bg-[#F8FAFC] p-7">
-              <ShieldCheck className="h-6 w-6 text-brand-ember" />
+            <aside className="h-fit rounded-2xl border border-brand-line bg-brand-sand p-7 shadow-[0_24px_60px_-50px_rgba(11,31,58,0.6)]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-ember/30 bg-white">
+                <ShieldCheck className="h-5 w-5 text-brand-ember" strokeWidth={1.7} />
+              </span>
               <h2 className="mt-4 font-heading text-[18px] font-semibold text-brand">
                 Hogyan működik?
               </h2>
@@ -326,7 +355,7 @@ export default function Idopont() {
                 <li>2. Munkatársunk átnézi, és felveszi Önnel a kapcsolatot.</li>
                 <li>3. Egyeztetjük a pontos időpontot és a teendőket.</li>
               </ol>
-              <p className="mt-6 rounded-lg border border-brand-silver bg-white p-4 text-[13px] leading-[1.6] text-brand-engine">
+              <p className="mt-6 rounded-lg border border-brand-line bg-white p-4 text-[13px] leading-[1.6] text-brand-engine">
                 Ez időpontkérelem, nem garantált foglalás. A visszaigazolást telefonon vagy e-mailben
                 küldjük.
               </p>
