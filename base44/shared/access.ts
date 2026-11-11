@@ -5,6 +5,7 @@ export const ACCESS_STATUS = {
   PENDING: 'Jóváhagyásra vár',
   APPROVED: 'Jóváhagyva',
   REJECTED: 'Elutasítva',
+  REVOKED: 'Visszavonva',
 };
 
 export const SHOP = {
@@ -43,15 +44,24 @@ export async function sendTemplateEmail(base44, { to, template, variables }) {
   }
 }
 
-export async function getLatestAccessRequest(base44, email) {
+export async function getAccessRecords(base44, email) {
   const normalized = normalizeEmail(email);
-  if (!normalized) return null;
+  if (!normalized) return [];
   const page = await base44.asServiceRole.entities.HozzaferesiKeres.filter(
     { email: normalized },
-    { sort: '-created_date', limit: 1 }
+    { sort: '-created_date', limit: 20 }
   );
   const items = page && page.items ? page.items : page;
-  return (items && items[0]) || null;
+  return Array.isArray(items) ? items : [];
+}
+
+export async function getLatestAccessRequest(base44, email) {
+  const records = await getAccessRecords(base44, email);
+  return records[0] || null;
+}
+
+export function hasApprovedAccess(records) {
+  return (records || []).some((record) => record.status === ACCESS_STATUS.APPROVED);
 }
 
 export async function listAppUsers(base44) {

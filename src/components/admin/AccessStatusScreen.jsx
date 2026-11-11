@@ -109,10 +109,40 @@ export default function AccessStatusScreen({ status, name, email, onRefresh }) {
     );
   }
 
+  if (status === 'revoked') {
+    return (
+      <Shell>
+        <div className="rounded-2xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-50px_rgba(11,31,58,0.55)] sm:p-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-slate-50 text-slate-600">
+            <ShieldX className="h-5 w-5" strokeWidth={1.7} />
+          </span>
+          <h1 className="mt-4 font-heading text-[22px] font-semibold text-brand">
+            A hozzáférése visszavonva
+          </h1>
+          <p className="mt-3 text-[15px] leading-[1.65] text-brand-engine">
+            Az admin felület adatai jelenleg nem érhetők el az Ön számára. Ha ismét szüksége van a
+            hozzáférésre, küldjön be új kérelmet.
+          </p>
+          <div className="mt-6">
+            <AccessRequestForm defaultEmail={email} defaultName={name} />
+          </div>
+          <button
+            type="button"
+            onClick={() => base44.auth.logout('/admin')}
+            className="mt-5 inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full border border-brand-line text-[13px] font-semibold uppercase tracking-[0.12em] text-brand hover:border-brand/40"
+          >
+            <LogOut className="h-4 w-4" />
+            Kilépés
+          </button>
+        </div>
+      </Shell>
+    );
+  }
+
   return (
     <Shell>
       <div className="rounded-2xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-50px_rgba(11,31,58,0.55)] sm:p-8">
-        <h1 className="font-heading text-[22px] font-semibold text-brand">
+        <h1 className="mt-0 font-heading text-[22px] font-semibold text-brand">
           Admin hozzáférés szükséges
         </h1>
         <p className="mt-2 text-[15px] leading-[1.65] text-brand-engine">

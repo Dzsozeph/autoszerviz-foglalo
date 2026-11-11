@@ -24,12 +24,14 @@
       "enum": [
         "J\u00f3v\u00e1hagy\u00e1sra v\u00e1r",
         "J\u00f3v\u00e1hagyva",
-        "Elutas\u00edtva"
+        "Elutas\u00edtva",
+        "Visszavonva"
       ],
       "enumColors": [
         "orange",
         "green",
-        "red"
+        "red",
+        "gray"
       ],
       "default": "J\u00f3v\u00e1hagy\u00e1sra v\u00e1r"
     },

@@ -5,8 +5,8 @@ import {
   OWNER_EMAIL,
   SHOP,
   findAccountByEmail,
+  getAccessRecords,
   isOwner,
-  listAppUsers,
   normalizeEmail,
   sendTemplateEmail,
 } from '../../shared/access.ts';
@@ -30,6 +30,18 @@ export default async function (req) {
         phone: str(body.phone, 32),
       };
 
+      const requester = await base44.auth
+        .me()
+        .catch((e) => (e.status === 401 || e.status === 403 ? null : Promise.reject(e)));
+
+      if (requester && isOwner(requester)) {
+        return Response.json({ ok: true, alreadyApproved: true });
+      }
+      // Bejelentkezve mindig a saját fiók címére szól a kérelem.
+      if (requester && requester.email) {
+        data.email = normalizeEmail(requester.email);
+      }
+
       const errors = {};
       if (!data.name) errors.name = 'Adja meg a teljes nevét.';
       if (!EMAIL_RE.test(data.email)) errors.email = 'Adjon meg egy érvényes e-mail-címet.';
@@ -39,29 +51,18 @@ export default async function (req) {
         return Response.json({ error: 'validation_failed', fields: errors }, { status: 400 });
       }
 
-      const requester = await base44.auth
-        .me()
-        .catch((e) => (e.status === 401 || e.status === 403 ? null : Promise.reject(e)));
-      if (requester && (isOwner(requester) || requester.role === 'admin')) {
+      const records = await getAccessRecords(base44, data.email);
+      const approved = records.find((record) => record.status === ACCESS_STATUS.APPROVED);
+      if (approved) {
         return Response.json({ ok: true, alreadyApproved: true });
       }
-
-      const page = await base44.asServiceRole.entities.HozzaferesiKeres.filter(
-        { email: data.email },
-        { sort: '-created_date', limit: 1 }
-      );
-      const items = page && page.items ? page.items : page;
-      const existing = (items && items[0]) || null;
-
-      if (existing && existing.status === ACCESS_STATUS.APPROVED) {
-        return Response.json({ ok: true, alreadyApproved: true });
-      }
-      if (existing && existing.status === ACCESS_STATUS.PENDING) {
+      const latest = records[0] || null;
+      if (latest && latest.status === ACCESS_STATUS.PENDING) {
         return Response.json({ ok: true, alreadyPending: true });
       }
 
-      const record = existing
-        ? await base44.asServiceRole.entities.HozzaferesiKeres.update(existing.id, {
+      const record = latest
+        ? await base44.asServiceRole.entities.HozzaferesiKeres.update(latest.id, {
             ...data,
             status: ACCESS_STATUS.PENDING,
             reviewed_date: null,
@@ -93,14 +94,15 @@ export default async function (req) {
     if (action === 'list') {
       const page = await base44.asServiceRole.entities.HozzaferesiKeres.list('-created_date', 100);
       const requests = page && page.items ? page.items : page;
-      const adminItems = await listAppUsers(base44);
-      const admins = adminItems
-        .filter((account) => normalizeEmail(account.email) !== OWNER_EMAIL && account.role === 'admin')
-        .map((account) => ({
-          id: account.id,
-          name: account.full_name || account.email,
-          email: account.email,
-        }));
+      const seen = new Set();
+      const admins = [];
+      (requests || []).forEach((record) => {
+        const email = normalizeEmail(record.email);
+        if (!email || email === OWNER_EMAIL) return;
+        if (record.status !== ACCESS_STATUS.APPROVED || seen.has(email)) return;
+        seen.add(email);
+        admins.push({ id: record.id, name: record.name || email, email: record.email });
+      });
       return Response.json({ ok: true, requests: requests || [], admins });
     }
 
@@ -162,14 +164,22 @@ export default async function (req) {
         return Response.json({ error: 'owner_protected' }, { status: 400 });
       }
 
-      const account = await findAccountByEmail(base44, email);
-      if (!account) return Response.json({ error: 'not_found' }, { status: 404 });
+      const records = await getAccessRecords(base44, email);
+      const target =
+        records.find((record) => record.status === ACCESS_STATUS.APPROVED) || records[0] || null;
+      if (!target) return Response.json({ error: 'not_found' }, { status: 404 });
 
-      await base44.asServiceRole.entities.User.update(account.id, { role: 'user' });
-      await base44.asServiceRole.entities.HozzaferesiKeres.updateMany(
-        { email, status: ACCESS_STATUS.APPROVED },
-        { $set: { status: ACCESS_STATUS.REJECTED } }
-      );
+      await base44.asServiceRole.entities.HozzaferesiKeres.update(target.id, {
+        status: ACCESS_STATUS.REVOKED,
+        reviewed_date: new Date().toISOString(),
+      });
+
+      const account = await findAccountByEmail(base44, email);
+      if (account && normalizeEmail(account.email) !== OWNER_EMAIL) {
+        await base44.asServiceRole.entities.User.update(account.id, { role: 'user' }).catch((error) => {
+          console.error('Szerepkör visszaállítása nem sikerült', { message: error && error.message });
+        });
+      }
 
       return Response.json({ ok: true });
     }

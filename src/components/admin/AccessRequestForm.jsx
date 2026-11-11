@@ -13,6 +13,7 @@ const inputClass =
   'h-12 w-full rounded-lg border border-brand-line bg-white text-[15px] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
 
 export default function AccessRequestForm({ defaultEmail = '', defaultName = '' }) {
+  const emailLocked = Boolean(defaultEmail);
   const [form, setForm] = useState({ ...EMPTY, email: defaultEmail, name: defaultName });
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
@@ -91,16 +92,22 @@ export default function AccessRequestForm({ defaultEmail = '', defaultName = '' 
         {errors.name && <p className="mt-1 text-[13px] text-red-600">{errors.name}</p>}
       </div>
       <div>
-        <Label htmlFor="req-email">E-mail-cím *</Label>
+        <Label htmlFor="req-email">E-mail-cím</Label>
         <Input
           id="req-email"
           type="email"
           value={form.email}
+          readOnly={emailLocked}
           onChange={(e) => setField('email', e.target.value)}
           placeholder="munkatars@profiautoszerviz.hu"
-          className={`mt-2 ${inputClass}`}
+          className={`mt-2 ${inputClass} ${
+            emailLocked ? 'cursor-not-allowed bg-brand-cream text-brand-engine' : ''
+          }`}
           autoComplete="email"
         />
+        {emailLocked && (
+          <p className="mt-1 text-[12px] text-brand-engine">A belépett Google-fiók e-mail-címe.</p>
+        )}
         {errors.email && <p className="mt-1 text-[13px] text-red-600">{errors.email}</p>}
       </div>
       <div>
