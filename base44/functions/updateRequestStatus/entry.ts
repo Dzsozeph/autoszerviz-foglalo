@@ -1,13 +1,26 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
-import { APP_URL, SHOP, sendTemplateEmail } from '../../shared/access.ts';
+import { APP_URL, sendTemplateEmail } from '../../shared/access.ts';
+import { cegAdatEmailVars, getCegAdat } from '../../shared/cegadat.ts';
 
 const STATUSES = ['Új', 'Folyamatban', 'Jóváhagyva', 'Elutasítva', 'Lezárva'];
 
 const TEMPLATES = {
-  Folyamatban: 'StatuszFolyamatban',
-  Jóváhagyva: 'StatuszJovahagyva',
-  Elutasítva: 'StatuszElutasitva',
-  Lezárva: 'StatuszLezarva',
+  Folyamatban: {
+    template: 'StatuszFolyamatban',
+    subject: 'Időpontkérése feldolgozás alatt van',
+  },
+  Jóváhagyva: {
+    template: 'StatuszJovahagyva',
+    subject: 'Időpontkérése jóváhagyva',
+  },
+  Elutasítva: {
+    template: 'StatuszElutasitva',
+    subject: 'Időpontkérésével kapcsolatos tájékoztatás',
+  },
+  Lezárva: {
+    template: 'StatuszLezarva',
+    subject: 'Köszönjük, hogy minket választott',
+  },
 };
 
 export default async function (req) {
@@ -29,34 +42,53 @@ export default async function (req) {
     );
     if (!record) return Response.json({ error: 'not_found' }, { status: 404 });
 
-    const unchanged = record.status === status;
-    const template = TEMPLATES[status];
-    const alreadyNotified = record.notified_status === status;
-
-    if (!unchanged) {
-      const patch = { status };
-      if (template) patch.notified_status = status;
-      await base44.asServiceRole.entities.Idopontkeres.update(id, patch);
+    // Ugyanarra a státuszváltásra nem megy ki kétszer e-mail.
+    if (record.status === status) {
+      return Response.json({
+        ok: true,
+        status,
+        unchanged: true,
+        emailSent: false,
+        emailSkipped: true,
+      });
     }
 
-    if (unchanged || !template || alreadyNotified || !record.email) {
+    const entry = TEMPLATES[status];
+    const alreadyNotified = record.notified_status === status;
+
+    const patch = { status };
+    if (entry) patch.notified_status = status;
+    await base44.asServiceRole.entities.Idopontkeres.update(id, patch);
+
+    if (!entry || alreadyNotified || !record.email) {
       return Response.json({ ok: true, status, emailSent: false, emailSkipped: true });
     }
 
+    const cegadat = await getCegAdat(base44);
+
     const result = await sendTemplateEmail(base44, {
       to: record.email,
-      template,
+      template: entry.template,
+      subject: entry.subject,
       variables: {
+        ...cegAdatEmailVars(cegadat),
         customer_name: record.customer_name || '',
         service: record.service || '',
         car: `${record.car_brand || ''} ${record.car_model || ''}`.trim(),
         license_plate: record.license_plate || '',
         preferred: `${record.preferred_date || ''} ${record.preferred_time || ''}`.trim(),
-        shop_phone: SHOP.phone,
-        shop_email: SHOP.email,
         app_url: APP_URL,
       },
     });
+
+    if (!result.ok) {
+      console.error('Státusz értesítő e-mail nem ment ki', {
+        request: id,
+        status,
+        template: entry.template,
+        reason: result.error,
+      });
+    }
 
     return Response.json({
       ok: true,

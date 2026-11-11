@@ -1,11 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
-import {
-  APP_URL,
-  SHOP,
-  getAdminRecipients,
-  sendTemplateEmail,
-  sendToAll,
-} from '../../shared/access.ts';
+import { APP_URL, getAdminRecipients, sendTemplateEmail, sendToAll } from '../../shared/access.ts';
+import { cegAdatEmailVars, getCegAdat } from '../../shared/cegadat.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^[+0-9()\s-]{7,24}$/;
@@ -62,6 +57,10 @@ export default async function (req) {
       errors.preferred_time = 'Válasszon egy időpontot 8:00 és 17:00 között.';
     }
 
+    if (body.consent !== true) {
+      errors.consent = 'Az adatkezelési tájékoztató elfogadása kötelező.';
+    }
+
     if (Object.keys(errors).length > 0) {
       return Response.json({ error: 'validation_failed', fields: errors }, { status: 400 });
     }
@@ -98,34 +97,43 @@ export default async function (req) {
     const car = `${data.car_brand} ${data.car_model}`.trim();
     const preferred = `${data.preferred_date} ${data.preferred_time}`.trim();
     const adminRecipients = await getAdminRecipients(base44);
+    const cegadat = await getCegAdat(base44);
+    const shopVars = cegAdatEmailVars(cegadat);
 
     try {
-      await sendToAll(base44, adminRecipients, 'UjIdopontkeresAdmin', {
-        customer_name: data.customer_name,
-        phone: data.phone,
-        customer_email: data.email,
-        car,
-        license_plate: data.license_plate,
-        service: data.service,
-        preferred,
-        problem_description: data.problem_description,
-        admin_url: `${APP_URL}/admin`,
-      });
+      await sendToAll(
+        base44,
+        adminRecipients,
+        'UjIdopontkeresAdmin',
+        {
+          ...shopVars,
+          customer_name: data.customer_name,
+          phone: data.phone,
+          customer_email: data.email,
+          car,
+          license_plate: data.license_plate,
+          service: data.service,
+          preferred,
+          problem_description: data.problem_description,
+          admin_url: `${APP_URL}/admin?keres=${request.id}`,
+        },
+        `Új időpontkérés érkezett – ${data.customer_name}`
+      );
 
       await sendTemplateEmail(base44, {
         to: data.email,
         template: 'IdopontkeresVisszaigazolas',
         variables: {
+          ...shopVars,
           customer_name: data.customer_name,
           service: data.service,
           car,
           license_plate: data.license_plate,
           preferred,
           problem_description: data.problem_description,
-          shop_phone: SHOP.phone,
-          shop_email: SHOP.email,
           app_url: APP_URL,
         },
+        subject: `Időpontkérését megkaptuk – ${cegadat.name}`,
       });
     } catch (emailError) {
       console.error('Időpontkérés e-mail értesítés hiba', {

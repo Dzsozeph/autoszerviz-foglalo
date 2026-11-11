@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, Loader2, Inbox, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import StatusSelect from './StatusSelect';
@@ -16,6 +17,7 @@ export default function RequestsTab() {
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState('');
   const [feedback, setFeedback] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -38,6 +40,17 @@ export default function RequestsTab() {
     load();
   }, [load]);
 
+  // E-mailben küldött link: /admin?keres=<id> – a kérés részletei automatikusan megnyílnak
+  useEffect(() => {
+    const id = searchParams.get('keres');
+    if (!id) return;
+    base44.entities.Idopontkeres.get(id)
+      .then((record) => {
+        if (record) setSelected(record);
+      })
+      .catch(() => {});
+  }, [searchParams]);
+
   const changeStatus = async (id, status) => {
     const previous = requests;
     setRequests((rows) =>
@@ -52,7 +65,12 @@ export default function RequestsTab() {
       const data = response.data || {};
       if (data.error) throw new Error(data.error);
       setError('');
-      if (data.emailSent) {
+      if (data.unchanged) {
+        setFeedback({
+          type: 'success',
+          text: 'A státusz nem változott, ezért nem küldtünk e-mailt.',
+        });
+      } else if (data.emailSent) {
         setFeedback({
           type: 'success',
           text: 'Státusz módosítva, e-mail elküldve az ügyfélnek.',
@@ -187,7 +205,10 @@ export default function RequestsTab() {
 
       <RequestDetail
         request={selected}
-        onClose={() => setSelected(null)}
+        onClose={() => {
+          setSelected(null);
+          if (searchParams.get('keres')) setSearchParams({}, { replace: true });
+        }}
         onStatusChange={changeStatus}
         onNoteSaved={(note) =>
           setRequests((rows) =>

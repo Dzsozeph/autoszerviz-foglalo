@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone } from 'lucide-react';
+import { useCegAdat } from '@/components/CegAdatProvider';
+import { telHref } from '@/lib/cegadat';
 
 export default function CtaBand() {
+  const cegadat = useCegAdat();
+
   return (
     <section className="bg-brand text-white">
       <div className="container-page grid gap-8 py-14 sm:py-16 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
@@ -23,11 +27,11 @@ export default function CtaBand() {
             <ArrowRight className="h-4 w-4" />
           </Link>
           <a
-            href="tel:+3612345678"
+            href={telHref(cegadat.phone)}
             className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/40 px-8 text-[13px] font-semibold uppercase tracking-[0.14em] text-white hover:bg-white/10"
           >
             <Phone className="h-4 w-4" />
-            +36 1 234 5678
+            {cegadat.phone}
           </a>
         </div>
       </div>

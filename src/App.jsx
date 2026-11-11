@@ -13,6 +13,7 @@ import Szolgaltatasok from '@/pages/Szolgaltatasok';
 import Idopont from '@/pages/Idopont';
 import Gyik from '@/pages/Gyik';
 import Kapcsolat from '@/pages/Kapcsolat';
+import Adatkezeles from '@/pages/Adatkezeles';
 import Admin from '@/pages/Admin';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -52,6 +53,7 @@ const AuthenticatedApp = () => {
         <Route path="/idopont" element={<Idopont />} />
         <Route path="/gyik" element={<Gyik />} />
         <Route path="/kapcsolat" element={<Kapcsolat />} />
+        <Route path="/adatkezeles" element={<Adatkezeles />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="/login" element={<Login />} />

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Phone, Wrench } from 'lucide-react';
+import { useCegAdat } from '@/components/CegAdatProvider';
+import { telHref } from '@/lib/cegadat';
 
 const NAV = [
   { to: '/', label: 'Főoldal' },
@@ -16,6 +18,7 @@ const linkClass = ({ isActive }) =>
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const cegadat = useCegAdat();
 
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
@@ -26,10 +29,10 @@ export default function SiteHeader() {
           </span>
           <span className="leading-tight">
             <span className="block font-heading text-[17px] font-semibold tracking-tight text-brand">
-              Profi Autószerviz
+              {cegadat.name}
             </span>
             <span className="block text-[11px] uppercase tracking-[0.18em] text-brand-engine">
-              Minta szerviz
+              {cegadat.city} · Minta szerviz
             </span>
           </span>
         </Link>
@@ -41,11 +44,11 @@ export default function SiteHeader() {
             </NavLink>
           ))}
           <a
-            href="tel:+3612345678"
+            href={telHref(cegadat.phone)}
             className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand"
           >
             <Phone className="h-4 w-4" />
-            +36 1 234 5678
+            {cegadat.phone}
           </a>
           <Link
             to="/idopont"

@@ -2,16 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, X, Send, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { useCegAdat } from '@/components/CegAdatProvider';
 
-const WELCOME =
-  'Kedves Érdeklődő! Köszönöm, hogy felkereste a Profi Autószerviz oldalát. Én a Profi Autószerviz virtuális asszisztense vagyok, nem ember. Miben segíthetek?';
+const welcomeText = (cegadat) =>
+  `Kedves Érdeklődő! Köszönöm, hogy felkereste a ${cegadat.name} oldalát. Én a ${cegadat.name} virtuális asszisztense vagyok, nem ember. Miben segíthetek?`;
 
-const ERROR_REPLY =
-  'Elnézést, most technikai akadályba ütköztem. Kérjük, próbálja újra később, vagy hívjon minket telefonon: +36 1 234 5678 (minta szám).';
+const errorText = (cegadat) =>
+  `Elnézést, most technikai akadályba ütköztem. Kérjük, próbálja újra később, vagy hívjon minket telefonon: ${cegadat.phone}.`;
 
 export default function ChatWidget() {
+  const cegadat = useCegAdat();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([{ role: 'assistant', content: WELCOME }]);
+  const [messages, setMessages] = useState([{ role: 'assistant', welcome: true }]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const scrollRef = useRef(null);
@@ -32,9 +34,9 @@ export default function ChatWidget() {
         messages: next.slice(-12),
       });
       const reply = response.data?.reply;
-      setMessages([...next, { role: 'assistant', content: reply || ERROR_REPLY }]);
+      setMessages([...next, { role: 'assistant', content: reply || errorText(cegadat) }]);
     } catch (error) {
-      setMessages([...next, { role: 'assistant', content: ERROR_REPLY }]);
+      setMessages([...next, { role: 'assistant', content: errorText(cegadat) }]);
     } finally {
       setSending(false);
     }
@@ -51,7 +53,7 @@ export default function ChatWidget() {
         <div
           role="dialog"
           aria-label="Virtuális asszisztens"
-          className="fixed bottom-[92px] right-4 z-50 flex max-h-[min(560px,calc(100vh-140px))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-brand-silver bg-white shadow-[0_28px_70px_-24px_rgba(11,31,58,0.5)] sm:right-6"
+          className="fixed bottom-[148px] right-4 z-50 flex max-h-[min(560px,calc(100vh-200px))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-brand-silver bg-white shadow-[0_28px_70px_-24px_rgba(11,31,58,0.5)] sm:bottom-[92px] sm:right-6 sm:max-h-[min(560px,calc(100vh-140px))]"
         >
           <div className="flex items-center gap-3 bg-brand px-5 py-4 text-white">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-ember/15 text-brand-ember">
@@ -59,7 +61,7 @@ export default function ChatWidget() {
             </span>
             <div className="min-w-0 flex-1">
               <p className="truncate font-heading text-[15px] font-semibold">Virtuális asszisztens</p>
-              <p className="text-[12px] text-white/65">Profi Autószerviz · minta oldal</p>
+              <p className="text-[12px] text-white/65">{cegadat.name} · minta oldal</p>
             </div>
             <button
               type="button"
@@ -84,7 +86,7 @@ export default function ChatWidget() {
                       : 'rounded-bl-md border border-brand-silver bg-white text-brand'
                   }`}
                 >
-                  {message.content}
+                  {message.welcome ? welcomeText(cegadat) : message.content}
                 </p>
               </div>
             ))}
@@ -136,7 +138,7 @@ export default function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Chat bezárása' : 'Chat megnyitása'}
         aria-expanded={open}
-        className="fixed bottom-5 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-ember text-white shadow-[0_14px_34px_-10px_rgba(249,115,22,0.8)] transition-transform hover:scale-105 sm:right-6 sm:h-16 sm:w-16"
+        className="fixed bottom-[76px] right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-ember text-white shadow-[0_14px_34px_-10px_rgba(249,115,22,0.8)] transition-transform hover:scale-105 sm:bottom-5 sm:right-6 sm:h-16 sm:w-16"
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>

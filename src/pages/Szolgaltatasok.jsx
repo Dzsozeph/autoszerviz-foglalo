@@ -4,10 +4,18 @@ import { ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
 import { SERVICE_ICONS } from '@/lib/serviceIcons';
+import usePageMeta from '@/lib/usePageMeta';
 
 export default function Szolgaltatasok() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  usePageMeta({
+    title: 'Szolgáltatások – Profi Autószerviz | Olajcsere, fékjavítás, diagnosztika',
+    description:
+      'Autószerviz szolgáltatásaink: olajcsere, fékjavítás, futóműjavítás, számítógépes diagnosztika, általános javítás és műszaki vizsgára felkészítés. Márkafüggetlen műhely.',
+    path: '/szolgaltatasok',
+  });
 
   useEffect(() => {
     let active = true;

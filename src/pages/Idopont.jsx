@@ -7,6 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { TIME_SLOTS, todayISO } from '@/lib/booking';
+import ConsentField from '@/components/public/ConsentField';
+import { useCegAdat } from '@/components/CegAdatProvider';
+import { telHref } from '@/lib/cegadat';
+import usePageMeta from '@/lib/usePageMeta';
 
 const EMPTY = {
   customer_name: '',
@@ -19,6 +23,7 @@ const EMPTY = {
   problem_description: '',
   preferred_date: '',
   preferred_time: '',
+  consent: false,
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -56,7 +61,15 @@ function Legend({ step, children }) {
 
 export default function Idopont() {
   const [params] = useSearchParams();
+  const cegadat = useCegAdat();
   const preset = params.get('szolgaltatas') || '';
+
+  usePageMeta({
+    title: 'Időpontkérés – Profi Autószerviz',
+    description:
+      'Kérjen időpontot online a Profi Autószerviznél: adja meg autója adatait, a kért szolgáltatást és a preferált időpontot. Munkatársunk hamarosan visszajelez.',
+    path: '/idopont',
+  });
   const [services, setServices] = useState([]);
   const [form, setForm] = useState({ ...EMPTY, service: preset });
   const [errors, setErrors] = useState({});
@@ -96,6 +109,7 @@ export default function Idopont() {
     if (!data.preferred_date) e.preferred_date = 'Válasszon egy napot.';
     else if (data.preferred_date < todayISO()) e.preferred_date = 'Múltbeli dátumot nem lehet választani.';
     if (!data.preferred_time) e.preferred_time = 'Válasszon időpontot.';
+    if (!data.consent) e.consent = 'Kérjük, fogadja el az adatkezelési tájékoztatót.';
     return e;
   };
 
@@ -329,6 +343,15 @@ export default function Idopont() {
                 <p className="mt-6 rounded-lg bg-red-50 p-4 text-[14px] text-red-700">{serverError}</p>
               )}
 
+              <div className="mt-8 rounded-xl border border-brand-line bg-brand-sand p-4">
+                <ConsentField
+                  id="consent"
+                  checked={form.consent}
+                  onChange={(value) => setField('consent', value)}
+                  error={errors.consent}
+                />
+              </div>
+
               <div className="mt-9 flex flex-col gap-4 border-t border-brand-line pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-[13px] leading-[1.5] text-brand-engine">
                   A beküldés nem jár fizetési kötelezettséggel.
@@ -361,8 +384,8 @@ export default function Idopont() {
               </p>
               <p className="mt-4 text-[13px] text-brand-engine">
                 Inkább telefonálna?{' '}
-                <a href="tel:+3612345678" className="font-semibold text-brand underline">
-                  +36 1 234 5678
+                <a href={telHref(cegadat.phone)} className="font-semibold text-brand underline">
+                  {cegadat.phone}
                 </a>{' '}
                 (minta szám)
               </p>

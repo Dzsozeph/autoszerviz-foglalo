@@ -10,9 +10,18 @@ import ServicesGrid from '@/components/home/ServicesGrid';
 import WhyUs from '@/components/home/WhyUs';
 import Testimonials from '@/components/home/Testimonials';
 import CtaBand from '@/components/home/CtaBand';
+import StructuredData from '@/components/public/StructuredData';
+import usePageMeta from '@/lib/usePageMeta';
 
 export default function Home() {
   const [services, setServices] = useState([]);
+
+  usePageMeta({
+    title: 'Profi Autószerviz – Megbízható autószerviz és online időpontkérés',
+    description:
+      'Profi Autószerviz: olajcsere, fékjavítás, futóműjavítás, számítógépes diagnosztika és műszaki vizsgára felkészítés. Kérjen időpontot online néhány perc alatt.',
+    path: '/',
+  });
 
   useEffect(() => {
     let active = true;
@@ -28,6 +37,7 @@ export default function Home() {
 
   return (
     <>
+      <StructuredData services={services} />
       <Hero />
       <StatsStrip />
       <SectionDivider />

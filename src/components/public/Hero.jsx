@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Image } from '@/components/ui/image';
+import { useCegAdat } from '@/components/CegAdatProvider';
 
 const HERO_IMAGE =
   'https://media.base44.com/images/public/6af4670961f92c12d456e3c5/0eab8ef47_generated_image.png';
 
 export default function Hero() {
+  const cegadat = useCegAdat();
+
   return (
     <section className="relative w-full overflow-hidden bg-brand text-white" aria-label="Profi Autószerviz">
       <div
@@ -21,7 +24,7 @@ export default function Hero() {
         <div className="grid items-stretch gap-10 py-14 lg:grid-cols-[1fr_47%] lg:gap-[3.5%] lg:py-16">
           <div className="flex min-w-0 flex-col justify-between gap-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
-              Prémium autószerviz · Budapest
+              Prémium autószerviz · {cegadat.city}
             </p>
 
             <h1 className="font-heading text-[clamp(2.35rem,7.2vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
@@ -49,6 +52,7 @@ export default function Hero() {
               alt="Modern autó motortere közelről, kék és narancs megvilágítással"
               className="aspect-[4/3] w-full lg:aspect-[602/628]"
               fittingType="fill"
+              fetchPriority="high"
             />
             <figcaption className="absolute bottom-4 left-4 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
               Minta fotó – bemutató célú

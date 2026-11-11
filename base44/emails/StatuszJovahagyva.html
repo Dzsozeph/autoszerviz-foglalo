@@ -1,6 +1,6 @@
 <mjml>
   <mj-head>
-    <mj-title>Időpontkérése jóváhagyva – Profi Autószerviz</mj-title>
+    <mj-title>Időpontkérése jóváhagyva</mj-title>
     <mj-preview>Időpontkérése jóváhagyva, várjuk a szervizben.</mj-preview>
     <mj-attributes>
       <mj-all font-family="Inter, Helvetica, Arial, sans-serif" />
@@ -12,10 +12,11 @@
   <mj-body background-color="#ffffff">
     <mj-section background-color="#0b1d38" padding="26px 36px">
       <mj-column>
-        <mj-image src="https://media.base44.com/images/public/6af4670961f92c12d456e3c5/238570ceb_logo.png" width="96px" align="left" padding="0" alt="Profi Autószerviz" />
-        <mj-text color="#ffffff" font-size="16px" font-weight="700" padding="12px 0 0" font-family="'Space Grotesk', Arial, sans-serif">Profi Autószerviz</mj-text>
+        <mj-image src="https://media.base44.com/images/public/6af4670961f92c12d456e3c5/238570ceb_logo.png" width="96px" align="left" padding="0" alt="{{shop_name}}" />
+        <mj-text color="#ffffff" font-size="16px" font-weight="700" padding="12px 0 0" font-family="'Space Grotesk', Arial, sans-serif">{{shop_name}}</mj-text>
       </mj-column>
     </mj-section>
+    <mj-section background-color="#f97316" padding="0"><mj-column><mj-text padding="0" font-size="1px">&nbsp;</mj-text></mj-column></mj-section>
 
     <mj-section padding="36px 36px 8px">
       <mj-column>
@@ -25,7 +26,7 @@
     </mj-section>
 
     <mj-section padding="20px 36px 0">
-      <mj-column background-color="#e2e8f0" padding="20px 22px">
+      <mj-column background-color="#f0e4d4" padding="22px 24px">
         <mj-text font-size="14px" line-height="1.9">
           <strong>Időpont:</strong> {{preferred}}<br />
           <strong>Szolgáltatás:</strong> {{service}}<br />
@@ -41,9 +42,9 @@
       </mj-column>
     </mj-section>
 
-    <mj-section background-color="#e2e8f0" padding="24px 36px">
+    <mj-section background-color="#f0e4d4" padding="24px 36px">
       <mj-column>
-        <mj-text font-size="12px" line-height="1.7" color="#475569">Profi Autószerviz · 1117 Budapest, Minta utca 12. · +36 1 234 5678<br />info@profiautoszerviz.hu · Minta oldal – bemutató célú</mj-text>
+        <mj-text font-size="12px" line-height="1.7" color="#475569">{{shop_name}} · {{shop_address}} · {{shop_phone}}<br />{{shop_email}} · Minta oldal, bemutató célú</mj-text>
       </mj-column>
     </mj-section>
   </mj-body>

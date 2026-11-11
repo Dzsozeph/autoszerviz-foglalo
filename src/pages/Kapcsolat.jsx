@@ -1,26 +1,44 @@
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
+import ConsentField from '@/components/public/ConsentField';
+import { useCegAdat } from '@/components/CegAdatProvider';
+import { mapQuery, telHref, waHref } from '@/lib/cegadat';
+import usePageMeta from '@/lib/usePageMeta';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const INFO = [
-  { icon: Phone, label: 'Telefon', value: '+36 1 234 5678', note: '(minta szám)' },
-  { icon: Mail, label: 'E-mail', value: 'info@profiautoszerviz.hu', note: '(minta cím)' },
-  { icon: MapPin, label: 'Cím', value: '1117 Budapest, Minta utca 12.', note: '(minta cím)' },
-  { icon: Clock, label: 'Nyitvatartás', value: 'H–P 8:00–17:00 · Szo 8:00–12:00', note: 'Vasárnap zárva' },
-];
-
 export default function Kapcsolat() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const cegadat = useCegAdat();
+  const [form, setForm] = useState({ name: '', email: '', message: '', consent: false });
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [serverError, setServerError] = useState('');
+
+  usePageMeta({
+    title: 'Kapcsolat és nyitvatartás – Profi Autószerviz',
+    description:
+      'Elérhetőségeink, nyitvatartásunk és kapcsolatfelvételi lehetőségek: telefon, e-mail, WhatsApp és kapcsolati űrlap a Profi Autószerviznél.',
+    path: '/kapcsolat',
+  });
+
+  const INFO = [
+    { icon: Phone, label: 'Telefon', value: cegadat.phone, note: '(minta szám)', href: telHref(cegadat.phone) },
+    { icon: MessageCircle, label: 'WhatsApp', value: cegadat.whatsapp, note: '(minta szám)', href: waHref(cegadat.whatsapp) },
+    { icon: Mail, label: 'E-mail', value: cegadat.email, note: '(minta cím)', href: `mailto:${cegadat.email}` },
+    { icon: MapPin, label: 'Cím', value: cegadat.address, note: '(minta cím)' },
+    {
+      icon: Clock,
+      label: 'Nyitvatartás',
+      value: `H–P ${cegadat.hours_weekdays} · Szo ${cegadat.hours_saturday}`,
+      note: `Vasárnap ${cegadat.hours_sunday}`,
+    },
+  ];
 
   const setField = (key, value) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -33,6 +51,7 @@ export default function Kapcsolat() {
     if (!form.name.trim()) next.name = 'Kérjük, adja meg a nevét.';
     if (!EMAIL_RE.test(form.email.trim())) next.email = 'Adjon meg érvényes e-mail-címet.';
     if (form.message.trim().length < 10) next.message = 'Írja le az üzenetét legalább 10 karakterben.';
+    if (!form.consent) next.consent = 'Kérjük, fogadja el az adatkezelési tájékoztatót.';
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -45,7 +64,7 @@ export default function Kapcsolat() {
         message: form.message.trim(),
         read: false,
       });
-      setForm({ name: '', email: '', message: '' });
+      setForm({ name: '', email: '', message: '', consent: false });
       setSent(true);
     } catch (error) {
       setServerError('Az üzenet küldése nem sikerült. Kérjük, próbálja újra, vagy hívjon minket telefonon.');
@@ -66,13 +85,24 @@ export default function Kapcsolat() {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <div className="grid gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line sm:grid-cols-2">
-              {INFO.map(({ icon: Icon, label, value, note }) => (
+              {INFO.map(({ icon: Icon, label, value, note, href }) => (
                 <div key={label} className="bg-white p-6">
                   <Icon className="h-5 w-5 text-brand-ember" strokeWidth={1.7} />
                   <p className="mt-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-brand-engine">
                     {label}
                   </p>
-                  <p className="mt-1 text-[15px] font-medium leading-snug text-brand">{value}</p>
+                  {href ? (
+                    <a
+                      href={href}
+                      target={href.startsWith('http') ? '_blank' : undefined}
+                      rel={href.startsWith('http') ? 'noreferrer' : undefined}
+                      className="mt-1 block text-[15px] font-medium leading-snug text-brand underline-offset-2 hover:underline"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    <p className="mt-1 text-[15px] font-medium leading-snug text-brand">{value}</p>
+                  )}
                   <p className="mt-1 text-[12px] text-brand-engine/70">{note}</p>
                 </div>
               ))}
@@ -80,8 +110,8 @@ export default function Kapcsolat() {
 
             <div className="mt-6 overflow-hidden rounded-xl border border-brand-line">
               <iframe
-                title="Profi Autószerviz – minta cím a térképen"
-                src="https://www.google.com/maps?q=1117+Budapest+Minta+utca+12&output=embed"
+                title={`${cegadat.name} – a cím a térképen`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery(cegadat))}&output=embed`}
                 className="h-[280px] w-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -151,12 +181,18 @@ export default function Kapcsolat() {
                   />
                   {errors.message && <p className="mt-1 text-[13px] text-red-600">{errors.message}</p>}
                 </div>
+                <ConsentField
+                  id="contact-consent"
+                  checked={form.consent}
+                  onChange={(value) => setField('consent', value)}
+                  error={errors.consent}
+                />
                 {serverError && (
                   <p className="rounded-lg bg-red-50 p-3 text-[13px] text-red-700">{serverError}</p>
                 )}
                 <button
                   type="submit"
-                  disabled={sending}
+                  disabled={sending || !form.consent}
                   className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-brand-ember px-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.2)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {sending ? 'Küldés folyamatban…' : 'Üzenet küldése'}

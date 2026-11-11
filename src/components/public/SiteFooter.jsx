@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Wrench, Phone, Mail, MapPin } from 'lucide-react';
+import { Wrench, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { useCegAdat } from '@/components/CegAdatProvider';
+import { telHref, waHref } from '@/lib/cegadat';
 
 export default function SiteFooter() {
+  const cegadat = useCegAdat();
+
   return (
     <footer className="bg-brand text-white">
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -11,7 +15,7 @@ export default function SiteFooter() {
               <Wrench className="h-5 w-5" />
             </span>
             <span className="font-heading text-[17px] font-semibold tracking-tight">
-              Profi Autószerviz
+              {cegadat.name}
             </span>
           </div>
           <p className="mt-4 max-w-[280px] text-[15px] leading-relaxed text-white/70">
@@ -29,6 +33,7 @@ export default function SiteFooter() {
             <li><Link to="/gyik" className="hover:text-white">GYIK</Link></li>
             <li><Link to="/kapcsolat" className="hover:text-white">Kapcsolat</Link></li>
             <li><Link to="/idopont" className="hover:text-white">Időpontkérés</Link></li>
+            <li><Link to="/adatkezeles" className="hover:text-white">Adatkezelési tájékoztató</Link></li>
           </ul>
         </div>
 
@@ -37,9 +42,9 @@ export default function SiteFooter() {
             Nyitvatartás
           </h3>
           <ul className="mt-4 space-y-2 text-[15px] text-white/75">
-            <li>Hétfő – Péntek: 8:00 – 17:00</li>
-            <li>Szombat: 8:00 – 12:00</li>
-            <li>Vasárnap: zárva</li>
+            <li>Hétfő – Péntek: {cegadat.hours_weekdays}</li>
+            <li>Szombat: {cegadat.hours_saturday}</li>
+            <li>Vasárnap: {cegadat.hours_sunday}</li>
           </ul>
         </div>
 
@@ -50,23 +55,39 @@ export default function SiteFooter() {
           <ul className="mt-4 space-y-3 text-[15px] text-white/75">
             <li className="flex items-start gap-2">
               <Phone className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
-              <span>+36 1 234 5678 <em className="not-italic text-white/45">(minta)</em></span>
+              <a href={telHref(cegadat.phone)} className="hover:text-white hover:underline">
+                {cegadat.phone}
+              </a>
+            </li>
+            <li className="flex items-start gap-2">
+              <MessageCircle className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
+              <a
+                href={waHref(cegadat.whatsapp)}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white hover:underline"
+              >
+                WhatsApp: {cegadat.whatsapp}
+              </a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
-              <span>info@profiautoszerviz.hu <em className="not-italic text-white/45">(minta)</em></span>
+              <a href={`mailto:${cegadat.email}`} className="hover:text-white hover:underline">
+                {cegadat.email}
+              </a>
             </li>
             <li className="flex items-start gap-2">
               <MapPin className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
-              <span>1117 Budapest, Minta utca 12. <em className="not-italic text-white/45">(minta)</em></span>
+              <span>{cegadat.address}</span>
             </li>
           </ul>
+          <p className="mt-4 text-[12px] text-white/40">A megadott elérhetőségek minta adatok.</p>
         </div>
       </div>
 
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-5 text-[14px] text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Profi Autószerviz – Minden jog fenntartva.</p>
+          <p>© {new Date().getFullYear()} {cegadat.name} – Minden jog fenntartva.</p>
           <p className="font-medium text-white/70">Minta oldal – bemutató célú</p>
         </div>
       </div>

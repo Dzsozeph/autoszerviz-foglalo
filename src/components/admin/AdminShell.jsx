@@ -9,6 +9,7 @@ import {
   LogOut,
   ExternalLink,
   ShieldCheck,
+  Building2,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useAdminAccess } from './AdminGate';
@@ -18,6 +19,7 @@ import ServicesEditor from './ServicesEditor';
 import FaqEditor from './FaqEditor';
 import MessagesTab from './MessagesTab';
 import AccessRequestsTab from './AccessRequestsTab';
+import CegAdatokTab from './CegAdatokTab';
 
 const BASE_TABS = [
   { key: 'dashboard', label: 'Áttekintés', icon: LayoutDashboard },
@@ -32,7 +34,11 @@ export default function AdminShell() {
   const [tab, setTab] = useState('dashboard');
 
   const tabs = access.isOwner
-    ? [...BASE_TABS, { key: 'access', label: 'Hozzáférési kérelmek', icon: ShieldCheck }]
+    ? [
+        ...BASE_TABS,
+        { key: 'company', label: 'Cégadatok', icon: Building2 },
+        { key: 'access', label: 'Hozzáférési kérelmek', icon: ShieldCheck },
+      ]
     : BASE_TABS;
 
   const active = tabs.find((item) => item.key === tab) || tabs[0];
@@ -105,6 +111,7 @@ export default function AdminShell() {
           {tab === 'services' && <ServicesEditor />}
           {tab === 'faq' && <FaqEditor />}
           {tab === 'messages' && <MessagesTab />}
+          {tab === 'company' && access.isOwner && <CegAdatokTab />}
           {tab === 'access' && access.isOwner && <AccessRequestsTab />}
         </div>
       </main>

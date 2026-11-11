@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Image } from '@/components/ui/image';
+import { useCegAdat } from '@/components/CegAdatProvider';
 
 const WORKSHOP_IMAGE =
   'https://media.base44.com/images/public/6af4670961f92c12d456e3c5/ec9e9af42_generated_image.png';
@@ -12,6 +13,8 @@ const POINTS = [
 ];
 
 export default function IntroSection() {
+  const cegadat = useCegAdat();
+
   return (
     <section className="container-page py-16 sm:py-20">
       <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -21,6 +24,7 @@ export default function IntroSection() {
             alt="Letisztult, modern autószerviz műhely emelőkkel"
             className="aspect-[4/3] w-full"
             fittingType="fill"
+            loading="lazy"
           />
         </div>
 
@@ -32,7 +36,7 @@ export default function IntroSection() {
             Egy műhely, ahol a részletek számítanak.
           </h2>
           <p className="mt-5 text-[16px] leading-[1.65] text-brand-engine">
-            A Profi Autószerviz egy fiktív, bemutató célú szerviz: az oldal azt mutatja meg, hogyan
+            A {cegadat.name} egy fiktív, bemutató célú szerviz: az oldal azt mutatja meg, hogyan
             működhet egy modern autószerviz online időpontkérése és ügyfélkezelése. A mögötte lévő
             folyamat – kérés, egyeztetés, javítás – valódi.
           </p>

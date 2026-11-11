@@ -23,16 +23,18 @@ export function isOwner(user) {
   return normalizeEmail(user && user.email) === OWNER_EMAIL;
 }
 
-export async function sendTemplateEmail(base44, { to, template, variables }) {
+export async function sendTemplateEmail(base44, { to, template, variables, subject }) {
   const recipient = normalizeEmail(to);
   if (!recipient) return { ok: false, error: 'missing_recipient' };
   try {
-    const result = await base44.asServiceRole.integrations.Core.SendEmail({
+    const payload = {
       to: recipient,
       template_name: template,
       variables: variables || {},
       category: 'transactional',
-    });
+    };
+    if (subject) payload.subject = subject;
+    const result = await base44.asServiceRole.integrations.Core.SendEmail(payload);
     if (result && result.success === false) {
       console.error('E-mail elutasítva', { template, reason: result.reason });
       return { ok: false, error: result.reason || 'refused' };
@@ -82,25 +84,28 @@ export async function findAccountByEmail(base44, email) {
   return users.find((item) => normalizeEmail(item.email) === normalized) || null;
 }
 
+// Címzettek: a tulajdonos és a jóváhagyott hozzáférési kérelmekkel rendelkező adminok.
 export async function getAdminRecipients(base44) {
   const recipients = new Set([OWNER_EMAIL]);
   try {
-    const items = await listAppUsers(base44);
-    items
-      .filter((item) => item.role === 'admin')
-      .forEach((item) => {
-        const email = normalizeEmail(item.email);
-        if (email) recipients.add(email);
-      });
+    const page = await base44.asServiceRole.entities.HozzaferesiKeres.filter(
+      { status: ACCESS_STATUS.APPROVED },
+      { sort: '-created_date', limit: 200 }
+    );
+    const items = page && page.items ? page.items : page;
+    (Array.isArray(items) ? items : []).forEach((item) => {
+      const email = normalizeEmail(item.email);
+      if (email) recipients.add(email);
+    });
   } catch (error) {
     console.error('Admin címzettek betöltése nem sikerült', { message: error && error.message });
   }
   return Array.from(recipients);
 }
 
-export async function sendToAll(base44, recipients, template, variables) {
+export async function sendToAll(base44, recipients, template, variables, subject) {
   const results = await Promise.allSettled(
-    recipients.map((to) => sendTemplateEmail(base44, { to, template, variables }))
+    recipients.map((to) => sendTemplateEmail(base44, { to, template, variables, subject }))
   );
   return results.map((result) => (result.status === 'fulfilled' ? result.value : { ok: false }));
 }

@@ -8,10 +8,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import usePageMeta from '@/lib/usePageMeta';
 
 export default function Gyik() {
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  usePageMeta({
+    title: 'Gyakori kérdések – Profi Autószerviz',
+    description:
+      'Válaszok a leggyakoribb kérdésekre az időpontkérésről, az árakról, a javítás menetéről és a nyitvatartásról a Profi Autószerviznél.',
+    path: '/gyik',
+  });
 
   useEffect(() => {
     let active = true;

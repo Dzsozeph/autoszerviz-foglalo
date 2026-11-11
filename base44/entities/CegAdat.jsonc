@@ -1,0 +1,67 @@
+{
+  "name": "CegAdat",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "C\u00e9gn\u00e9v"
+    },
+    "address": {
+      "type": "string",
+      "title": "C\u00edm"
+    },
+    "city": {
+      "type": "string",
+      "title": "V\u00e1ros"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefonsz\u00e1m"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail-c\u00edm"
+    },
+    "whatsapp": {
+      "type": "string",
+      "title": "WhatsApp-sz\u00e1m"
+    },
+    "hours_weekdays": {
+      "type": "string",
+      "title": "Nyitvatart\u00e1s h\u00e9tk\u00f6znap"
+    },
+    "hours_saturday": {
+      "type": "string",
+      "title": "Nyitvatart\u00e1s szombat"
+    },
+    "hours_sunday": {
+      "type": "string",
+      "title": "Nyitvatart\u00e1s vas\u00e1rnap"
+    },
+    "map_query": {
+      "type": "string",
+      "title": "T\u00e9rk\u00e9p keres\u0151sz\u00f6veg"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "email": "dzsozeph93@gmail.com"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "email": "dzsozeph93@gmail.com"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "email": "dzsozeph93@gmail.com"
+      }
+    }
+  }
+}
