@@ -20,7 +20,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="container-page relative">
+      <div className="relative mx-auto w-full max-w-[1700px] px-6 lg:px-12">
         <div className="grid items-stretch gap-10 py-14 lg:grid-cols-[55%_1fr] lg:gap-[6%] lg:py-16">
           <div className="flex min-w-0 flex-col justify-between gap-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
@@ -47,12 +47,13 @@ export default function Hero() {
           </div>
 
           <figure className="relative w-full overflow-hidden rounded-2xl bg-brand-deep">
-           <img
-  src={HERO_IMAGE}
-  alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-  className="block aspect-[4/3] w-full object-cover lg:aspect-[3/2]"
-  fetchPriority="high"
-/>
+            <Image
+              src={HERO_IMAGE}
+              alt="Modern autó motortere közelről, kék és narancs megvilágítással"
+              className="aspect-[4/3] w-full lg:aspect-[602/628]"
+              fittingType="fill"
+              fetchPriority="high"
+            />
             <figcaption className="absolute bottom-4 left-4 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
               Minta fotó – bemutató célú
             </figcaption>
