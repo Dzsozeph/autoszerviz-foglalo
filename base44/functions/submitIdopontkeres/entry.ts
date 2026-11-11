@@ -73,19 +73,13 @@ export default async function (req) {
       status: 'Új',
     });
 
-    // Ügyfél mentése vagy frissítése
+    // Ügyfél mentése: anonim beküldés soha nem módosít meglévő ügyfélrekordot
     const existingPage = await base44.asServiceRole.entities.Ugyfel.filter(
       { email: data.email.toLowerCase() },
       { limit: 1 }
     );
     const existing = existingPage.items || existingPage;
-    if (existing.length > 0) {
-      await base44.asServiceRole.entities.Ugyfel.update(existing[0].id, {
-        name: data.customer_name,
-        phone: data.phone,
-        email: data.email.toLowerCase(),
-      });
-    } else {
+    if (existing.length === 0) {
       await base44.asServiceRole.entities.Ugyfel.create({
         name: data.customer_name,
         phone: data.phone,
