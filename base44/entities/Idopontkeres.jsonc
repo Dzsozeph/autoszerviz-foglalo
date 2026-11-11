@@ -62,6 +62,10 @@
       ],
       "default": "\u00daj"
     },
+    "notified_status": {
+      "type": "string",
+      "title": "Utolj\u00e1ra e-mailben jelzett st\u00e1tusz"
+    },
     "internal_note": {
       "type": "string",
       "title": "Bels\u0151 megjegyz\u00e9s"

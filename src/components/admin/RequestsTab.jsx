@@ -15,6 +15,7 @@ export default function RequestsTab() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState('');
+  const [feedback, setFeedback] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -45,12 +46,29 @@ export default function RequestsTab() {
         : rows.map((row) => (row.id === id ? { ...row, status } : row))
     );
     setSelected((current) => (current && current.id === id ? { ...current, status } : current));
+    setFeedback(null);
     try {
-      await base44.entities.Idopontkeres.update(id, { status });
+      const response = await base44.functions.invoke('updateRequestStatus', { id, status });
+      const data = response.data || {};
+      if (data.error) throw new Error(data.error);
       setError('');
+      if (data.emailSent) {
+        setFeedback({
+          type: 'success',
+          text: 'Státusz módosítva, e-mail elküldve az ügyfélnek.',
+        });
+      } else if (data.emailSkipped) {
+        setFeedback({ type: 'success', text: 'Státusz módosítva.' });
+      } else {
+        setFeedback({
+          type: 'warning',
+          text: 'Státusz módosítva, de az értesítő e-mailt nem sikerült elküldeni.',
+        });
+      }
     } catch (err) {
       setRequests(previous);
       setError('A státusz mentése nem sikerült. Próbálja újra.');
+      load();
     }
   };
 
@@ -96,6 +114,17 @@ export default function RequestsTab() {
       </div>
 
       {error && <p className="mt-4 rounded-lg bg-red-50 p-3 text-[13px] text-red-700">{error}</p>}
+      {feedback && (
+        <p
+          className={`mt-4 rounded-lg p-3 text-[13px] ${
+            feedback.type === 'success'
+              ? 'bg-emerald-50 text-emerald-800'
+              : 'bg-amber-50 text-amber-800'
+          }`}
+        >
+          {feedback.text}
+        </p>
+      )}
 
       <div className="mt-6 overflow-hidden rounded-xl border border-brand-silver bg-white">
         {loading ? (

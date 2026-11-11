@@ -1,27 +1,40 @@
-import { useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import AdminLogin from './AdminLogin';
+import AccessStatusScreen from './AccessStatusScreen';
+
+const AdminAccessContext = createContext({ isOwner: false, isAdmin: false, status: 'none' });
+
+export const useAdminAccess = () => useContext(AdminAccessContext);
 
 export default function AdminGate({ children }) {
-  const [state, setState] = useState({ loading: true, signedIn: false, admin: false });
-  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState({ signedIn: false, status: 'signed_out' });
 
-  useEffect(() => {
-    let active = true;
-    base44.auth
-      .me()
-      .then((me) => {
-        if (active) setState({ loading: false, signedIn: true, admin: me?.role === 'admin' });
-      })
-      .catch(() => {
-        if (active) setState({ loading: false, signedIn: false, admin: false });
+  const load = useCallback(async () => {
+    try {
+      const response = await base44.functions.invoke('adminSession', {});
+      const data = response.data || {};
+      setSession({
+        signedIn: !!data.signedIn,
+        isAdmin: !!data.isAdmin,
+        isOwner: !!data.isOwner,
+        status: data.status || (data.signedIn ? 'none' : 'signed_out'),
+        name: data.name || '',
+        email: data.email || '',
       });
-    return () => {
-      active = false;
-    };
+    } catch (error) {
+      setSession({ signedIn: false, isAdmin: false, isOwner: false, status: 'signed_out' });
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  if (state.loading) {
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F1F5F9]">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-silver border-t-brand" />
@@ -29,18 +42,18 @@ export default function AdminGate({ children }) {
     );
   }
 
-  if (!state.signedIn) {
-    return (
-      <Navigate
-        to={`/login?returnTo=${encodeURIComponent(location.pathname)}`}
-        replace
-      />
-    );
+  if (!session.signedIn) return <AdminLogin />;
+
+  if (session.isAdmin) {
+    return <AdminAccessContext.Provider value={session}>{children}</AdminAccessContext.Provider>;
   }
 
-  if (!state.admin) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
+  return (
+    <AccessStatusScreen
+      status={session.status}
+      name={session.name}
+      email={session.email}
+      onRefresh={load}
+    />
+  );
 }

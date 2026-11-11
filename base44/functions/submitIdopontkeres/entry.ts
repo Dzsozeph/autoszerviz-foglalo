@@ -1,4 +1,11 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import {
+  APP_URL,
+  SHOP,
+  getAdminRecipients,
+  sendTemplateEmail,
+  sendToAll,
+} from '../../shared/access.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^[+0-9()\s-]{7,24}$/;
@@ -84,6 +91,45 @@ export default async function (req) {
         name: data.customer_name,
         phone: data.phone,
         email: data.email.toLowerCase(),
+      });
+    }
+
+    // Értesítő e-mailek: a hibát naplózzuk, a mentés akkor is sikeres marad
+    const car = `${data.car_brand} ${data.car_model}`.trim();
+    const preferred = `${data.preferred_date} ${data.preferred_time}`.trim();
+    const adminRecipients = await getAdminRecipients(base44);
+
+    try {
+      await sendToAll(base44, adminRecipients, 'UjIdopontkeresAdmin', {
+        customer_name: data.customer_name,
+        phone: data.phone,
+        customer_email: data.email,
+        car,
+        license_plate: data.license_plate,
+        service: data.service,
+        preferred,
+        problem_description: data.problem_description,
+        admin_url: `${APP_URL}/admin`,
+      });
+
+      await sendTemplateEmail(base44, {
+        to: data.email,
+        template: 'IdopontkeresVisszaigazolas',
+        variables: {
+          customer_name: data.customer_name,
+          service: data.service,
+          car,
+          license_plate: data.license_plate,
+          preferred,
+          problem_description: data.problem_description,
+          shop_phone: SHOP.phone,
+          shop_email: SHOP.email,
+          app_url: APP_URL,
+        },
+      });
+    } catch (emailError) {
+      console.error('Időpontkérés e-mail értesítés hiba', {
+        message: emailError && emailError.message,
       });
     }
 

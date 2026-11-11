@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
-import { CalendarClock, Inbox, Loader2, ArrowRight } from 'lucide-react';
+import { CalendarClock, Inbox, Loader2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { formatDateHu, formatDateTimeHu } from '@/lib/booking';
 import { STATUS_STYLES } from '@/lib/status';
+import { useAdminAccess } from './AdminGate';
 
-export default function DashboardTab({ onOpenRequests }) {
+export default function DashboardTab({ onOpenRequests, onOpenAccess }) {
+  const { isOwner } = useAdminAccess();
   const [stats, setStats] = useState({ newCount: 0, total: 0, inProgress: 0 });
   const [latest, setLatest] = useState([]);
+  const [pendingAccess, setPendingAccess] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,6 +32,20 @@ export default function DashboardTab({ onOpenRequests }) {
       active = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!isOwner) return;
+    let active = true;
+    base44.functions
+      .invoke('accessRequest', { action: 'pendingCount' })
+      .then((response) => {
+        if (active) setPendingAccess(response.data?.count || 0);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [isOwner, loading]);
 
   if (loading) {
     return (
@@ -58,6 +75,22 @@ export default function DashboardTab({ onOpenRequests }) {
           </div>
         ))}
       </div>
+
+      {isOwner && (
+        <button
+          type="button"
+          onClick={onOpenAccess}
+          className="mt-4 flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-brand-silver bg-white px-6 py-4 text-left hover:border-brand/40"
+        >
+          <span className="flex items-center gap-2 text-[14px] font-semibold text-brand">
+            <ShieldCheck className="h-4 w-4 text-brand-ember" />
+            Hozzáférési kérelmek
+          </span>
+          <span className="rounded-full border border-orange-300 bg-orange-50 px-3 py-1 text-[13px] font-semibold text-orange-700">
+            {pendingAccess} jóváhagyásra vár
+          </span>
+        </button>
+      )}
 
       <div className="mt-8 rounded-xl border border-brand-silver bg-white">
         <div className="flex items-center justify-between border-b border-brand-silver px-6 py-4">
