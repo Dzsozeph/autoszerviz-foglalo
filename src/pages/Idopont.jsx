@@ -23,7 +23,7 @@ const EMPTY = {
   problem_description: '',
   preferred_date: '',
   preferred_time: '',
-  consent: false,
+  consent: false
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -35,18 +35,18 @@ function Field({ id, label, error, children, className = '' }) {
       <Label htmlFor={id}>{label}</Label>
       <div className="mt-2">{children}</div>
       {error && <p className="mt-1 text-[13px] text-red-600">{error}</p>}
-    </div>
-  );
+    </div>);
+
 }
 
 const inputClass =
-  'h-12 w-full rounded-lg border-brand-line bg-brand-cream text-[15px] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
+'h-12 w-full rounded-lg border-brand-line bg-brand-cream text-[15px] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
 
 const selectClass =
-  'h-12 w-full rounded-lg border border-brand-line bg-brand-cream px-3 text-[15px] text-brand outline-none transition-colors focus:border-brand-ember focus:ring-2 focus:ring-brand-ember/20';
+'h-12 w-full rounded-lg border border-brand-line bg-brand-cream px-3 text-[15px] text-brand outline-none transition-colors focus:border-brand-ember focus:ring-2 focus:ring-brand-ember/20';
 
 const textareaClass =
-  'rounded-lg border-brand-line bg-brand-cream text-[15px] leading-[1.6] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
+'rounded-lg border-brand-line bg-brand-cream text-[15px] leading-[1.6] text-brand placeholder:text-brand-engine/45 focus-visible:border-brand-ember focus-visible:ring-2 focus-visible:ring-brand-ember/20';
 
 function Legend({ step, children }) {
   return (
@@ -55,8 +55,8 @@ function Legend({ step, children }) {
         {step}
       </span>
       {children}
-    </legend>
-  );
+    </legend>);
+
 }
 
 export default function Idopont() {
@@ -67,8 +67,8 @@ export default function Idopont() {
   usePageMeta({
     title: 'Időpontkérés – Profi Autószerviz',
     description:
-      'Kérjen időpontot online a Profi Autószerviznél: adja meg autója adatait, a kért szolgáltatást és a preferált időpontot. Munkatársunk hamarosan visszajelez.',
-    path: '/idopont',
+    'Kérjen időpontot online a Profi Autószerviznél: adja meg autója adatait, a kért szolgáltatást és a preferált időpontot. Munkatársunk hamarosan visszajelez.',
+    path: '/idopont'
   });
   const [services, setServices] = useState([]);
   const [form, setForm] = useState({ ...EMPTY, service: preset });
@@ -79,11 +79,11 @@ export default function Idopont() {
 
   useEffect(() => {
     let active = true;
-    base44.entities.Szolgaltatas.filter({ active: true }, { sort: 'order', limit: 50 })
-      .then((page) => {
-        if (active) setServices(page.items || []);
-      })
-      .catch(() => {});
+    base44.entities.Szolgaltatas.filter({ active: true }, { sort: 'order', limit: 50 }).
+    then((page) => {
+      if (active) setServices(page.items || []);
+    }).
+    catch(() => {});
     return () => {
       active = false;
     };
@@ -106,8 +106,8 @@ export default function Idopont() {
     if (data.problem_description.trim().length < 10) {
       e.problem_description = 'Írja le röviden a hibát (legalább 10 karakter).';
     }
-    if (!data.preferred_date) e.preferred_date = 'Válasszon egy napot.';
-    else if (data.preferred_date < todayISO()) e.preferred_date = 'Múltbeli dátumot nem lehet választani.';
+    if (!data.preferred_date) e.preferred_date = 'Válasszon egy napot.';else
+    if (data.preferred_date < todayISO()) e.preferred_date = 'Múltbeli dátumot nem lehet választani.';
     if (!data.preferred_time) e.preferred_time = 'Válasszon időpontot.';
     if (!data.consent) e.consent = 'Kérjük, fogadja el az adatkezelési tájékoztatót.';
     return e;
@@ -148,12 +148,12 @@ export default function Idopont() {
       <PageHeader
         eyebrow="Időpontkérés"
         title="Kérjen időpontot online"
-        intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
-      />
+        intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe." />
+      
 
       <section className="container-page py-14 sm:py-20">
-        {success ? (
-          <div className="mx-auto max-w-2xl rounded-2xl border border-emerald-200 bg-emerald-50 p-8 sm:p-10">
+        {success ?
+        <div className="mx-auto max-w-2xl rounded-2xl border border-emerald-200 bg-emerald-50 p-8 sm:p-10">
             <CheckCircle2 className="h-9 w-9 text-emerald-600" />
             <h2 className="mt-4 font-heading text-[24px] font-semibold text-emerald-900">
               Köszönjük, megkaptuk az időpontkérését!
@@ -164,192 +164,192 @@ export default function Idopont() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <button
-                type="button"
-                onClick={() => setSuccess(false)}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brand px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-white"
-              >
+              type="button"
+              onClick={() => setSuccess(false)}
+              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brand px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-white">
+              
                 Új kérés indítása
               </button>
               <Link
-                to="/"
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-brand px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-brand hover:bg-brand/5"
-              >
+              to="/"
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-brand px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-brand hover:bg-brand/5">
+              
                 Vissza a főoldalra
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-          </div>
-        ) : (
-          <div className="grid gap-10 lg:grid-cols-[1.5fr_0.5fr] lg:gap-14">
+          </div> :
+
+        <div className="grid gap-10 lg:grid-cols-[1.5fr_0.5fr] lg:gap-14">
             <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="rounded-2xl border border-brand-line bg-white p-6 shadow-[0_30px_70px_-50px_rgba(11,31,58,0.55)] sm:p-8"
-            >
+            onSubmit={handleSubmit}
+            noValidate
+            className="rounded-2xl border border-brand-line bg-white p-6 shadow-[0_30px_70px_-50px_rgba(11,31,58,0.55)] sm:p-8">
+            
               <div
-                aria-hidden="true"
-                className="-mx-6 -mt-6 mb-7 h-1 bg-gradient-to-r from-brand-ember via-brand-honey to-brand-ember/40 sm:-mx-8 sm:-mt-8"
-              />
+              aria-hidden="true"
+              className="-mx-6 -mt-6 mb-7 h-1 bg-gradient-to-r from-brand-ember via-brand-honey to-brand-ember/40 sm:-mx-8 sm:-mt-8" />
+            
               <fieldset className="border-0 p-0">
                 <Legend step="1">Adatai</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <Field id="customer_name" label="Név *" error={errors.customer_name}>
                     <Input
-                      id="customer_name"
-                      value={form.customer_name}
-                      onChange={(e) => setField('customer_name', e.target.value)}
-                      placeholder="Kovács Anna"
-                      className={inputClass}
-                      autoComplete="name"
-                    />
+                    id="customer_name"
+                    value={form.customer_name}
+                    onChange={(e) => setField('customer_name', e.target.value)}
+                    placeholder="Kovács Anna"
+                    className={inputClass}
+                    autoComplete="name" />
+                  
                   </Field>
                   <Field id="phone" label="Telefonszám *" error={errors.phone}>
                     <Input
-                      id="phone"
-                      type="tel"
-                      value={form.phone}
-                      onChange={(e) => setField('phone', e.target.value)}
-                      placeholder="+36 30 123 4567"
-                      className={inputClass}
-                      autoComplete="tel"
-                    />
+                    id="phone"
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) => setField('phone', e.target.value)}
+                    placeholder="+36 30 123 4567"
+                    className={inputClass}
+                    autoComplete="tel" />
+                  
                   </Field>
                   <Field id="email" label="E-mail-cím *" error={errors.email} className="sm:col-span-2">
                     <Input
-                      id="email"
-                      type="email"
-                      value={form.email}
-                      onChange={(e) => setField('email', e.target.value)}
-                      placeholder="anna@example.com"
-                      className={inputClass}
-                      autoComplete="email"
-                    />
+                    id="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setField('email', e.target.value)}
+                    placeholder="anna@example.com"
+                    className={inputClass}
+                    autoComplete="email" />
+                  
                   </Field>
                 </div>
               </fieldset>
 
               <div
-                aria-hidden="true"
-                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
-              />
+              aria-hidden="true"
+              className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent" />
+            
               <fieldset className="mt-8 border-0 p-0">
                 <Legend step="2">Az autó</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-3">
                   <Field id="car_brand" label="Márka *" error={errors.car_brand}>
                     <Input
-                      id="car_brand"
-                      value={form.car_brand}
-                      onChange={(e) => setField('car_brand', e.target.value)}
-                      placeholder="Volkswagen"
-                      className={inputClass}
-                    />
+                    id="car_brand"
+                    value={form.car_brand}
+                    onChange={(e) => setField('car_brand', e.target.value)}
+                    placeholder="Volkswagen"
+                    className={inputClass} />
+                  
                   </Field>
                   <Field id="car_model" label="Típus *" error={errors.car_model}>
                     <Input
-                      id="car_model"
-                      value={form.car_model}
-                      onChange={(e) => setField('car_model', e.target.value)}
-                      placeholder="Golf 7"
-                      className={inputClass}
-                    />
+                    id="car_model"
+                    value={form.car_model}
+                    onChange={(e) => setField('car_model', e.target.value)}
+                    placeholder="Golf 7"
+                    className={inputClass} />
+                  
                   </Field>
                   <Field id="license_plate" label="Rendszám *" error={errors.license_plate}>
                     <Input
-                      id="license_plate"
-                      value={form.license_plate}
-                      onChange={(e) => setField('license_plate', e.target.value.toUpperCase())}
-                      placeholder="ABC-123"
-                      className={inputClass}
-                    />
+                    id="license_plate"
+                    value={form.license_plate}
+                    onChange={(e) => setField('license_plate', e.target.value.toUpperCase())}
+                    placeholder="ABC-123"
+                    className={inputClass} />
+                  
                   </Field>
                 </div>
               </fieldset>
 
               <div
-                aria-hidden="true"
-                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
-              />
+              aria-hidden="true"
+              className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent" />
+            
               <fieldset className="mt-8 border-0 p-0">
                 <Legend step="3">Miben segíthetünk?</Legend>
                 <div className="mt-5 grid gap-5">
                   <Field id="service" label="Kért szolgáltatás *" error={errors.service}>
                     <select
-                      id="service"
-                      value={form.service}
-                      onChange={(e) => setField('service', e.target.value)}
-                      className={selectClass}
-                    >
+                    id="service"
+                    value={form.service}
+                    onChange={(e) => setField('service', e.target.value)}
+                    className={selectClass}>
+                    
                       <option value="">Válasszon szolgáltatást…</option>
-                      {services.map((service) => (
-                        <option key={service.id} value={service.name}>
+                      {services.map((service) =>
+                    <option key={service.id} value={service.name}>
                           {service.name}
                         </option>
-                      ))}
+                    )}
                     </select>
                   </Field>
                   <Field
-                    id="problem_description"
-                    label="A hiba vagy probléma leírása *"
-                    error={errors.problem_description}
-                  >
+                  id="problem_description"
+                  label="A hiba vagy probléma leírása *"
+                  error={errors.problem_description}>
+                  
                     <Textarea
-                      id="problem_description"
-                      rows={5}
-                      className={textareaClass}
-                      value={form.problem_description}
-                      onChange={(e) => setField('problem_description', e.target.value)}
-                      placeholder="Írja le, mit tapasztal az autónál: mikor jelentkezik a hiba, milyen hangot ad, világít-e valamilyen visszajelző lámpa…"
-                    />
+                    id="problem_description"
+                    rows={5}
+                    className={textareaClass}
+                    value={form.problem_description}
+                    onChange={(e) => setField('problem_description', e.target.value)}
+                    placeholder="Írja le, mit tapasztal az autónál: mikor jelentkezik a hiba, milyen hangot ad, világít-e valamilyen visszajelző lámpa…" />
+                  
                   </Field>
                 </div>
               </fieldset>
 
               <div
-                aria-hidden="true"
-                className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent"
-              />
+              aria-hidden="true"
+              className="mt-9 h-px w-full bg-gradient-to-r from-transparent via-brand-ember/25 to-transparent" />
+            
               <fieldset className="mt-8 border-0 p-0">
                 <Legend step="4">Preferált időpont</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <Field id="preferred_date" label="Preferált nap *" error={errors.preferred_date}>
                     <Input
-                      id="preferred_date"
-                      type="date"
-                      min={todayISO()}
-                      value={form.preferred_date}
-                      onChange={(e) => setField('preferred_date', e.target.value)}
-                      className={inputClass}
-                    />
+                    id="preferred_date"
+                    type="date"
+                    min={todayISO()}
+                    value={form.preferred_date}
+                    onChange={(e) => setField('preferred_date', e.target.value)}
+                    className={inputClass} />
+                  
                   </Field>
                   <Field id="preferred_time" label="Preferált időpont *" error={errors.preferred_time}>
                     <select
-                      id="preferred_time"
-                      value={form.preferred_time}
-                      onChange={(e) => setField('preferred_time', e.target.value)}
-                      className={selectClass}
-                    >
+                    id="preferred_time"
+                    value={form.preferred_time}
+                    onChange={(e) => setField('preferred_time', e.target.value)}
+                    className={selectClass}>
+                    
                       <option value="">Válasszon időpontot…</option>
-                      {TIME_SLOTS.map((time) => (
-                        <option key={time} value={time}>
+                      {TIME_SLOTS.map((time) =>
+                    <option key={time} value={time}>
                           {time}
                         </option>
-                      ))}
+                    )}
                     </select>
                   </Field>
                 </div>
               </fieldset>
 
-              {serverError && (
-                <p className="mt-6 rounded-lg bg-red-50 p-4 text-[14px] text-red-700">{serverError}</p>
-              )}
+              {serverError &&
+            <p className="mt-6 rounded-lg bg-red-50 p-4 text-[14px] text-red-700">{serverError}</p>
+            }
 
               <div className="mt-8 rounded-xl border border-brand-line bg-brand-sand p-4">
                 <ConsentField
-                  id="consent"
-                  checked={form.consent}
-                  onChange={(value) => setField('consent', value)}
-                  error={errors.consent}
-                />
+                id="consent"
+                checked={form.consent}
+                onChange={(value) => setField('consent', value)}
+                error={errors.consent} />
+              
               </div>
 
               <div className="mt-9 flex flex-col gap-4 border-t border-brand-line pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -357,10 +357,10 @@ export default function Idopont() {
                   A beküldés nem jár fizetési kötelezettséggel.
                 </p>
                 <button
-                  type="submit"
-                  disabled={submitting}
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-brand-ember px-8 text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.2)] disabled:cursor-not-allowed disabled:opacity-60"
-                >
+                type="submit"
+                disabled={submitting}
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-brand-ember px-8 text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.2)] disabled:cursor-not-allowed disabled:opacity-60">
+                
                   {submitting ? 'Küldés folyamatban…' : 'Időpontkérés elküldése'}
                 </button>
               </div>
@@ -376,7 +376,7 @@ export default function Idopont() {
               <ol className="mt-4 space-y-3 text-[14px] leading-[1.6] text-brand-engine">
                 <li>1. Kitölti az űrlapot, és elküldi a kérést.</li>
                 <li>2. Munkatársunk átnézi, és felveszi Önnel a kapcsolatot.</li>
-                <li>3. Egyeztetjük a pontos időpontot és a teendőket.</li>
+                <li>kl</li>
               </ol>
               <p className="mt-6 rounded-lg border border-brand-line bg-white p-4 text-[13px] leading-[1.6] text-brand-engine">
                 Ez időpontkérelem, nem garantált foglalás. A visszaigazolást telefonon vagy e-mailben
@@ -391,8 +391,8 @@ export default function Idopont() {
               </p>
             </aside>
           </div>
-        )}
+        }
       </section>
-    </>
-  );
+    </>);
+
 }
