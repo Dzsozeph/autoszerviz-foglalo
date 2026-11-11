@@ -1,0 +1,46 @@
+{
+  "name": "KapcsolatiUzenet",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "N\u00e9v"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "message": {
+      "type": "string",
+      "title": "\u00dczenet"
+    },
+    "read": {
+      "type": "boolean",
+      "title": "Olvasott",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

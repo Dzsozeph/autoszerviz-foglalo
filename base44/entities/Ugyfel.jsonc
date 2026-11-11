@@ -1,0 +1,43 @@
+{
+  "name": "Ugyfel",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "N\u00e9v"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefonsz\u00e1m"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

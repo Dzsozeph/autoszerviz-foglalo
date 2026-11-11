@@ -1,0 +1,64 @@
+{
+  "name": "Szolgaltatas",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "N\u00e9v"
+    },
+    "short_description": {
+      "type": "string",
+      "title": "R\u00f6vid le\u00edr\u00e1s"
+    },
+    "icon": {
+      "type": "string",
+      "title": "Ikon",
+      "enum": [
+        "oil",
+        "brake",
+        "suspension",
+        "diagnostics",
+        "repair",
+        "inspection"
+      ],
+      "enumColors": [
+        "blue",
+        "orange",
+        "purple",
+        "green",
+        "yellow",
+        "gray"
+      ]
+    },
+    "order": {
+      "type": "number",
+      "title": "Sorrend"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Akt\u00edv",
+      "default": true
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -7,6 +7,18 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 // Add page imports here
+import PublicLayout from '@/components/public/PublicLayout';
+import Home from '@/pages/Home';
+import Szolgaltatasok from '@/pages/Szolgaltatasok';
+import Idopont from '@/pages/Idopont';
+import Gyik from '@/pages/Gyik';
+import Kapcsolat from '@/pages/Kapcsolat';
+import Admin from '@/pages/Admin';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
+import Mfa from '@/pages/Mfa';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -34,7 +46,19 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/szolgaltatasok" element={<Szolgaltatasok />} />
+        <Route path="/idopont" element={<Idopont />} />
+        <Route path="/gyik" element={<Gyik />} />
+        <Route path="/kapcsolat" element={<Kapcsolat />} />
+      </Route>
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/mfa" element={<Mfa />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

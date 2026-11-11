@@ -1,0 +1,94 @@
+{
+  "name": "Idopontkeres",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string",
+      "title": "\u00dcgyf\u00e9l neve"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefonsz\u00e1m"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "car_brand": {
+      "type": "string",
+      "title": "Aut\u00f3 m\u00e1rk\u00e1ja"
+    },
+    "car_model": {
+      "type": "string",
+      "title": "Aut\u00f3 t\u00edpusa"
+    },
+    "license_plate": {
+      "type": "string",
+      "title": "Rendsz\u00e1m"
+    },
+    "service": {
+      "type": "string",
+      "title": "K\u00e9rt szolg\u00e1ltat\u00e1s"
+    },
+    "problem_description": {
+      "type": "string",
+      "title": "Hiba le\u00edr\u00e1sa"
+    },
+    "preferred_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Prefer\u00e1lt nap"
+    },
+    "preferred_time": {
+      "type": "string",
+      "title": "Prefer\u00e1lt id\u0151pont"
+    },
+    "status": {
+      "type": "string",
+      "title": "St\u00e1tusz",
+      "enum": [
+        "\u00daj",
+        "Folyamatban",
+        "J\u00f3v\u00e1hagyva",
+        "Elutas\u00edtva",
+        "Lez\u00e1rva"
+      ],
+      "enumColors": [
+        "orange",
+        "blue",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "\u00daj"
+    },
+    "internal_note": {
+      "type": "string",
+      "title": "Bels\u0151 megjegyz\u00e9s"
+    }
+  },
+  "required": [
+    "customer_name",
+    "phone",
+    "service",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
