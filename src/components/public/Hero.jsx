@@ -46,7 +46,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <figure className="relative w-full overflow-hidden rounded-2xl bg-brand-deep lg:w-[calc(100%+6rem)]">
+          <figure className="relative w-full overflow-hidden rounded-2xl bg-brand-deep">
             <Image
               src={HERO_IMAGE}
               alt="Modern autó motortere közelről, kék és narancs megvilágítással"
