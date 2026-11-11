@@ -21,7 +21,7 @@ export default function Hero() {
       />
 
       <div className="container-page relative">
-        <div className="grid items-stretch gap-10 py-14 lg:grid-cols-[1fr_47%] lg:gap-[3.5%] lg:py-16">
+        <div className="grid items-stretch gap-10 py-14 lg:grid-cols-[1fr_55%] lg:gap-[3.5%] lg:py-16">
           <div className="flex min-w-0 flex-col justify-between gap-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
               Prémium autószerviz · {cegadat.city}
