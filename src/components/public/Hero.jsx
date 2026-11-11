@@ -47,13 +47,12 @@ export default function Hero() {
           </div>
 
           <figure className="relative w-full overflow-hidden rounded-2xl bg-brand-deep">
-            <Image
-              src={HERO_IMAGE}
-              alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-              className="aspect-[4/3] w-full lg:aspect-[602/628]"
-              fittingType="fill"
-              fetchPriority="high"
-            />
+           <img
+  src={HERO_IMAGE}
+  alt="Modern autó motortere közelről, kék és narancs megvilágítással"
+  className="block aspect-[4/3] w-full object-cover lg:aspect-[3/2]"
+  fetchPriority="high"
+/>
             <figcaption className="absolute bottom-4 left-4 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
               Minta fotó – bemutató célú
             </figcaption>
