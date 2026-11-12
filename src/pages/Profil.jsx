@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, CalendarClock, CarFront, FileText, Loader2, UserRound } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  CalendarClock,
+  CarFront,
+  FileText,
+  Loader2,
+  LogOut,
+  UserRound,
+} from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
 import { useAuth } from '@/lib/AuthContext';
@@ -24,6 +32,7 @@ function InfoCard({ icon: Icon, title, children }) {
 
 export default function Profil() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +70,14 @@ export default function Profil() {
   const displayName = profile?.name || user?.full_name || user?.name || 'Ügyfél';
   const email = profile?.email || user?.email || '';
 
+  const handleLogout = () => {
+    setProfile(null);
+    setRequests([]);
+    setError('');
+    logout(false);
+    navigate('/', { replace: true });
+  };
+
   return (
     <>
       <PageHeader
@@ -97,9 +114,10 @@ export default function Profil() {
               </dl>
               <button
                 type="button"
-                onClick={() => logout()}
-                className="mt-6 min-h-[42px] rounded-full border border-brand-line px-5 text-[13px] font-semibold text-brand hover:bg-brand-silver/50"
+                onClick={handleLogout}
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand-line px-5 text-[13px] font-semibold text-brand hover:bg-brand-silver/50"
               >
+                <LogOut className="h-4 w-4" aria-hidden="true" />
                 Kilépés
               </button>
             </InfoCard>
