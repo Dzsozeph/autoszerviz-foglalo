@@ -135,7 +135,7 @@ export default function Login() {
               Bejelentkezés...
             </>
           ) : (
-            "Log in"
+            "Bejelentkezés"
           )}
         </Button>
       </form>
