@@ -10,6 +10,7 @@ import { TIME_SLOTS, todayISO } from '@/lib/booking';
 import ConsentField from '@/components/public/ConsentField';
 import { useCegAdat } from '@/components/CegAdatProvider';
 import { telHref } from '@/lib/cegadat';
+import { useAuth } from '@/lib/AuthContext';
 import usePageMeta from '@/lib/usePageMeta';
 
 const EMPTY = {
@@ -62,6 +63,7 @@ function Legend({ step, children }) {
 export default function Idopont() {
   const [params] = useSearchParams();
   const cegadat = useCegAdat();
+  const { user } = useAuth();
   const preset = params.get('szolgaltatas') || '';
 
   usePageMeta({
@@ -71,7 +73,12 @@ export default function Idopont() {
     path: '/idopont'
   });
   const [services, setServices] = useState([]);
-  const [form, setForm] = useState({ ...EMPTY, service: preset });
+  const [form, setForm] = useState({
+    ...EMPTY,
+    customer_name: user?.full_name || user?.name || '',
+    email: user?.email || '',
+    service: preset
+  });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -134,9 +141,13 @@ export default function Idopont() {
         return;
       }
       setSuccess(true);
-      setForm({ ...EMPTY });
+      setForm({
+        ...EMPTY,
+        customer_name: user?.full_name || user?.name || '',
+        email: user?.email || ''
+      });
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (error) {
+    } catch {
       setServerError('A kérés elküldése nem sikerült. Kérjük, ellenőrizze a kapcsolatot, vagy hívjon minket telefonon.');
     } finally {
       setSubmitting(false);
@@ -219,11 +230,13 @@ export default function Idopont() {
                     id="email"
                     type="email"
                     value={form.email}
-                    onChange={(e) => setField('email', e.target.value)}
+                    readOnly
                     placeholder="anna@example.com"
-                    className={inputClass}
+                    className={`${inputClass} cursor-not-allowed opacity-75`}
                     autoComplete="email" />
-                  
+                    <p className="mt-1 text-[12px] text-brand-engine">
+                      A foglalás a bejelentkezett fiók e-mail-címéhez kapcsolódik.
+                    </p>
                   </Field>
                 </div>
               </fieldset>

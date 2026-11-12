@@ -19,12 +19,19 @@ const str = (value, max) => (typeof value === 'string' ? value.trim().slice(0, m
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch((error) =>
+      error.status === 401 ? null : Promise.reject(error)
+    );
+    if (!user?.id || !user.email) {
+      return Response.json({ error: 'unauthorized' }, { status: 401 });
+    }
+
     const body = await req.json().catch(() => ({}));
 
     const data = {
       customer_name: str(body.customer_name, 120),
       phone: str(body.phone, 32),
-      email: str(body.email, 160),
+      email: user.email.trim().toLowerCase(),
       car_brand: str(body.car_brand, 60),
       car_model: str(body.car_model, 60),
       license_plate: str(body.license_plate, 16).toUpperCase(),
@@ -76,15 +83,10 @@ export default async function (req) {
       );
     }
 
-    const user = await base44.auth.me().catch((error) =>
-      error.status === 401 ? null : Promise.reject(error)
-    );
     const requestData = {
       ...data,
       status: 'Új',
-      ...(user?.id && user.email?.toLowerCase() === data.email
-        ? { user_id: user.id }
-        : {}),
+      user_id: user.id,
     };
     const request = await base44.asServiceRole.entities.Idopontkeres.create(requestData);
 
