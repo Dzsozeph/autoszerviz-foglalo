@@ -72,10 +72,10 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <ScrollToTop />
-          <AuthenticatedApp />
-        </Router>
+      <Router basename={import.meta.env.BASE_URL}>
+  <ScrollToTop />
+  <AuthenticatedApp />
+</Router>
         <Toaster />
       </QueryClientProvider>
     </AuthProvider>
