@@ -46,11 +46,11 @@ export default function Hero() {
             </div>
           </div>
 
-          <figure className="relative w-full h-full min-h-[500px] overflow-hidden rounded-2xl bg-brand-deep">
+          <figure className="relative w-full overflow-hidden rounded-2xl bg-brand-deep">
             <Image
               src={HERO_IMAGE}
               alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="aspect-[4/3] w-full h-full object-cover lg:aspect-auto"
               fittingType="fill"
               fetchPriority="high"
             />
