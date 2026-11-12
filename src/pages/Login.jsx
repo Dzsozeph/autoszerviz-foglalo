@@ -55,7 +55,7 @@ export default function Login() {
       subtitle="Lépj be a profilodra"
       footer={
         <>
-          "Nincs még accountod?{" "}
+          Nincs még accountod?{" "}
           <Link
             to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
             className="text-primary font-medium hover:underline"
@@ -71,7 +71,7 @@ export default function Login() {
         onClick={handleGoogle}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
-        Continue with Google
+        Biztonságos bejelentkezés a Google-n keresztül
       </Button>
 
       <div className="relative mb-6">
