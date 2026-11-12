@@ -111,7 +111,7 @@ export default function Login() {
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
             <Link to="/forgot-password" className="text-xs text-primary hover:underline">
-              Forgot password?
+              Elfelejtetted a jelszavad?
             </Link>
           </div>
           <div className="relative">
@@ -132,7 +132,7 @@ export default function Login() {
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Logging in...
+              Bejelentkezés...
             </>
           ) : (
             "Log in"
