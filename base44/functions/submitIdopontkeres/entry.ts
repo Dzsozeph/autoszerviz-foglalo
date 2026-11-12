@@ -65,8 +65,6 @@ export default async function (req) {
       return Response.json({ error: 'validation_failed', fields: errors }, { status: 400 });
     }
 
-    data.email = data.email.toLowerCase();
-
     const servicesPage = await base44.asServiceRole.entities.Szolgaltatas.filter({ active: true }, { limit: 100 });
     const services = servicesPage.items || servicesPage;
     if (!services.some((s) => s.name === data.service)) {
@@ -76,15 +74,10 @@ export default async function (req) {
       );
     }
 
-    const user = await base44.auth.me().catch((error) =>
-      error.status === 401 ? null : Promise.reject(error)
-    );
-    const requestData = {
+    const request = await base44.asServiceRole.entities.Idopontkeres.create({
       ...data,
       status: 'Új',
-      ...(user?.id ? { user_id: user.id } : {}),
-    };
-    const request = await base44.asServiceRole.entities.Idopontkeres.create(requestData);
+    });
 
     // Ügyfél mentése: anonim beküldés soha nem módosít meglévő ügyfélrekordot
     const existingPage = await base44.asServiceRole.entities.Ugyfel.filter(

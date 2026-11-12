@@ -14,10 +14,6 @@
       "type": "string",
       "title": "E-mail"
     },
-    "user_id": {
-      "type": "string",
-      "title": "Felhasználóazonosító"
-    },
     "car_brand": {
       "type": "string",
       "title": "Aut\u00f3 m\u00e1rk\u00e1ja"
