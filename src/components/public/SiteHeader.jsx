@@ -103,27 +103,28 @@ export default function SiteHeader() {
               </NavLink>
             ))}
             <Link
-    to="/idopont"
-    className="inline-flex min-h-[44px] items-center rounded-full bg-brand-ember px-5 text-[13px] font-semibold uppercase tracking-[0.08em] text-white"
-  >
-    Időpontot kérek
-  </Link>
-
-  <Link
-    to="/register"
-    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember"
-  >
-    <UserRoundPlus className="h-4 w-4" />
-    Regisztráció
-  </Link>
-
-  <Link
-    to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand-line px-4 text-[13px] font-semibold text-brand"
-  >
-    <UserRound className="h-4 w-4" />
-    Profil
-  </Link>
+              to="/idopont"
+              onClick={() => setOpen(false)}
+              className="mt-2 flex min-h-[48px] items-center justify-center rounded-lg bg-brand-ember text-[15px] font-semibold uppercase tracking-[0.08em] text-white"
+            >
+              Időpontot kérek
+            </Link>
+            <Link
+              to="/register"
+              onClick={() => setOpen(false)}
+              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-ember text-[15px] font-semibold text-brand-ember"
+            >
+              <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
+              Regisztráció
+            </Link>
+            <Link
+              to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
+              onClick={() => setOpen(false)}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-line text-[15px] font-semibold text-brand"
+            >
+              <UserRound className="h-4 w-4" aria-hidden="true" />
+              Profil
+            </Link>
           </nav>
         </div>
       )}
