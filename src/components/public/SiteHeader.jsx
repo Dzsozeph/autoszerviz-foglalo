@@ -24,7 +24,7 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
-      <div className="container-page flex h-[72px] items-center justify-between gap-4">
+      <div className="container-page flex h-[72px] items-center justify-start gap-4">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-brand-ember">
             <Wrench className="h-5 w-5" strokeWidth={2} />
@@ -39,10 +39,7 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav
-  aria-label="Fő navigáció"
-  className="hidden items-center gap-6 xl:flex ml-8"
->
+        <nav aria-label="Fő navigáció" className="hidden items-center gap-6 xl:flex">
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === '/'}>
               {item.label}
