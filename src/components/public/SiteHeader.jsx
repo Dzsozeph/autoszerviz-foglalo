@@ -42,12 +42,13 @@ export default function SiteHeader() {
         <nav
   aria-label="Fő navigáció"
   className="hidden items-center gap-6 xl:flex relative xl:left-[50px]"
->
+><div className="relative xl:-left-[30px] flex items-center gap-6">
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === '/'}>
               {item.label}
             </NavLink>
           ))}
+          </div>
           <a
             href={telHref(cegadat.phone)}
             className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative xl:left-[50px] whitespace-nowrap shrink-0"
