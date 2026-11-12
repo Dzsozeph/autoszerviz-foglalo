@@ -50,10 +50,16 @@ export default function Hero() {
             <Image
               src={HERO_IMAGE}
               alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-              className="aspect-[4/3] w-full lg:aspect-[602/628]"
+              className="aspect-[4/3] w-full h-full object-cover lg:aspect-auto"
               fittingType="fill"
               fetchPriority="high"
             />
+            <div
+  className="pointer-events-none absolute inset-0 z-10"
+  style={{
+    background: 'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.4) 35%, transparent 65%)',
+  }}
+/>
             <figcaption className="absolute bottom-4 left-4 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
               Minta fotó – bemutató célú
             </figcaption>
