@@ -4,7 +4,7 @@ import { Image } from '@/components/ui/image';
 import { useCegAdat } from '@/components/CegAdatProvider';
 
 const HERO_IMAGE =
-  'https://media.base44.com/images/public/6af4670961f92c12d456e3c5/0eab8ef47_generated_image.png';
+  'https://unsplash.com/photos/mechanic-inspecting-a-car-engine-with-hood-open-erWc6mrOq_I';
 
 export default function Hero() {
   const cegadat = useCegAdat();
