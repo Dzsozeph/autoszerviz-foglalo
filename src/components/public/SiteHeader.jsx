@@ -8,8 +8,9 @@ import { telHref } from '@/lib/cegadat';
 const NAV = [
   { to: '/', label: 'Főoldal' },
   { to: '/szolgaltatasok', label: 'Szolgáltatások' },
-  { to: '/gyik', label: 'GYIK' },
   { to: '/kapcsolat', label: 'Kapcsolat' },
+  { to: '/gyik', label: 'GYIK' },
+  
 ];
 
 const linkClass = ({ isActive }) =>
