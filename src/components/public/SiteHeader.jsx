@@ -50,11 +50,12 @@ export default function SiteHeader() {
           ))}
           <a
             href={telHref(cegadat.phone)}
-            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand left-[150px] position:relative"
+            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand"
           >
             <Phone className="h-4 w-4" />
             {cegadat.phone}
           </a>
+          <div className="flex items-center gap-3 relative left-[100px]">
           <Link
             to="/idopont"
             className="inline-flex min-h-[44px] items-center rounded-full bg-brand-ember px-5 text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
@@ -75,6 +76,7 @@ export default function SiteHeader() {
             <UserRound className="h-4 w-4" aria-hidden="true" />
             Profil
           </Link>
+          </div>
         </nav>
 
         <button
@@ -98,7 +100,7 @@ export default function SiteHeader() {
                 end={item.to === '/'}
                 onClick={() => setOpen(false)}
                 className="flex min-h-[48px] items-center rounded-lg px-3 text-[16px] font-medium text-brand hover:bg-brand-silver/50"
-              >
+               >
                 {item.label}
               </NavLink>
             ))}
