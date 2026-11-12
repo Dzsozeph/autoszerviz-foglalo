@@ -67,7 +67,7 @@ export default function Login() {
     >
       <Button
         variant="outline"
-        className="w-[50px] h-12 text-sm font-medium mb-6 h-[80px]" 
+        className="w-[300px] h-12 text-sm font-medium mb-6 h-[80px] mx auto" 
         onClick={handleGoogle}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
