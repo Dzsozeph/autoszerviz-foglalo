@@ -25,7 +25,7 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
       <div className="container-page flex h-[72px] items-center justify-between gap-4">
-       <Link to="/" className="flex items-center gap-3 relative -left-[200px]" onClick={() => setOpen(false)}>
+       <Link to="/" className="flex items-center gap-3 relative xl:-left-[200px]" onClick={() => setOpen(false)}>
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-brand-ember">
             <Wrench className="h-5 w-5" strokeWidth={2} />
           </span>
@@ -41,7 +41,7 @@ export default function SiteHeader() {
 
         <nav
   aria-label="Fő navigáció"
-  className="hidden items-center gap-6 xl:flex relative left-[50px]"
+  className="hidden items-center gap-6 xl:flex relative xl:left-[50px]"
 >
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === '/'}>
@@ -55,7 +55,7 @@ export default function SiteHeader() {
             <Phone className="h-4 w-4" />
             {cegadat.phone}
           </a>
-          <div className="flex items-center gap-3 relative left-[100px]">
+          <div className="flex items-center gap-3 relative xl:left-[100px]">
           <Link
             to="/idopont"
             className="inline-flex min-h-[44px] items-center rounded-full bg-brand-ember px-5 text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
