@@ -7,7 +7,7 @@ import { MfaScreen } from "@/components/MfaParts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
+import { ArrowLeft, LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import { safeReturnTo } from "@/lib/authReturnTo";
@@ -139,6 +139,13 @@ export default function Login() {
           )}
         </Button>
       </form>
+
+      <Button asChild variant="outline" className="mt-4 w-full h-12 font-medium">
+        <Link to="/">
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+          Vissza a főoldalra
+        </Link>
+      </Button>
     </AuthLayout>
   );
 }
