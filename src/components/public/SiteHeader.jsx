@@ -41,7 +41,7 @@ export default function SiteHeader() {
 
         <nav
   aria-label="Fő navigáció"
-  className="hidden items-center gap-6 xl:flex relative left-12"
+  className="hidden items-center gap-6 xl:flex relative left-21"
 >
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === '/'}>
