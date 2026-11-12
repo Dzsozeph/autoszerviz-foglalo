@@ -16,7 +16,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(320deg,rgba(245, 120, 24, 1) 0%, rgba(0, 0, 0, 1) 76%)',
+            'background: linear-gradient(320deg,rgba(245, 120, 24, 1) 0%, rgba(0, 0, 0, 1) 36%);',
         }}
       />
 
