@@ -71,7 +71,7 @@ export default function Login() {
         onClick={handleGoogle}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
-        Biztonságos bejelentkezés a Google-n keresztül
+        Biztonságos <br />  és gyors bejelentkezés <br /> a Google-n keresztül
       </Button>
 
       <div className="relative mb-6">
