@@ -51,12 +51,12 @@ export default function SiteHeader() {
           </div>
           <a
             href={telHref(cegadat.phone)}
-            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative xl:left-[70px] whitespace-nowrap shrink-0"
+            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative xl:left-[50px] whitespace-nowrap shrink-0"
           >
             <Phone className="h-4 w-4" />
             {cegadat.phone}
           </a>
-          <div className="flex items-center gap-3 relative xl:left-[100px]">
+          <div className="flex items-center gap-3 relative xl:left-[150px]">
           <Link
             to="/idopont"
             className="inline-flex min-h-[44px] items-center rounded-full bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
