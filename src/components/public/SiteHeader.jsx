@@ -50,7 +50,7 @@ export default function SiteHeader() {
           ))}
           <a
             href={telHref(cegadat.phone)}
-            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative left-[20px] whitespace-nowrap shrink-0"
+            className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative xl:left-[50px] whitespace-nowrap shrink-0"
           >
             <Phone className="h-4 w-4" />
             {cegadat.phone}
