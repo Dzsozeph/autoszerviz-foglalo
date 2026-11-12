@@ -51,11 +51,11 @@ export default function Login() {
   return (
     <AuthLayout
       icon={LogIn}
-      title="Üdv újra"
-      subtitle="Log in to your account"
+      title="Üdv újra itt"
+      subtitle="Lépj be a profilodra"
       footer={
         <>
-          Don't have an account?{" "}
+          Nincs még accountod?{" "}
           <Link
             to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
             className="text-primary font-medium hover:underline"
