@@ -107,7 +107,7 @@ export default function SiteHeader() {
             <Link
               to="/idopont"
               onClick={() => setOpen(false)}
-              className="mt-2 flex min-h-[48px] items-center justify-center rounded-lg bg-brand-ember text-[15px] font-semibold uppercase tracking-[0.08em] text-white"
+              className="mt-2 flex min-h-[48px] items-center justify-center rounded-lg bg-brand-ember text-[15px] font-semibold uppercase tracking-[0.08em] text-white whitespace-nowrap shrink-0"
             >
               Időpontot kérek
             </Link>
