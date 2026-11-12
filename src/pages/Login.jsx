@@ -55,12 +55,12 @@ export default function Login() {
       subtitle="Lépj be a profilodra"
       footer={
         <>
-          Nincs még accountod?{" "}
+          "Nincs még accountod?{" "}
           <Link
             to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
             className="text-primary font-medium hover:underline"
           >
-            Create one
+            Hozz létre egyet
           </Link>
         </>
       }
