@@ -50,7 +50,7 @@ export default function Hero() {
             <Image
               src={HERO_IMAGE}
               alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-              className="aspect-[4/3] w-full h-full object-cover lg:aspect-auto"
+              className="absolute inset-0 h-full w-full object-cover"
               fittingType="fill"
               fetchPriority="high"
             />
