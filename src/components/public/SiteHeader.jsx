@@ -25,7 +25,7 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
       <div className="container-page flex h-[72px] items-center justify-between gap-4">
-       <Link to="/" className="flex items-center gap-3 relative -left-[150px]" onClick={() => setOpen(false)}>
+       <Link to="/" className="flex items-center gap-3 relative -left-[200px]" onClick={() => setOpen(false)}>
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-brand-ember">
             <Wrench className="h-5 w-5" strokeWidth={2} />
           </span>
