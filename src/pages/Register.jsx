@@ -141,16 +141,16 @@ export default function Register() {
   return (
     <AuthLayout
       icon={UserPlus}
-      title="Create your account"
-      subtitle="Sign up to get started"
+      title="Készíts egy fiókot"
+      subtitle="Regisztrálj a kezdéshez"
       footer={
         <>
-          Already have an account?{" "}
+          Már fan fiókod?{" "}
           <Link
             to={loginPath}
             className="text-primary font-medium hover:underline"
           >
-            Log in
+            Lépj be
           </Link>
         </>
       }
@@ -169,7 +169,7 @@ export default function Register() {
           <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-3 text-muted-foreground">or</span>
+          <span className="bg-card px-3 text-muted-foreground">vagy</span>
         </div>
       </div>
 
@@ -233,10 +233,10 @@ export default function Register() {
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Creating account...
+              Fiók készítése...
             </>
           ) : (
-            "Create account"
+            "Fiók készítése"
           )}
         </Button>
       </form>
