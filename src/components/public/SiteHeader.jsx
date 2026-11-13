@@ -4,6 +4,7 @@ import { Menu, X, Phone, Wrench, UserRound, UserRoundPlus } from 'lucide-react';
 import { useCegAdat } from '@/components/CegAdatProvider';
 import { useAuth } from '@/lib/AuthContext';
 import { telHref } from '@/lib/cegadat';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
 const NAV = [
   { to: '/', label: 'Főoldal' },
@@ -21,7 +22,10 @@ const linkClass = ({ isActive }) =>
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const cegadat = useCegAdat();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const profileLabel = isAuthenticated
+    ? user?.full_name || user?.name || 'Profil'
+    : 'Profil';
 
   return (
     <header className="sticky top-0 z-40 border-b border-brand-line bg-white/95 backdrop-blur">
@@ -54,6 +58,7 @@ export default function SiteHeader() {
             href={telHref(cegadat.phone)}
             className="flex items-center gap-2 text-[15px] font-medium text-brand-engine hover:text-brand relative xl:left-[50px] whitespace-nowrap shrink-0"
           >
+            <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
             <Phone className="h-4 w-4" />
             {cegadat.phone}
           </a>
@@ -76,7 +81,7 @@ export default function SiteHeader() {
             className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50"
           >
             <UserRound className="h-4 w-4" aria-hidden="true" />
-            Profil
+            {profileLabel}
           </Link>
           </div>
         </nav>
@@ -127,7 +132,7 @@ export default function SiteHeader() {
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-line text-[15px] font-semibold text-brand"
             >
               <UserRound className="h-4 w-4" aria-hidden="true" />
-              Profil
+              {profileLabel}
             </Link>
           </nav>
         </div>

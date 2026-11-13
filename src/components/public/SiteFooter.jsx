@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Wrench, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Wrench, Phone, Mail, MapPin } from 'lucide-react';
 import { useCegAdat } from '@/components/CegAdatProvider';
 import { telHref, waHref } from '@/lib/cegadat';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
 export default function SiteFooter() {
   const cegadat = useCegAdat();
@@ -63,7 +64,7 @@ export default function SiteFooter() {
               </a>
             </li>
             <li className="flex items-start gap-2">
-              <MessageCircle className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
+              <WhatsAppIcon className="mt-1 h-4 w-4 shrink-0 text-brand-ember" />
               <a
                 href={waHref(cegadat.whatsapp)}
                 target="_blank"
