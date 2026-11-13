@@ -21,7 +21,7 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-[1700px] px-6 lg:px-12">
-        <div className="grid items-stretch gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[45%_1fr] lg:gap-[6%] lg:py-16">
+        <div className="grid items-stretch gap-10 py-14 lg:min-h-[750px] lg:grid-cols-[45%_1fr] lg:gap-[6%] lg:py-16">
           <div className="flex min-w-0 flex-col justify-between gap-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
               Prémium autószerviz · {cegadat.city}
@@ -46,24 +46,27 @@ export default function Hero() {
             </div>
           </div>
 
-          <figure className="relative min-h-[350px] w-full overflow-hidden rounded-2xl bg-brand-deep lg:min-h-full">
-            <Image
-  src={HERO_IMAGE}
-  alt="Modern autó motortere közelről, kék és narancs megvilágítással"
-  className="aspect-[4/3] w-full h-full object-cover lg:aspect-auto"
-  fittingType="fill"
-  fetchPriority="high"
-/>
-            <div
-  className="pointer-events-none absolute inset-0 z-10"
-  style={{
-    background: 'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.4) 35%, transparent 65%)',
-  }}
-/>
-            <figcaption className="absolute bottom-4 left-[250px] rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
-              Minta fotó – bemutató célú
-            </figcaption>
-          </figure>
+          <figure className="relative min-h-[400px] w-full self-stretch overflow-hidden rounded-2xl bg-brand-deep lg:min-h-[620px]">
+  <Image
+    src={HERO_IMAGE}
+    alt="Modern autó motortere közelről, kék és narancs megvilágítással"
+    className="absolute inset-0 h-full w-full object-cover"
+    fittingType="fill"
+    fetchPriority="high"
+  />
+
+  <div
+    className="pointer-events-none absolute inset-0 z-10"
+    style={{
+      background:
+        'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.65) 10%, rgba(0,0,0,0.25) 35%, transparent 65%)',
+    }}
+  />
+
+  <figcaption className="absolute bottom-4 left-8 z-20 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
+    Minta fotó – bemutató célú
+  </figcaption>
+</figure>
         </div>
       </div>
     </section>
