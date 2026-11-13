@@ -141,6 +141,15 @@ export default function ChatWidget() {
         className="fixed bottom-[76px] right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-ember text-white shadow-[0_14px_34px_-10px_rgba(249,115,22,0.8)] transition-transform hover:scale-105 sm:bottom-5 sm:right-6 sm:h-16 sm:w-16"
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        {!open && (
+          <span
+            aria-hidden="true"
+            className="absolute right-0 top-0 flex h-3.5 w-3.5"
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
+          </span>
+        )}
       </button>
     </>
   );
