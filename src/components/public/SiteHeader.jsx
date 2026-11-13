@@ -65,7 +65,7 @@ export default function SiteHeader() {
           <div className="flex items-center gap-3 relative xl:left-[150px]">
           <Link
             to="/idopont"
-            className="inline-flex min-h-[44px] items-center rounded-full bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
+            className="inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-full bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
           >
             Időpontot kérek
           </Link>
@@ -81,7 +81,9 @@ export default function SiteHeader() {
             className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50"
           >
             <UserRound className="h-4 w-4" aria-hidden="true" />
-            {profileLabel}
+            <span className="max-w-[140px] truncate" title={profileLabel}>
+              {profileLabel}
+            </span>
           </Link>
           </div>
         </nav>
@@ -132,7 +134,9 @@ export default function SiteHeader() {
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-line text-[15px] font-semibold text-brand"
             >
               <UserRound className="h-4 w-4" aria-hidden="true" />
-              {profileLabel}
+              <span className="max-w-[220px] truncate" title={profileLabel}>
+                {profileLabel}
+              </span>
             </Link>
           </nav>
         </div>
