@@ -21,7 +21,7 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-[1700px] px-6 lg:px-12">
-        <div className="grid items-stretch gap-10 py-14 lg:min-h-[750px] lg:grid-cols-[45%_1fr] lg:gap-[6%] lg:py-16">
+        <div className="grid items-stretch gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[45%_1fr] lg:gap-[6%] lg:py-16">
           <div className="flex min-w-0 flex-col justify-between gap-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
               Prémium autószerviz · {cegadat.city}
