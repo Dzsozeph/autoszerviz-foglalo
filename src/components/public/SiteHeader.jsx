@@ -100,7 +100,7 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-brand-silver bg-[linear-gradient(153deg,rgba(18,18,18,1)_0%, rgba(255,255,255,1)_12%);] xl:hidden">
+        <div className="border-t border-brand-silver bg-[linear-gradient(153deg,rgba(18,18,18,1)_0%,rgba(255,255,255,1)_12%);] xl:hidden">
           <nav aria-label="Mobil navigáció" className="container-page flex flex-col gap-1 py-3">
             {NAV.map((item) => (
               <NavLink
