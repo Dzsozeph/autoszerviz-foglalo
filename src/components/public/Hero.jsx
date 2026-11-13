@@ -60,7 +60,7 @@ export default function Hero() {
     background: 'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.4) 35%, transparent 65%)',
   }}
 />
-            <figcaption className="absolute bottom-4 left-4 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
+            <figcaption className="absolute bottom-4 left-[100px] rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
               Minta fotó – bemutató célú
             </figcaption>
           </figure>
