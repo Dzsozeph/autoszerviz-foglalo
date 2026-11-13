@@ -7,7 +7,7 @@ export default function CtaBand() {
   const cegadat = useCegAdat();
 
   return (
-    <section className="bg-brand text-white">
+    <section className="bg-[linear-gradient(0deg,rgba(148,64,0,1)_0%,rgba(0,0,0,1)_44%)] text-white">
       <div className="container-page grid gap-8 py-14 sm:py-16 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
         <div>
           <h2 className="font-heading text-[clamp(1.8rem,3.6vw,2.6rem)] font-semibold leading-tight tracking-tight">
