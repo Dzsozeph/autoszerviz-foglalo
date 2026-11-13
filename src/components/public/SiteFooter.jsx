@@ -9,7 +9,7 @@ export default function SiteFooter() {
   return (
     <footer className="bg-brand text-white"
     style={{
-    background: "linear-gradient(180deg,rgba(148, 64, 0, 1) 0%, rgba(0, 0, 0, 1) 52%)"
+    background: "linear-gradient(180deg,rgba(37, 16, 0, 1) 0%, rgba(0, 0, 0, 1) 52%)"
   }}>
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
