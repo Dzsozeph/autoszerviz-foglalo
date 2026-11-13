@@ -7,7 +7,10 @@ export default function SiteFooter() {
   const cegadat = useCegAdat();
 
   return (
-    <footer className="bg-brand text-white">
+    <footer className="bg-brand text-white"
+    style={{
+    background: "linear-gradient(320deg, rgba(148, 64, 0, 1) 0%, rgba(0, 0, 0, 1) 60%)"
+  }}>
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
