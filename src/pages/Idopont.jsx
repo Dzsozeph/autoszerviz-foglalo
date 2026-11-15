@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { hu } from 'date-fns/locale';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
+import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   TIME_SLOTS,
+  BOOKING_DAY_MINUTES,
   getAvailableBookingSlots,
   getBookingUtilization,
   getServiceDurationMinutes,
@@ -35,6 +38,19 @@ const EMPTY = {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^[+0-9()\s-]{7,24}$/;
+
+const dateKey = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const dateFromKey = (value) => {
+  if (!value) return undefined;
+  const [year, month, day] = value.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
 
 function Field({ id, label, error, children, className = '' }) {
   return (
@@ -80,6 +96,8 @@ export default function Idopont() {
   });
   const [services, setServices] = useState([]);
   const [bookingRequests, setBookingRequests] = useState([]);
+  const [availabilityLoading, setAvailabilityLoading] = useState(true);
+  const [availabilityError, setAvailabilityError] = useState(false);
   const [form, setForm] = useState({
     ...EMPTY,
     customer_name: user?.full_name || user?.name || '',
@@ -99,16 +117,22 @@ export default function Idopont() {
     ]).
     then(([servicePage, calendarResponse]) => {
       const data = calendarResponse?.data || {};
+      if (data.error) throw new Error(data.error);
       if (active) {
         setServices(servicePage.items || []);
         setBookingRequests(Array.isArray(data.requests) ? data.requests : []);
+        setAvailabilityError(false);
       }
     }).
     catch(() => {
       if (active) {
         setServices([]);
         setBookingRequests([]);
+        setAvailabilityError(true);
       }
+    }).
+    finally(() => {
+      if (active) setAvailabilityLoading(false);
     });
     return () => {
       active = false;
@@ -123,6 +147,20 @@ export default function Idopont() {
   const utilization = form.preferred_date
     ? getBookingUtilization({ date: form.preferred_date, requests: bookingRequests })
     : { bookedMinutes: 0, totalMinutes: 0, percentage: 0 };
+  const occupancyByDate = bookingRequests.reduce((days, request) => {
+    if (!request.preferred_date || ['Elutasítva', 'Lezárva'].includes(request.status)) return days;
+    days[request.preferred_date] = (days[request.preferred_date] || 0)
+      + getServiceDurationMinutes(request.service);
+    return days;
+  }, {});
+  const occupancyDays = Object.entries(occupancyByDate).reduce((days, [dateKeyValue, bookedMinutes]) => {
+    const date = dateFromKey(dateKeyValue);
+    if (!date) return days;
+    const percentage = Math.min(100, Math.round((bookedMinutes / BOOKING_DAY_MINUTES) * 100));
+    const level = percentage >= 100 ? 'full' : percentage >= 75 ? 'high' : percentage >= 40 ? 'medium' : 'low';
+    days[level].push(date);
+    return days;
+  }, { low: [], medium: [], high: [], full: [] });
 
   useEffect(() => {
     if (form.preferred_time && !availableTimes.includes(form.preferred_time)) {
@@ -364,17 +402,53 @@ export default function Idopont() {
               <fieldset className="mt-8 border-0 p-0">
                 <Legend step="4">Preferált időpont</Legend>
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
-                  <Field id="preferred_date" label="Preferált nap *" error={errors.preferred_date}>
-                    <Input
-                    id="preferred_date"
-                    type="date"
-                    min={todayISO()}
-                    value={form.preferred_date}
-                    onChange={(e) => setField('preferred_date', e.target.value)}
-                    className={inputClass} />
+                  <Field id="preferred_date" label="Válasszon napot *" error={errors.preferred_date} className="sm:col-span-2">
+                    <div className="rounded-xl border border-brand-line bg-white p-3 sm:max-w-md">
+                      <div className="mb-2 flex flex-wrap gap-x-4 gap-y-2 px-2 text-[11px] text-brand-engine" aria-label="Napi telítettség jelmagyarázat">
+                        <span className="inline-flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-emerald-200" />Alacsony</span>
+                        <span className="inline-flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-amber-200" />Közepes</span>
+                        <span className="inline-flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-orange-300" />Magas</span>
+                        <span className="inline-flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-red-300" />Betelt</span>
+                      </div>
+                      {availabilityLoading ? (
+                        <p className="p-4 text-sm text-brand-engine">A szabad kapacitás betöltése…</p>
+                      ) : availabilityError ? (
+                        <p className="p-4 text-sm text-red-700" role="alert">
+                          A naptár kapacitását nem sikerült betölteni. Frissítse az oldalt, mielőtt napot választ.
+                        </p>
+                      ) : (
+                        <>
+                          <Calendar
+                            mode="single"
+                            locale={hu}
+                            selected={dateFromKey(form.preferred_date)}
+                            onSelect={(date) => setField('preferred_date', date ? dateKey(date) : '')}
+                            disabled={{ before: dateFromKey(todayISO()) }}
+                            modifiers={{
+                              low: occupancyDays.low,
+                              medium: occupancyDays.medium,
+                              high: occupancyDays.high,
+                              full: occupancyDays.full,
+                            }}
+                            modifiersClassNames={{
+                              low: 'bg-emerald-100 text-emerald-950 hover:bg-emerald-200',
+                              medium: 'bg-amber-100 text-amber-950 hover:bg-amber-200',
+                              high: 'bg-orange-200 text-orange-950 hover:bg-orange-300',
+                              full: 'bg-red-200 text-red-950 hover:bg-red-300',
+                            }}
+                            classNames={{
+                              day_selected: 'ring-2 ring-brand-ember ring-offset-2',
+                              day_today: 'font-bold underline underline-offset-2',
+                            }}
+                            showOutsideDays={false}
+                            className="mx-auto"
+                          />
+                        </>
+                      )}
+                    </div>
                     {form.preferred_date && (
                       <p className="mt-2 text-[12px] text-brand-engine">
-                        Napi telítettség: {utilization.percentage}% ({utilization.bookedMinutes}/{utilization.totalMinutes} perc).
+                        Kiválasztott nap telítettsége: {utilization.percentage}% ({utilization.bookedMinutes}/{utilization.totalMinutes} perc).
                       </p>
                     )}
                   
