@@ -53,6 +53,10 @@ base44 dashboard open
 
 This repo syncs to Base44 through git, so publish from the dashboard rather than `base44 deploy` — a CLI deploy ships your local tree directly, bypassing the sync, and the deployed state silently diverges from the repo.
 
+## Google Reviews
+
+The homepage loads current rating and review data from Google Places API (New). Enable Places API (New) and billing in Google Cloud, restrict the API key to Places API, set an appropriate usage quota, then add `GOOGLE_PLACES_API_KEY` as a server-side secret for the Base44 function. Do not add the key to frontend environment variables or commit it. The Google Maps listing URL can be changed in Admin → Cégadatok.
+
 ## Docs & Support
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)

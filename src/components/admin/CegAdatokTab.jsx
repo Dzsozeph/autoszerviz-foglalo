@@ -21,6 +21,12 @@ const FIELDS = [
     placeholder: '1117 Budapest, Minta utca 12.',
     className: 'sm:col-span-2',
   },
+  {
+    key: 'google_maps_url',
+    label: 'Google Cégprofil adatlap URL-je',
+    placeholder: 'https://www.google.com/maps/place/...',
+    className: 'sm:col-span-2',
+  },
 ];
 
 export default function CegAdatokTab() {
@@ -100,7 +106,8 @@ export default function CegAdatokTab() {
       <p className="mt-2 max-w-2xl text-[14px] leading-[1.6] text-brand-engine">
         Ezek az adatok jelennek meg a weboldalon, az értesítő e-mailek láblécében, a strukturált
         adatokban (Google) és a chatbot válaszaiban. A mentés után a nyilvános oldalak
-        újratöltéskor frissülnek.
+        újratöltéskor frissülnek. A főoldali élő értékelésekhez a Google Térkép-adatlap URL-jét
+        használjuk.
       </p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">

@@ -8,6 +8,8 @@ export const CEGADAT_DEFAULTS = {
   hours_weekdays: '8:00 – 17:00',
   hours_saturday: '8:00 – 12:00',
   hours_sunday: 'zárva',
+  google_maps_url:
+    'https://www.google.com/maps/place/Aut%C3%B3ment%C3%A9s+0-24/@47.4099497,18.2691694,9z/data=!4m10!1m2!2m1!1zYXV0w7NzemVyZWzFkQ!3m6!1s0x4741c6bfc3ab8533:0x8c12eaf3493ebb9e!8m2!3d47.4983077!4d19.2864832!15sCg1hdXTDs3N6ZXJlbMWRkgEOdG93aW5nX3NlcnZpY2XgAQA!16s%2Fg%2F11ggzmrdty?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
 };
 
 const FIELDS = Object.keys(CEGADAT_DEFAULTS);

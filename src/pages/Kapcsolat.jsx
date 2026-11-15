@@ -7,8 +7,10 @@ import {
   siCitroen,
   siDacia,
   siFiat,
+  siFacebook,
   siFord,
   siHonda,
+  siInstagram,
   siHyundai,
   siJeep,
   siKia,
@@ -25,6 +27,7 @@ import {
   siSubaru,
   siSuzuki,
   siTesla,
+  siTiktok,
   siToyota,
   siVolkswagen,
   siVolvo,
@@ -69,6 +72,12 @@ const CAR_LOGOS = [
   siToyota,
   siVolkswagen,
   siVolvo,
+];
+
+const SOCIAL_LINKS = [
+  { icon: siFacebook, href: 'https://www.facebook.com/' },
+  { icon: siInstagram, href: 'https://www.instagram.com/' },
+  { icon: siTiktok, href: 'https://www.tiktok.com/' },
 ];
 
 export default function Kapcsolat() {
@@ -189,6 +198,29 @@ export default function Kapcsolat() {
                   <p className="mt-1 text-[12px] text-brand-engine/70">{note}</p>
                 </div>
               ))}
+              <div className="flex min-h-[148px] items-center justify-center gap-4 bg-white p-6">
+                {SOCIAL_LINKS.map(({ icon, href }) => (
+                  <a
+                    key={icon.slug}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={icon.title}
+                    title={icon.title}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-cream p-2.5 transition-transform hover:-translate-y-0.5 hover:bg-brand-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-ember"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      role="img"
+                      aria-hidden="true"
+                      className="h-full w-full"
+                      style={{ fill: `#${icon.hex}` }}
+                    >
+                      <path d={icon.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="mt-6 overflow-hidden rounded-xl border border-brand-line">

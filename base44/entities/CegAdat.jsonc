@@ -41,6 +41,10 @@
     "map_query": {
       "type": "string",
       "title": "T\u00e9rk\u00e9p keres\u0151sz\u00f6veg"
+    },
+    "google_maps_url": {
+      "type": "string",
+      "title": "Google C\u00e9gprofil adatlap URL-je"
     }
   },
   "required": [

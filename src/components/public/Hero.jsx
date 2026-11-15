@@ -1,13 +1,71 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink, Loader2, RefreshCw, Star } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useCegAdat } from '@/components/CegAdatProvider';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1771340012378-3c86cb649193?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D';
 
+const REVIEW_ERROR_MESSAGES = {
+  google_reviews_not_configured: 'A Google Places API-kulcs még nincs beállítva.',
+  google_listing_not_configured: 'A Google Cégprofil adatlapja nincs beállítva.',
+  google_listing_not_found: 'A Google Cégprofil nem található a megadott adatlap alapján.',
+};
+
+function RatingStars({ rating, size = 'h-4 w-4', emptyClass = 'text-white/25' }) {
+  return (
+    <span className="inline-flex items-center gap-0.5" aria-label={`${rating} az 5 csillagból`}>
+      {Array.from({ length: 5 }, (_, index) => (
+        <Star
+          key={index}
+          className={`${size} ${index < Math.round(rating) ? 'fill-amber-400 text-amber-400' : emptyClass}`}
+          aria-hidden="true"
+        />
+      ))}
+    </span>
+  );
+}
+
 export default function Hero() {
   const cegadat = useCegAdat();
+  const [reviews, setReviews] = useState(null);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [reviewsError, setReviewsError] = useState('');
+  const [reviewsOpen, setReviewsOpen] = useState(false);
+
+  const loadReviews = useCallback(async () => {
+    setReviewsLoading(true);
+    setReviewsError('');
+    try {
+      const response = await base44.functions.invoke('getGoogleReviews', {});
+      const data = response.data || {};
+      if (data.error) throw new Error(data.error);
+      setReviews(data);
+    } catch (error) {
+      const errorCode =
+        error?.message || error?.data?.error || error?.response?.data?.error;
+      setReviewsError(
+        REVIEW_ERROR_MESSAGES[errorCode] || 'A Google-értékelések most nem tölthetők be.'
+      );
+    } finally {
+      setReviewsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadReviews();
+  }, [loadReviews]);
+
+  const googleMapsUrl = reviews?.googleMapsUri || cegadat.google_maps_url;
 
   return (
     <section className="relative w-full overflow-hidden bg-brand text-white" aria-label="Profi Autószerviz">
@@ -21,8 +79,8 @@ export default function Hero() {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1700px] px-6 lg:px-12">
-        <div className="grid items-stretch py-14 lg:min-h-[650px] lg:py-16">
-          <div className="flex min-w-0 flex-col justify-between gap-10 lg:w-[45%]">
+        <div className="grid items-center gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] lg:gap-8 lg:py-16">
+          <div className="flex min-w-0 flex-col gap-8">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
               Prémium autószerviz · {cegadat.city}
             </p>
@@ -45,6 +103,51 @@ export default function Hero() {
               </Link>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setReviewsOpen(true)}
+            aria-haspopup="dialog"
+            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-5 text-left shadow-[0_24px_70px_-35px_rgba(0,0,0,0.9)] backdrop-blur-md transition-colors hover:border-brand-ember/60 hover:bg-brand-deep sm:p-6 lg:justify-self-end"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                  Google-értékelések
+                </p>
+                {reviews?.rating != null ? (
+                  <>
+                    <p className="mt-3 font-heading text-[38px] font-semibold leading-none text-white">
+                      {reviews.rating.toFixed(1)}
+                    </p>
+                    <div className="mt-2">
+                      <RatingStars rating={reviews.rating} />
+                    </div>
+                    <p className="mt-2 text-[13px] text-white/65">
+                      {reviews.userRatingCount.toLocaleString('hu-HU')} értékelés alapján
+                    </p>
+                  </>
+                ) : (
+                  <p className="mt-3 text-[15px] font-semibold text-white">
+                    {reviewsLoading
+                      ? 'Értékelések betöltése…'
+                      : reviewsError
+                        ? 'Az értékelések most nem érhetők el'
+                        : 'Értékelések megtekintése'}
+                  </p>
+                )}
+              </div>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-amber-400 transition-transform group-hover:scale-105">
+                <Star className="h-5 w-5 fill-current" aria-hidden="true" />
+              </span>
+            </div>
+            <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+              <span className="text-[13px] font-semibold text-white">
+                {reviewsError ? 'Google Maps megnyitása' : 'Vélemények megtekintése'}
+              </span>
+              <span className="text-[12px] font-medium text-white/60">Google Maps</span>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -67,6 +170,120 @@ export default function Hero() {
           Minta fotó – bemutató célú
         </figcaption>
       </figure>
+
+      <Dialog open={reviewsOpen} onOpenChange={setReviewsOpen}>
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-brand-silver bg-brand-cream p-5 sm:p-8">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-[24px] font-semibold text-brand">
+              Google-értékelések
+            </DialogTitle>
+            <DialogDescription className="text-brand-engine">
+              {reviews?.placeName || cegadat.name}
+            </DialogDescription>
+          </DialogHeader>
+
+          {reviews?.rating != null && (
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-brand-line bg-white p-4">
+              <span className="font-heading text-[32px] font-semibold text-brand">
+                {reviews.rating.toFixed(1)}
+              </span>
+              <span>
+                <span className="block">
+                  <RatingStars
+                    rating={reviews.rating}
+                    size="h-4 w-4"
+                    emptyClass="text-brand-silver"
+                  />
+                </span>
+                <span className="mt-1 block text-[12px] text-brand-engine">
+                  {reviews.userRatingCount.toLocaleString('hu-HU')} értékelés a Google Mapsen
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={loadReviews}
+                disabled={reviewsLoading}
+                aria-label="Értékelések frissítése"
+                className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-brand-silver text-brand hover:bg-brand-cream disabled:opacity-50"
+              >
+                {reviewsLoading
+                  ? <Loader2 className="h-4 w-4 animate-spin" />
+                  : <RefreshCw className="h-4 w-4" />}
+              </button>
+            </div>
+          )}
+
+          {reviewsLoading && !reviews && (
+            <div className="flex items-center justify-center gap-2 py-10 text-[14px] text-brand-engine">
+              <Loader2 className="h-4 w-4 animate-spin" /> Google-értékelések betöltése…
+            </div>
+          )}
+          {reviewsError && (
+            <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
+              <span>{reviewsError}</span>
+              <button
+                type="button"
+                onClick={loadReviews}
+                disabled={reviewsLoading}
+                className="inline-flex min-h-9 items-center gap-2 rounded-full border border-red-300 px-3 text-[12px] font-semibold hover:bg-red-100 disabled:opacity-50"
+              >
+                <RefreshCw className="h-3.5 w-3.5" /> Újrapróbálás
+              </button>
+            </div>
+          )}
+          {reviews?.reviews?.length > 0 && (
+            <ul className="space-y-3">
+              {reviews.reviews.map((review, index) => (
+                <li key={`${review.authorName}-${review.publishTime || index}`} className="rounded-xl border border-brand-line bg-white p-4 sm:p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                      {review.authorUri ? (
+                        <a
+                          href={review.authorUri}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[14px] font-semibold text-brand hover:underline"
+                        >
+                          {review.authorName}
+                        </a>
+                      ) : (
+                        <p className="text-[14px] font-semibold text-brand">{review.authorName}</p>
+                      )}
+                      {review.relativeTime && (
+                        <p className="mt-1 text-[12px] text-brand-engine">{review.relativeTime}</p>
+                      )}
+                    </div>
+                    <RatingStars rating={review.rating} size="h-3.5 w-3.5" emptyClass="text-brand-silver" />
+                  </div>
+                  {review.text && (
+                    <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-brand-engine">
+                      {review.text}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+          {reviews && reviews.reviews.length === 0 && (
+            <p className="rounded-xl border border-brand-line bg-white p-5 text-[14px] text-brand-engine">
+              Jelenleg nem érhetők el megjeleníthető szöveges értékelések.
+            </p>
+          )}
+
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-brand-line pt-4">
+            <span className="text-[12px] font-semibold text-brand-engine">Google Maps</span>
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-brand px-4 text-[12px] font-semibold text-white hover:bg-brand-light"
+            >
+              Összes értékelés a Google Mapsen
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

@@ -1,0 +1,34 @@
+[33mb3b9ada[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mb3b9ada[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit: Oldalak frissítése
+[33m5df8ca6[m HEAD@{2}: commit: Oldalak frissítése
+[33ma897718[m HEAD@{3}: commit: Oldalak frissítése
+[33m85bc73f[m HEAD@{4}: reset: moving to HEAD
+[33m85bc73f[m HEAD@{5}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m85bc73f[m HEAD@{6}: pull origin main --rebase (pick): Update project
+[33m26de8c2[m HEAD@{7}: pull origin main --rebase (start): checkout 26de8c28da386729ff3c47b07f7782e47ce5ab1d
+[33m2ad8a20[m HEAD@{8}: commit: Update project
+[33mdd20d2c[m HEAD@{9}: pull --rebase origin main (finish): returning to refs/heads/main
+[33mdd20d2c[m HEAD@{10}: pull --rebase origin main (pick): Update autoszerviz foglalo
+[33m70d99da[m HEAD@{11}: pull --rebase origin main (start): checkout 70d99da26329a4f7681a4b75874f02a5b3cc6ad6
+[33me49b59a[m HEAD@{12}: commit: Update autoszerviz foglalo
+[33mc5e7903[m HEAD@{13}: commit: Update autoszerviz foglalo
+[33m573b642[m HEAD@{14}: pull --rebase origin main: Fast-forward
+[33m16350a0[m HEAD@{15}: reset: moving to HEAD
+[33m16350a0[m HEAD@{16}: pull: Fast-forward
+[33mdcbbffc[m HEAD@{17}: commit: Update project
+[33m7e897ea[m HEAD@{18}: commit: Update project
+[33m4ddf7d6[m HEAD@{19}: commit: Update project
+[33m628e582[m HEAD@{20}: commit: Update project
+[33m4ce3669[m HEAD@{21}: pull: Fast-forward
+[33m3fb4da3[m HEAD@{22}: pull: Fast-forward
+[33m197bda2[m HEAD@{23}: commit: Codespace updates
+[33m1023d4e[m HEAD@{24}: commit: Codespace updates
+[33m7b0537b[m HEAD@{25}: commit: Improve profile logout
+[33mde84d01[m HEAD@{26}: commit: Add customer profile page
+[33me0b6274[m HEAD@{27}: pull --rebase origin main: Fast-forward
+[33md43fdcd[m HEAD@{28}: pull --rebase origin main: Fast-forward
+[33me27bb68[m HEAD@{29}: pull --rebase origin main (finish): returning to refs/heads/main
+[33me27bb68[m HEAD@{30}: pull --rebase origin main (pick): Codespace updates
+[33m5855e2b[m HEAD@{31}: pull --rebase origin main (start): checkout 5855e2bc99515c3c0f8858626c0cd56de4b8ca39
+[33m2fd5a81[m HEAD@{32}: commit: Codespace updates
+[33m0429498[m HEAD@{33}: clone: from https://github.com/Dzsozeph/autoszerviz-foglalo
