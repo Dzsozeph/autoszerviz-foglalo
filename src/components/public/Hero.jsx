@@ -150,7 +150,7 @@ export default function Hero() {
             onClick={() => setReviewsOpen(true)}
             aria-haspopup="dialog"
             aria-label="Google-értékelések megtekintése"
-            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-0 shadow-xl backdrop-blur-md lg:absolute lg:top-[350px] lg:right-[700px] lg:h-[50px] lg:w-[230px] lg:overflow-hidden lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
+            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-0 shadow-xl backdrop-blur-md lg:absolute lg:top-[350px] lg:right-[850px] lg:h-[50px] lg:w-[230px] lg:overflow-hidden lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
           >
             <div className="hidden h-12 items-center justify-center gap-2 px-3 lg:flex">
               <svg
