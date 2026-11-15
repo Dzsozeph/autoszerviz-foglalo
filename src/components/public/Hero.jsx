@@ -120,7 +120,7 @@ export default function Hero() {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1700px] px-6 pt-8 lg:px-12 lg:pt-0">
-        <div className="grid items-center gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] lg:gap-8 lg:py-16">
+        <div className="relative grid items-center gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] lg:gap-8 lg:py-16">
           <div className="flex min-w-0 flex-col gap-8">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
               Prémium autószerviz · {cegadat.city}
@@ -150,7 +150,7 @@ export default function Hero() {
             onClick={() => setReviewsOpen(true)}
             aria-haspopup="dialog"
             aria-label="Google-értékelések megtekintése"
-            className="group absolute left-1/2 top-2 z-20 h-[37px] lg:h-[50px] w-[230px] max-w-full -translate-x-1/2 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 p-0 shadow-xl backdrop-blur-md lg:left-auto lg:right-[850px] lg:top-[350px] lg:translate-x-0 lg:rounded-2xl lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
+            className="group absolute left-1/2 top-2 z-20 h-[37px] w-[230px] max-w-full -translate-x-1/2 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 p-0 shadow-xl backdrop-blur-md lg:left-[35%] lg:top-[calc(50%+40px)] lg:h-[50px] lg:w-[230px] lg:translate-x-0 lg:rounded-2xl lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
           >
             <div className="flex h-[40px] lg:h-12 flex-col items-center justify-center gap-0.5 px-3">
   <div className="flex items-center justify-center gap-2">
