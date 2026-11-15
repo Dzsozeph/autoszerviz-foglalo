@@ -38,15 +38,23 @@ export default function Szolgaltatasok() {
         title="Minden fontos javítás egy helyen"
         intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
         aside={
-  <div className="relative isolate w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-black">
-    <img
-      src="https://i.ibb.co/pBz1X1qj/45033a90-d7b5-4ff6-9561-1b932b8a9a8d.png"
-      alt="Autószerviz"
-      className="block w-full h-auto object-contain"
-    />
+  <div className="relative isolate w-full min-w-0 lg:translate-x-16">
+
+    {/* Finom narancssárga fény a kép mögött */}
     <div
       aria-hidden="true"
-      className="absolute inset-0 bg-gradient-to-r from-brand/50 to-transparent"
+      className="absolute inset-[12%] -z-10 rounded-full bg-orange-600/10 blur-[90px]"
+    />
+
+    {/* Kép lágyított szélekkel */}
+    <img
+      src="https://i.ibb.co/pBz1X1qj/45033a90-d7b5-4ff6-9561-1b932b8a9a8d.png"
+      alt="Autószerviz szolgáltatások"
+      className="block h-auto w-full object-contain brightness-[0.82] contrast-[1.05] saturate-[0.85]"
+      style={{
+        maskImage: "radial-gradient(ellipse 85% 85% at center, black 65%, transparent 100%)",
+        WebkitMaskImage: "radial-gradient(ellipse 85% 85% at center, black 65%, transparent 100%)"
+      }}
     />
   </div>
 }
