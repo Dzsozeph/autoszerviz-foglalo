@@ -28,7 +28,7 @@ function RatingStars({ rating, size = 'h-4 w-4', emptyClass = 'text-white/25' })
       {Array.from({ length: 5 }, (_, index) => (
         <Star
           key={index}
-          className={`${size} ${index < Math.round(rating) ? 'fill-amber-400 text-amber-400' : emptyClass}`}
+          className={`${size} ${index < Math.round(rating) ? 'fill-orange-500 text-orange-500' : emptyClass}`}
           aria-hidden="true"
         />
       ))}
