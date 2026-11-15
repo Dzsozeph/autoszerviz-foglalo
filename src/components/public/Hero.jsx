@@ -152,20 +152,22 @@ export default function Hero() {
             aria-label="Google-értékelések megtekintése"
             className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-0 shadow-xl backdrop-blur-md lg:absolute lg:top-[350px] lg:right-[700px] lg:h-[50px] lg:w-[230px] lg:overflow-hidden lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
           >
-            <div className="hidden h-12 items-center justify-between px-3 lg:flex">
-              <span className="flex items-center gap-2">
-                <Star className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden="true" />
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4"
-                  style={{ fill: `#${siGoogle.hex}` }}
-                  aria-hidden="true"
-                >
-                  <path d={siGoogle.path} />
-                </svg>
-              </span>
-              <span className="font-heading text-[17px] font-semibold text-white">
-                {reviews?.rating != null ? reviews.rating.toFixed(1) : '–'}
+            <div className="hidden h-12 items-center justify-center gap-2 px-3 lg:flex">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4 shrink-0"
+                style={{ fill: `#${siGoogle.hex}` }}
+                aria-hidden="true"
+              >
+                <path d={siGoogle.path} />
+              </svg>
+              {reviews?.rating != null ? (
+                <RatingStars rating={reviews.rating} size="h-3 w-3" />
+              ) : (
+                <span className="text-sm text-white/60">–</span>
+              )}
+              <span className="text-[11px] text-white/75">
+                ({reviews?.userRatingCount?.toLocaleString('hu-HU') ?? '…'})
               </span>
             </div>
             <div className="lg:max-h-0 lg:overflow-hidden lg:opacity-0 lg:transition-[max-height,opacity] lg:duration-300 lg:group-hover:max-h-[160px] lg:group-hover:opacity-100 lg:group-focus-within:max-h-[160px] lg:group-focus-within:opacity-100">
