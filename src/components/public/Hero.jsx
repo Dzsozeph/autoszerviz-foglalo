@@ -66,6 +66,29 @@ export default function Hero() {
     loadReviews();
   }, [loadReviews]);
 
+  useEffect(() => {
+    if (!reviewsOpen) return undefined;
+
+    const body = document.body;
+    const root = document.documentElement;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyOverscroll = body.style.overscrollBehavior;
+    const previousRootOverflow = root.style.overflow;
+    const previousRootOverscroll = root.style.overscrollBehavior;
+
+    body.style.overflow = 'hidden';
+    body.style.overscrollBehavior = 'none';
+    root.style.overflow = 'hidden';
+    root.style.overscrollBehavior = 'none';
+
+    return () => {
+      body.style.overflow = previousBodyOverflow;
+      body.style.overscrollBehavior = previousBodyOverscroll;
+      root.style.overflow = previousRootOverflow;
+      root.style.overscrollBehavior = previousRootOverscroll;
+    };
+  }, [reviewsOpen]);
+
   const googleMapsUrl = reviews?.googleMapsUri || cegadat.google_maps_url;
 
   return (
@@ -193,7 +216,7 @@ export default function Hero() {
       </figure>
 
       <Dialog open={reviewsOpen} onOpenChange={setReviewsOpen}>
-        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-brand-silver bg-brand-cream p-5 sm:p-8">
+        <DialogContent className="max-h-[90dvh] max-w-2xl overflow-y-auto overscroll-contain border-brand-silver bg-brand-cream p-5 sm:p-8">
           <DialogHeader>
             <DialogTitle className="font-heading text-[24px] font-semibold text-brand">
               {reviews?.isMock ? 'Tesztértékelések' : 'Google-értékelések'}
