@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  CalendarDays,
   ChevronLeft,
   ChevronRight,
   Clock3,
@@ -10,6 +9,7 @@ import {
 import { base44 } from '@/api/base44Client';
 import { useCegAdat } from '@/components/CegAdatProvider';
 import { openingHoursForDate } from '@/lib/cegadat';
+import { getBookingUtilization, timeToMinutes } from '@/lib/booking';
 import { STATUS_STYLES, STATUSES } from '@/lib/status';
 import RequestDetail from './RequestDetail';
 
@@ -51,6 +51,13 @@ const huDate = (date, options = {}) => date.toLocaleDateString('hu-HU', options)
 const compactDate = (date) =>
   `${date.getMonth() + 1}.${String(date.getDate()).padStart(2, '0')}.`;
 const isTerminal = (request) => ['Elutasítva', 'Lezárva'].includes(request.status);
+const capacityColor = (percentage) => percentage >= 100
+  ? 'bg-red-100 text-red-800'
+  : percentage >= 75
+    ? 'bg-orange-100 text-orange-800'
+    : percentage >= 40
+      ? 'bg-amber-100 text-amber-800'
+      : 'bg-emerald-100 text-emerald-800';
 
 function Appointment({ request, onSelect, onDragStart, compact = false }) {
   return (
@@ -163,6 +170,25 @@ export default function CalendarTab() {
       (time === undefined || (request.preferred_time || '') === time)
     )
     .sort((a, b) => (a.preferred_time || '').localeCompare(b.preferred_time || ''));
+  const capacityOn = (date) => {
+    const key = dateKey(date);
+    const dayRequests = requests
+      .filter((request) => request.preferred_date === key && !isTerminal(request))
+      .map((request) => ({
+        ...request,
+        service: services.find((service) => service.name === request.service) || request.service,
+      }));
+    const { bookedMinutes } = getBookingUtilization({ date: key, requests: dayRequests });
+    const hours = openingHoursForDate(key, company);
+    if (!hours) return { bookedMinutes, totalMinutes: 0, percentage: 0, closed: true };
+    const totalMinutes = timeToMinutes(hours.close) - timeToMinutes(hours.open);
+    return {
+      bookedMinutes,
+      totalMinutes,
+      percentage: totalMinutes > 0 ? Math.min(100, Math.round((bookedMinutes / totalMinutes) * 100)) : 0,
+      closed: false,
+    };
+  };
 
   const shift = (direction) => {
     const next = new Date(anchor);
@@ -266,17 +292,27 @@ export default function CalendarTab() {
       <div className={`min-w-[760px] ${view === 'day' ? 'max-w-3xl' : ''}`}>
         <div className="grid border-b border-brand-silver" style={{ gridTemplateColumns: `64px repeat(${days.length}, minmax(100px, 1fr))` }}>
           <div className="p-2" />
-          {days.map((date, index) => (
-            <div key={dateKey(date)} className="border-l border-brand-silver px-2 py-3 text-center">
-              <p className="text-[11px] font-semibold uppercase text-brand-engine">
-                {view === 'week' ? WEEKDAY_NAMES[index] : WEEKDAY_NAMES[(date.getDay() + 6) % 7]}
-              </p>
-              <p className={`mt-1 text-[16px] font-semibold ${dateKey(date) === dateKey(new Date()) ? 'text-brand-ember' : 'text-brand'}`}>
-                {compactDate(date)}
-              </p>
-              <OpeningHours date={date} company={company} />
-            </div>
-          ))}
+          {days.map((date, index) => {
+            const capacity = capacityOn(date);
+            return (
+              <div key={dateKey(date)} className="border-l border-brand-silver px-2 py-3 text-center">
+                <p className="text-[11px] font-semibold uppercase text-brand-engine">
+                  {view === 'week' ? WEEKDAY_NAMES[index] : WEEKDAY_NAMES[(date.getDay() + 6) % 7]}
+                </p>
+                <p className={`mt-1 text-[16px] font-semibold ${dateKey(date) === dateKey(new Date()) ? 'text-brand-ember' : 'text-brand'}`}>
+                  {compactDate(date)}
+                </p>
+                <OpeningHours date={date} company={company} />
+                {capacity.closed ? (
+                  <span className="mt-2 inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600">Zárva</span>
+                ) : (
+                  <span className={`mt-2 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${capacityColor(capacity.percentage)}`}>
+                    Telítettség {capacity.percentage}%
+                  </span>
+                )}
+              </div>
+            );
+          })}
         </div>
         <div className="grid" style={{ gridTemplateColumns: `64px repeat(${days.length}, minmax(100px, 1fr))` }}>
           {SLOT_TIMES.map((time) => (
@@ -328,6 +364,7 @@ export default function CalendarTab() {
         <div className="grid grid-cols-7">
           {days.map((date) => {
             const dayRequests = requestsOn(date);
+            const capacity = capacityOn(date);
             return (
               <div
                 key={dateKey(date)}
@@ -342,6 +379,13 @@ export default function CalendarTab() {
                     {date.getDate()}
                   </span>
                   <OpeningHours date={date} company={company} />
+                </div>
+                <div className={`mb-1 rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                  capacity.closed ? 'bg-slate-100 text-slate-600' : capacityColor(capacity.percentage)
+                }`}>
+                  {capacity.closed
+                    ? 'Zárva'
+                    : `Telítettség: ${capacity.percentage}% · ${capacity.bookedMinutes}/${capacity.totalMinutes} perc`}
                 </div>
                 {dayRequests.slice(0, 3).map((request) => (
                   <Appointment
@@ -442,6 +486,18 @@ export default function CalendarTab() {
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-brand-silver py-3">
+        <span className="text-[11px] font-semibold text-brand-engine">Napi kapacitás:</span>
+        {[
+          ['bg-emerald-200', 'Alacsony 0–39%'],
+          ['bg-amber-200', 'Közepes 40–74%'],
+          ['bg-orange-300', 'Magas 75–99%'],
+          ['bg-red-300', 'Betelt 100%'],
+        ].map(([color, label]) => (
+          <span key={label} className="inline-flex items-center gap-1.5 text-[11px] text-brand-engine">
+            <span className={`h-2.5 w-2.5 rounded-full ${color}`} />
+            {label}
+          </span>
+        ))}
         {STATUSES.map((status) => (
           <span key={status} className="inline-flex items-center gap-1.5 text-[11px] text-brand-engine">
             <span className={`h-2.5 w-2.5 rounded-full ${STATUS_STYLES[status].split(' ')[1]}`} />
@@ -462,13 +518,17 @@ export default function CalendarTab() {
           <div className="flex items-center justify-center gap-2 py-16 text-[14px] text-brand-engine">
             <Loader2 className="h-4 w-4 animate-spin" /> Naptár betöltése…
           </div>
-        ) : filtered.length === 0 ? (
-          <div className="px-4 py-16 text-center">
-            <CalendarDays className="mx-auto h-8 w-8 text-brand-silver" />
-            <p className="mt-3 text-[14px] font-medium text-brand">Nincs megjeleníthető időpontkérés.</p>
-            <p className="mt-1 text-[12px] text-brand-engine">Módosítsa a szűrőket, vagy válasszon másik dátumot.</p>
-          </div>
-        ) : view === 'month' ? renderMonthView() : renderTimedView()}
+        ) : (
+          <>
+            {filtered.length === 0 && (
+              <div className="px-4 py-4 text-center">
+                <p className="text-[13px] font-medium text-brand">Nincs megjeleníthető időpontkérés.</p>
+                <p className="mt-1 text-[11px] text-brand-engine">A naptár ettől függetlenül a napi kapacitást mutatja.</p>
+              </div>
+            )}
+            {view === 'month' ? renderMonthView() : renderTimedView()}
+          </>
+        )}
       </div>
       <p className="mt-3 text-[11px] text-brand-engine">
         Nyitvatartás: H–P {company.hours_weekdays} · Szo {company.hours_saturday} · V {company.hours_sunday || 'zárva'}.
