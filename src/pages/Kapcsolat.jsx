@@ -1,5 +1,34 @@
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle, CarFront } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle } from 'lucide-react';
+import {
+  siAudi,
+  siBmw,
+  siChevrolet,
+  siCitroen,
+  siDacia,
+  siFiat,
+  siFord,
+  siHonda,
+  siHyundai,
+  siJeep,
+  siKia,
+  siMazda,
+  siMg,
+  siMini,
+  siMitsubishi,
+  siNissan,
+  siOpel,
+  siPeugeot,
+  siRenault,
+  siSeat,
+  siSkoda,
+  siSubaru,
+  siSuzuki,
+  siTesla,
+  siToyota,
+  siVolkswagen,
+  siVolvo,
+} from 'simple-icons';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
 import ConsentField from '@/components/public/ConsentField';
@@ -12,61 +41,34 @@ import { Textarea } from '@/components/ui/textarea';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const CAR_BRANDS = [
-  'Abarth',
-  'Acura',
-  'Alfa Romeo',
-  'Aston Martin',
-  'Audi',
-  'Bentley',
-  'BMW',
-  'BYD',
-  'Cadillac',
-  'Chevrolet',
-  'Citroën',
-  'Chrysler',
-  'Cupra',
-  'Dacia',
-  'Dodge',
-  'DS Automobiles',
-  'Fiat',
-  'Ford',
-  'Genesis',
-  'GMC',
-  'Honda',
-  'Hyundai',
-  'Infiniti',
-  'Isuzu',
-  'Jaguar',
-  'Jeep',
-  'Kia',
-  'KGM (SsangYong)',
-  'Land Rover',
-  'Lexus',
-  'Mazda',
-  'Maserati',
-  'McLaren',
-  'Mercedes-Benz',
-  'MG',
-  'MINI',
-  'Mitsubishi',
-  'Nissan',
-  'Opel',
-  'Peugeot',
-  'Polestar',
-  'Porsche',
-  'Renault',
-  'Rolls-Royce',
-  'SEAT',
-  'Škoda',
-  'Smart',
-  'Subaru',
-  'Suzuki',
-  'Tesla',
-  'Tata',
-  'Toyota',
-  'Volkswagen',
-  'Volvo',
+const CAR_LOGOS = [
+  siAudi,
+  siBmw,
+  siChevrolet,
+  siCitroen,
+  siDacia,
+  siFiat,
+  siFord,
+  siHonda,
+  siHyundai,
+  siJeep,
+  siKia,
+  siMazda,
+  siMg,
+  siMini,
+  siMitsubishi,
+  siNissan,
+  siOpel,
+  siPeugeot,
+  siRenault,
+  siSeat,
+  siSkoda,
+  siSubaru,
+  siSuzuki,
+  siTesla,
+  siToyota,
+  siVolkswagen,
+  siVolvo,
 ];
 
 export default function Kapcsolat() {
@@ -137,25 +139,28 @@ export default function Kapcsolat() {
         title="Beszéljünk az autójáról"
         intro="Kérdése van, vagy időpontot egyeztetne? Hívjon minket, írjon e-mailt, vagy küldje el üzenetét az űrlapon – munkanapokon igyekszünk minél előbb válaszolni."
         aside={
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ember">
-              Márkafüggetlen szerviz
-            </p>
-            <h2 className="mt-2 font-heading text-[18px] font-semibold text-white">
-              Szervizelt autómárkák
-            </h2>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {CAR_BRANDS.map((brand) => (
-                <li
-                  key={brand}
-                  className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/85"
+          <ul
+            aria-label="Szervizelt autómárkák"
+            className="grid grid-cols-5 justify-items-center gap-2 sm:grid-cols-6 sm:gap-3 lg:grid-cols-5 xl:grid-cols-6"
+          >
+            {CAR_LOGOS.map((logo) => (
+              <li
+                key={logo.slug}
+                title={logo.title}
+                className="flex h-11 w-11 items-center justify-center rounded-xl bg-white p-2 shadow-sm transition-transform hover:scale-105 sm:h-12 sm:w-12"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-label={logo.title}
+                  className="h-full w-full"
+                  style={{ fill: `#${logo.hex}` }}
                 >
-                  <CarFront className="h-3.5 w-3.5 shrink-0 text-brand-ember" aria-hidden="true" />
-                  {brand}
-                </li>
+                  <path d={logo.path} />
+                </svg>
+              </li>
               ))}
-            </ul>
-          </div>
+          </ul>
         }
       />
 
