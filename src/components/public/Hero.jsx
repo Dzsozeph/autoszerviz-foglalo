@@ -132,7 +132,7 @@ export default function Hero() {
             type="button"
             onClick={() => setReviewsOpen(true)}
             aria-haspopup="dialog"
-            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-6 lg:absolute lg:top-[450px] lg:right-[700px] lg:w-[380px] shadow-xl backdrop-blur-md"
+            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-6 lg:absolute lg:h-[220px] lg:top-[350px] lg:right-[700px] lg:w-[230px] shadow-xl backdrop-blur-md"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
