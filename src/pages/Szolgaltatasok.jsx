@@ -38,24 +38,18 @@ export default function Szolgaltatasok() {
         title="Minden fontos javítás egy helyen"
         intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
         aside={
-          <div className="relative isolate flex min-h-[220px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-brand-deep px-6 py-8 sm:min-h-[280px] lg:min-h-[340px]">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-r from-brand via-brand/75 to-transparent"
-            />
-            <div className="relative z-10 text-center">
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-brand-ember">
-                <ImagePlus className="h-7 w-7" strokeWidth={1.6} aria-hidden="true" />
-              </span>
-              <p className="mt-4 font-heading text-[16px] font-semibold text-white">
-                Kép helye
-              </p>
-              <p className="mt-2 text-[13px] leading-relaxed text-white/60">
-                Ide tölthető fel a szolgáltatásokhoz illő kép.
-              </p>
-            </div>
-          </div>
-        }
+  <div className="relative isolate w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-black">
+    <img
+      src="https://i.ibb.co/pBz1X1qj/45033a90-d7b5-4ff6-9561-1b932b8a9a8d.png"
+      alt="Autószerviz"
+      className="block w-full h-auto object-contain"
+    />
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 bg-gradient-to-r from-brand/50 to-transparent"
+    />
+  </div>
+}
       />
 
       <section className="container-page py-14 sm:py-20">

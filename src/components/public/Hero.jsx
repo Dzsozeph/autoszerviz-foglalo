@@ -150,30 +150,93 @@ export default function Hero() {
             onClick={() => setReviewsOpen(true)}
             aria-haspopup="dialog"
             aria-label="Google-értékelések megtekintése"
-            className="fixed top-3 left-1/2 -translate-x-1/2 z-[100] h-[50px] w-[230px] max-w-[calc(100%-32px)] overflow-hidden rounded-full border border-white/15 bg-brand-deep/90 p-0 shadow-xl backdrop-blur-md lg:absolute lg:top-[350px] lg:left-auto lg:right-[850px] lg:translate-x-0"
+            className="group absolute left-1/2 top-3 z-20 h-[50px] w-[230px] max-w-full -translate-x-1/2 overflow-hidden rounded-full border border-white/15 bg-brand-deep/90 p-0 shadow-xl backdrop-blur-md lg:left-auto lg:right-[850px] lg:top-[350px] lg:translate-x-0 lg:rounded-2xl lg:transition-[height] lg:duration-300 lg:ease-out lg:hover:h-[210px] lg:focus-within:h-[210px]"
           >
             <div className="flex h-12 flex-col items-center justify-center gap-0.5 px-3">
-              <div className="flex items-center justify-center gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 shrink-0"
-                  style={{ fill: `#${siGoogle.hex}` }}
-                  aria-hidden="true"
-                >
-                  <path d={siGoogle.path} />
-                </svg>
-                {reviews?.rating != null ? (
-                  <RatingStars rating={reviews.rating} size="h-3 w-3" />
-                ) : (
-                  <span className="text-sm text-white/60">–</span>
-                )}
-                <span className="text-[11px] text-white/75">
-                  ({reviews?.userRatingCount?.toLocaleString('hu-HU') ?? '…'})
-                </span>
+  <div className="flex items-center justify-center gap-2">
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4 shrink-0"
+      style={{ fill: `#${siGoogle.hex}` }}
+      aria-hidden="true"
+    >
+      <path d={siGoogle.path} />
+    </svg>
+
+    {reviews?.rating != null ? (
+      <RatingStars rating={reviews.rating} size="h-3 w-3" />
+    ) : (
+      <span className="text-sm text-white/60">–</span>
+    )}
+
+    <span className="text-[11px] text-white/75">
+      ({reviews?.userRatingCount?.toLocaleString('hu-HU') ?? '…'})
+    </span>
+  </div>
+
+  <span className="text-[9px] font-medium tracking-wide text-white/65">
+    Google-értékelések
+  </span>
+</div>
+            <div className="max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-300 lg:group-hover:max-h-[160px] lg:group-hover:opacity-100 lg:group-focus-within:max-h-[160px] lg:group-focus-within:opacity-100">
+              <div className="p-4 sm:p-5 lg:px-4 lg:pb-4 lg:pt-0">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/55">
+                      {reviews?.isMock ? 'Google értékelések' : 'Google-értékelések'}
+                    </p>
+                    {reviews?.isMock && (
+                      <p className="mt-1 text-[10px] font-medium text-amber-300">
+                        Kitalált tesztadatok
+                      </p>
+                    )}
+                    {reviews?.rating != null ? (
+                      <>
+                        <p className="mt-2 font-heading text-[30px] font-semibold leading-none text-white">
+                          {reviews.rating.toFixed(1)}
+                        </p>
+                        <div className="mt-1">
+                          <RatingStars rating={reviews.rating} size="h-3.5 w-3.5" />
+                        </div>
+                        <p className="mt-1 text-[12px] text-white/65">
+                          {reviews.userRatingCount.toLocaleString('hu-HU')} értékelés alapján
+                        </p>
+                      </>
+                    ) : (
+                      <p className="mt-2 text-[13px] font-semibold text-white">
+                        {reviewsLoading
+                          ? 'Értékelések betöltése…'
+                          : reviewsError
+                            ? 'Az értékelések most nem érhetők el'
+                            : 'Értékelések megtekintése'}
+                      </p>
+                    )}
+                  </div>
+                  <span className="flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-full bg-white/10 px-2.5 text-amber-400 transition-transform group-hover:scale-105 lg:hidden">
+                    <Star className="h-4 w-4 fill-current" aria-hidden="true" />
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4"
+                      style={{ fill: `#${siGoogle.hex}` }}
+                      aria-hidden="true"
+                    >
+                      <path d={siGoogle.path} />
+                    </svg>
+                  </span>
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/10 pt-3">
+                  <span className="text-[12px] font-semibold text-white">
+                    {reviews?.isMock
+                      ? 'Tesztadatok megtekintése'
+                      : reviewsError
+                        ? 'Google Maps megnyitása'
+                        : 'Vélemények megtekintése'}
+                  </span>
+                  <span className="text-[11px] font-medium text-white/60">
+                    {reviews?.isMock ? 'TESZT' : 'Google Maps'}
+                  </span>
+                </div>
               </div>
-              <span className="text-[9px] font-medium tracking-wide text-white/65">
-                Google-értékelések
-              </span>
             </div>
           </button>
         </div>
