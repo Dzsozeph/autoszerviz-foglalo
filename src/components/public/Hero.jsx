@@ -108,12 +108,12 @@ export default function Hero() {
             type="button"
             onClick={() => setReviewsOpen(true)}
             aria-haspopup="dialog"
-            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-5 text-left shadow-[0_24px_70px_-35px_rgba(0,0,0,0.9)] backdrop-blur-md transition-colors hover:border-brand-ember/60 hover:bg-brand-deep sm:p-6 lg:justify-self-end"
+            className="group w-full max-w-md rounded-2xl border border-white/15 bg-brand-deep/90 p-6 lg:absolute lg:top-[450px] lg:right-[700px] lg:w-[380px] shadow-xl backdrop-blur-md"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
-                  {reviews?.isMock ? 'Tesztértékelések' : 'Google-értékelések'}
+                  {reviews?.isMock ? 'Google értékelések' : 'Google-értékelések'}
                 </p>
                 {reviews?.isMock && (
                   <p className="mt-2 text-[11px] font-medium text-amber-300">
@@ -126,6 +126,7 @@ export default function Hero() {
                       {reviews.rating.toFixed(1)}
                     </p>
                     <div className="mt-2">
+                      
                       <RatingStars rating={reviews.rating} />
                     </div>
                     <p className="mt-2 text-[13px] text-white/65">
