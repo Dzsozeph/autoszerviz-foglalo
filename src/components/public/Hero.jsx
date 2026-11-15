@@ -225,13 +225,7 @@ export default function Hero() {
                   </span>
                 </div>
                 <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 border-t border-white/10 pt-3 text-center">
-                  <span className="text-[12px] font-semibold text-white">
-                    {reviews?.isMock
-                      ? 'Tesztadatok megtekintése'
-                      : reviewsError
-                        ? 'Google Maps megnyitása'
-                        : 'Vélemények megtekintése'}
-                  </span>
+            
                   <span className="text-[11px] font-medium text-white/60">
                     {reviews?.isMock ? 'TESZT' : 'Google Maps'}
                   </span>
