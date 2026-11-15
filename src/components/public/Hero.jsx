@@ -179,8 +179,8 @@ export default function Hero() {
   </span>
 </div>
             <div className="max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-300 lg:group-hover:max-h-[160px] lg:group-hover:opacity-100 lg:group-focus-within:max-h-[160px] lg:group-focus-within:opacity-100">
-              <div className="p-4 sm:p-5 lg:px-4 lg:pb-4 lg:pt-0">
-                <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-col items-center text-center p-4 sm:p-5 lg:px-4 lg:pb-4 lg:pt-0">
+                <div className="flex w-full flex-col items-center justify-center gap-3 text-center">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/55">
                       {reviews?.isMock ? 'Google értékelések' : 'Google-értékelések'}
@@ -224,7 +224,7 @@ export default function Hero() {
                     </svg>
                   </span>
                 </div>
-                <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/10 pt-3">
+                <div className="mt-3 flex w-full flex-col items-center justify-center gap-2 border-t border-white/10 pt-3 text-center">
                   <span className="text-[12px] font-semibold text-white">
                     {reviews?.isMock
                       ? 'Tesztadatok megtekintése'
