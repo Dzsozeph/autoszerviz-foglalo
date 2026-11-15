@@ -16,6 +16,60 @@ const TIMES = (() => {
 
 const str = (value, max) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
 
+const SERVICE_DURATION_DEFAULTS = {
+  olaj: 60,
+  gumi: 60,
+  fek: 90,
+  diagnosztika: 45,
+  futomu: 90,
+  javitas: 120,
+  vizsga: 60,
+  vizsgara: 60,
+  szerviz: 60,
+  ellenorzes: 45,
+  feltetel: 60,
+};
+
+const normalizeServiceName = (value) => String(value || '')
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9\s]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const getServiceDurationMinutes = (service) => {
+  if (!service) return 60;
+  if (typeof service === 'number') return service;
+  if (typeof service === 'string') {
+    const normalized = normalizeServiceName(service);
+    for (const [key, duration] of Object.entries(SERVICE_DURATION_DEFAULTS)) {
+      if (normalized.includes(key)) return duration;
+    }
+    return 60;
+  }
+
+  if (Number.isFinite(Number(service.estimated_duration_minutes))) {
+    return Number(service.estimated_duration_minutes);
+  }
+  if (Number.isFinite(Number(service.duration_minutes))) {
+    return Number(service.duration_minutes);
+  }
+
+  const normalized = normalizeServiceName(service.name || service.service || service.title || '');
+  for (const [key, duration] of Object.entries(SERVICE_DURATION_DEFAULTS)) {
+    if (normalized.includes(key)) return duration;
+  }
+  return 60;
+};
+
+const timeToMinutes = (value) => {
+  if (!value || typeof value !== 'string') return 0;
+  const [hours, minutes] = value.split(':').map(Number);
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
+  return hours * 60 + minutes;
+};
+
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -79,6 +133,39 @@ export default async function (req) {
     if (!services.some((s) => s.name === data.service)) {
       return Response.json(
         { error: 'validation_failed', fields: { service: 'Válasszon egy érvényes szolgáltatást.' } },
+        { status: 400 }
+      );
+    }
+
+    const serviceDurationMinutes = getServiceDurationMinutes(
+      services.find((service) => service.name === data.service) || data.service
+    );
+    const selectedStart = timeToMinutes(data.preferred_time);
+    const selectedEnd = selectedStart + serviceDurationMinutes;
+    if (selectedEnd > 17 * 60) {
+      return Response.json(
+        { error: 'validation_failed', fields: { preferred_time: 'A kiválasztott szolgáltatás nem fér el a műhely nyitvatartási idejébe.' } },
+        { status: 400 }
+      );
+    }
+
+    const existingBookingsPage = await base44.asServiceRole.entities.Idopontkeres.filter(
+      { preferred_date: data.preferred_date },
+      { limit: 1000 }
+    );
+    const existingBookings = existingBookingsPage.items || existingBookingsPage || [];
+    const hasConflict = existingBookings.some((booking) => {
+      if (!booking.preferred_time || booking.id === data.id) return false;
+      if (['Elutasítva', 'Lezárva'].includes(booking.status)) return false;
+      const bookingStart = timeToMinutes(booking.preferred_time);
+      const bookingDuration = getServiceDurationMinutes(booking.service || '');
+      const bookingEnd = bookingStart + bookingDuration;
+      return selectedStart < bookingEnd && selectedEnd > bookingStart;
+    });
+
+    if (hasConflict) {
+      return Response.json(
+        { error: 'validation_failed', fields: { preferred_time: 'Ez az időpont már foglalt a kiválasztott szolgáltatásra.' } },
         { status: 400 }
       );
     }

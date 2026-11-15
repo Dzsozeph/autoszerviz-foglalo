@@ -6,7 +6,13 @@ import PageHeader from '@/components/public/PageHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { TIME_SLOTS, todayISO } from '@/lib/booking';
+import {
+  TIME_SLOTS,
+  getAvailableBookingSlots,
+  getBookingUtilization,
+  getServiceDurationMinutes,
+  todayISO,
+} from '@/lib/booking';
 import ConsentField from '@/components/public/ConsentField';
 import { useCegAdat } from '@/components/CegAdatProvider';
 import { telHref } from '@/lib/cegadat';
@@ -73,6 +79,7 @@ export default function Idopont() {
     path: '/idopont'
   });
   const [services, setServices] = useState([]);
+  const [bookingRequests, setBookingRequests] = useState([]);
   const [form, setForm] = useState({
     ...EMPTY,
     customer_name: user?.full_name || user?.name || '',
@@ -86,15 +93,43 @@ export default function Idopont() {
 
   useEffect(() => {
     let active = true;
-    base44.entities.Szolgaltatas.filter({ active: true }, { sort: 'order', limit: 50 }).
-    then((page) => {
-      if (active) setServices(page.items || []);
+    Promise.all([
+      base44.entities.Szolgaltatas.filter({ active: true }, { sort: 'order', limit: 50 }),
+      base44.functions.invoke('getCalendarRequests', {})
+    ]).
+    then(([servicePage, calendarResponse]) => {
+      const data = calendarResponse?.data || {};
+      if (active) {
+        setServices(servicePage.items || []);
+        setBookingRequests(Array.isArray(data.requests) ? data.requests : []);
+      }
     }).
-    catch(() => {});
+    catch(() => {
+      if (active) {
+        setServices([]);
+        setBookingRequests([]);
+      }
+    });
     return () => {
       active = false;
     };
   }, []);
+
+  const serviceMeta = services.find((service) => service.name === form.service) || null;
+  const estimatedMinutes = getServiceDurationMinutes(serviceMeta || form.service);
+  const availableTimes = form.service && form.preferred_date
+    ? getAvailableBookingSlots({ date: form.preferred_date, service: serviceMeta || form.service, requests: bookingRequests })
+    : TIME_SLOTS;
+  const utilization = form.preferred_date
+    ? getBookingUtilization({ date: form.preferred_date, requests: bookingRequests })
+    : { bookedMinutes: 0, totalMinutes: 0, percentage: 0 };
+
+  useEffect(() => {
+    if (form.preferred_time && !availableTimes.includes(form.preferred_time)) {
+      setForm((current) => ({ ...current, preferred_time: '' }));
+      setErrors((current) => ({ ...current, preferred_time: undefined }));
+    }
+  }, [availableTimes, form.preferred_time]);
 
   const setField = (key, value) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -299,6 +334,11 @@ export default function Idopont() {
                         </option>
                     )}
                     </select>
+                    {form.service && (
+                      <p className="mt-2 text-[12px] text-brand-engine">
+                        Becsült munkavégzési idő: {estimatedMinutes} perc.
+                      </p>
+                    )}
                   </Field>
                   <Field
                   id="problem_description"
@@ -332,6 +372,11 @@ export default function Idopont() {
                     value={form.preferred_date}
                     onChange={(e) => setField('preferred_date', e.target.value)}
                     className={inputClass} />
+                    {form.preferred_date && (
+                      <p className="mt-2 text-[12px] text-brand-engine">
+                        Napi telítettség: {utilization.percentage}% ({utilization.bookedMinutes}/{utilization.totalMinutes} perc).
+                      </p>
+                    )}
                   
                   </Field>
                   <Field id="preferred_time" label="Preferált időpont *" error={errors.preferred_time}>
@@ -341,8 +386,14 @@ export default function Idopont() {
                     onChange={(e) => setField('preferred_time', e.target.value)}
                     className={selectClass}>
                     
-                      <option value="">Válasszon időpontot…</option>
-                      {TIME_SLOTS.map((time) =>
+                      <option value="">
+                        {form.preferred_date && form.service
+                          ? availableTimes.length
+                            ? 'Válasszon időpontot…'
+                            : 'Ez a nap már betelt a kiválasztott szolgáltatásra.'
+                          : 'Válasszon dátumot és szolgáltatást…'}
+                      </option>
+                      {(form.preferred_date && form.service ? availableTimes : TIME_SLOTS).map((time) =>
                     <option key={time} value={time}>
                           {time}
                         </option>

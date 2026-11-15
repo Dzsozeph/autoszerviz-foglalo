@@ -34,6 +34,10 @@
       "type": "number",
       "title": "Sorrend"
     },
+    "estimated_duration_minutes": {
+      "type": "number",
+      "title": "Becsült munkaidő (perc)"
+    },
     "active": {
       "type": "boolean",
       "title": "Akt\u00edv",
