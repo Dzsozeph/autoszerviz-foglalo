@@ -100,7 +100,7 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-brand-silver bg-[linear-gradient(221deg,rgba(0,0,0,1)0%,rgba(255,255,255,1)25%)] xl:hidden">
+        <div className="border-t border-white/10 bg-[#151515]/[98%] backdrop-blur-xl shadow-2xl xl:hidden">
           <nav aria-label="Mobil navigáció" className="container-page flex flex-col gap-1 py-3">
             {NAV.map((item) => (
               <NavLink
@@ -108,7 +108,7 @@ export default function SiteHeader() {
                 to={item.to}
                 end={item.to === '/'}
                 onClick={() => setOpen(false)}
-                className="flex min-h-[48px] items-center rounded-lg px-3 text-[16px] font-medium text-brand hover:bg-brand-silver/50"
+                className="flex min-h-[48px] items-center rounded-lg px-3 text-[16px] font-medium text-white/85 transition-colors hover:bg-white/10 hover:text-orange-500 [&.active]:bg-white/10 [&.active]:text-orange-500"
                >
                 {item.label}
               </NavLink>
@@ -131,7 +131,7 @@ export default function SiteHeader() {
             <Link
               to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
               onClick={() => setOpen(false)}
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-line text-[15px] font-semibold text-brand"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
             >
               <UserRound className="h-4 w-4" aria-hidden="true" />
               <span className="max-w-[220px] truncate" title={profileLabel}>
