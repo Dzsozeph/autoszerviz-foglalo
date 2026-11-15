@@ -5,6 +5,58 @@ const GOOGLE_SEARCH_URL = 'https://places.googleapis.com/v1/places:searchText';
 const GOOGLE_FIELDS = 'places.id,places.displayName,places.location';
 const DETAILS_FIELDS = 'id,displayName,rating,userRatingCount,reviews,googleMapsUri';
 
+// Explicit test fixture: never use these fabricated reviews as real customer feedback.
+const MOCK_REVIEWS = {
+  placeName: 'Tesztműhely',
+  rating: 4.2,
+  userRatingCount: 5,
+  googleMapsUri: '',
+  reviews: [
+    {
+      authorName: 'Kovács Anna (teszt)',
+      authorUri: '',
+      rating: 5,
+      text: 'Gyors és kedves ügyintézés, az autót a megbeszélt időre elkészítették. Köszönöm!',
+      relativeTime: '2 hete',
+      publishTime: '',
+    },
+    {
+      authorName: 'Nagy Péter (teszt)',
+      authorUri: '',
+      rating: 4,
+      text: 'Korrekt munkát végeztek, és mindenről előre tájékoztattak.',
+      relativeTime: '1 hónapja',
+      publishTime: '',
+    },
+    {
+      authorName: 'Tóth Eszter (teszt)',
+      authorUri: '',
+      rating: 3,
+      text: 'A javítás rendben volt, de az egyeztetett időponthoz képest valamivel később vehettem át az autót.',
+      relativeTime: '2 hónapja',
+      publishTime: '',
+    },
+    {
+      authorName: 'Szabó Gábor (teszt)',
+      authorUri: '',
+      rating: 5,
+      text: 'Részletesen elmagyarázták, mit találtak a diagnosztika során, és csak az előre egyeztetett munkákat végezték el. A javítás után az autóval minden rendben volt, az átvétel is gördülékenyen ment. Jó tapasztalat volt, máskor is ide jövök.',
+      relativeTime: '3 hónapja',
+      publishTime: '',
+    },
+    {
+      authorName: 'Varga László (teszt)',
+      authorUri: '',
+      rating: 4,
+      text: 'Segítőkész csapat, átlátható tájékoztatás.',
+      relativeTime: '4 hónapja',
+      publishTime: '',
+    },
+  ],
+  attribution: 'Tesztadatok – nem valódi Google-értékelések',
+  isMock: true,
+};
+
 function parseListing(value) {
   let url;
   try {
@@ -85,6 +137,10 @@ async function googleFetch(url, apiKey, fieldMask, options = {}) {
 export default async function (req) {
   const headers = { 'Cache-Control': 'no-store' };
   try {
+    if (Deno.env.get('GOOGLE_REVIEWS_MOCK')?.toLowerCase() === 'true') {
+      return Response.json(MOCK_REVIEWS, { headers });
+    }
+
     const base44 = createClientFromRequest(req);
     const page = await base44.asServiceRole.entities.CegAdat.list('-updated_date', 1);
     const company = (page?.items || page || [])[0];
@@ -164,6 +220,7 @@ export default async function (req) {
           publishTime: review.publishTime || '',
         })),
         attribution: 'Google Maps',
+        isMock: false,
       },
       { headers }
     );

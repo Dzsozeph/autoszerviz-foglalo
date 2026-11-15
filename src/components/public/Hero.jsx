@@ -113,8 +113,13 @@ export default function Hero() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
-                  Google-értékelések
+                  {reviews?.isMock ? 'Tesztértékelések' : 'Google-értékelések'}
                 </p>
+                {reviews?.isMock && (
+                  <p className="mt-2 text-[11px] font-medium text-amber-300">
+                    Kitalált tesztadatok – nem valódi vélemények
+                  </p>
+                )}
                 {reviews?.rating != null ? (
                   <>
                     <p className="mt-3 font-heading text-[38px] font-semibold leading-none text-white">
@@ -143,9 +148,15 @@ export default function Hero() {
             </div>
             <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
               <span className="text-[13px] font-semibold text-white">
-                {reviewsError ? 'Google Maps megnyitása' : 'Vélemények megtekintése'}
+                {reviews?.isMock
+                  ? 'Tesztadatok megtekintése'
+                  : reviewsError
+                    ? 'Google Maps megnyitása'
+                    : 'Vélemények megtekintése'}
               </span>
-              <span className="text-[12px] font-medium text-white/60">Google Maps</span>
+              <span className="text-[12px] font-medium text-white/60">
+                {reviews?.isMock ? 'TESZT' : 'Google Maps'}
+              </span>
             </div>
           </button>
         </div>
@@ -175,10 +186,12 @@ export default function Hero() {
         <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-brand-silver bg-brand-cream p-5 sm:p-8">
           <DialogHeader>
             <DialogTitle className="font-heading text-[24px] font-semibold text-brand">
-              Google-értékelések
+              {reviews?.isMock ? 'Tesztértékelések' : 'Google-értékelések'}
             </DialogTitle>
             <DialogDescription className="text-brand-engine">
-              {reviews?.placeName || cegadat.name}
+              {reviews?.isMock
+                ? 'Kitalált bemutató adatok – nem valódi Google-vélemények.'
+                : reviews?.placeName || cegadat.name}
             </DialogDescription>
           </DialogHeader>
 
@@ -196,7 +209,8 @@ export default function Hero() {
                   />
                 </span>
                 <span className="mt-1 block text-[12px] text-brand-engine">
-                  {reviews.userRatingCount.toLocaleString('hu-HU')} értékelés a Google Mapsen
+                  {reviews.userRatingCount.toLocaleString('hu-HU')}{' '}
+                  {reviews.isMock ? 'tesztértékelés átlaga' : 'értékelés a Google Mapsen'}
                 </span>
               </span>
               <button
@@ -271,16 +285,24 @@ export default function Hero() {
           )}
 
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-brand-line pt-4">
-            <span className="text-[12px] font-semibold text-brand-engine">Google Maps</span>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-brand px-4 text-[12px] font-semibold text-white hover:bg-brand-light"
-            >
-              Összes értékelés a Google Mapsen
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
+            {reviews?.isMock ? (
+              <span className="text-[12px] font-semibold text-amber-800">
+                Kitalált tesztadatok – nem Google-értékelések
+              </span>
+            ) : (
+              <>
+                <span className="text-[12px] font-semibold text-brand-engine">Google Maps</span>
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-full bg-brand px-4 text-[12px] font-semibold text-white hover:bg-brand-light"
+                >
+                  Összes értékelés a Google Mapsen
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </>
+            )}
           </div>
         </DialogContent>
       </Dialog>
