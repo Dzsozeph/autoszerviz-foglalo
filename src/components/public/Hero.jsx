@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { siGoogle } from 'simple-icons';
 import { useCegAdat } from '@/components/CegAdatProvider';
 
 const HERO_IMAGE =
@@ -143,8 +144,16 @@ export default function Hero() {
                   </p>
                 )}
               </div>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-amber-400 transition-transform group-hover:scale-105">
+              <span className="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-white/10 px-3 text-amber-400 transition-transform group-hover:scale-105">
                 <Star className="h-5 w-5 fill-current" aria-hidden="true" />
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  style={{ fill: `#${siGoogle.hex}` }}
+                  aria-hidden="true"
+                >
+                  <path d={siGoogle.path} />
+                </svg>
               </span>
             </div>
             <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
