@@ -37,17 +37,33 @@ export default function Szolgaltatasok() {
         eyebrow="Szolgáltatások"
         title="Minden fontos javítás egy helyen"
         intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
+        aside={
+          <div className="relative isolate flex min-h-[220px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-brand-deep px-6 py-8 sm:min-h-[280px] lg:min-h-[340px]">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-brand via-brand/75 to-transparent"
+            />
+            <div className="relative z-10 text-center">
+              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-brand-ember">
+                <ImagePlus className="h-7 w-7" strokeWidth={1.6} aria-hidden="true" />
+              </span>
+              <p className="mt-4 font-heading text-[16px] font-semibold text-white">
+                Kép helye
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/60">
+                Ide tölthető fel a szolgáltatásokhoz illő kép.
+              </p>
+            </div>
+          </div>
+        }
       />
 
       <section className="container-page py-14 sm:py-20">
         {loading ? (
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(260px,0.75fr)]">
-            <div className="grid gap-6 sm:grid-cols-2">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="h-56 animate-pulse rounded-xl border border-brand-silver bg-slate-50" />
-              ))}
-            </div>
-            <div className="aspect-[4/3] animate-pulse rounded-xl border border-brand-silver bg-slate-50 lg:aspect-[3/4]" />
+          <div className="grid gap-6 sm:grid-cols-2">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="h-56 animate-pulse rounded-xl border border-brand-silver bg-slate-50" />
+            ))}
           </div>
         ) : services.length === 0 ? (
           <p className="rounded-xl border border-brand-silver bg-slate-50 p-8 text-center text-[15px] text-brand-engine">
@@ -89,19 +105,6 @@ export default function Szolgaltatasok() {
               })}
             </div>
 
-            <aside className="rounded-xl border border-brand-silver bg-white p-4 shadow-[0_18px_40px_-32px_rgba(11,31,58,0.45)] lg:sticky lg:top-24">
-              <div className="flex aspect-[4/3] flex-col items-center justify-center rounded-lg border-2 border-dashed border-brand-line bg-brand-cream px-6 text-center lg:aspect-[3/4]">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-sand text-brand-ember">
-                  <ImagePlus className="h-7 w-7" strokeWidth={1.6} aria-hidden="true" />
-                </span>
-                <p className="mt-4 font-heading text-[16px] font-semibold text-brand">
-                  Kép helye
-                </p>
-                <p className="mt-2 max-w-xs text-[13px] leading-relaxed text-brand-engine">
-                  Ide később műhelyfotó vagy a szolgáltatásokhoz kapcsolódó kép kerülhet.
-                </p>
-              </div>
-            </aside>
           </div>
         )}
       </section>

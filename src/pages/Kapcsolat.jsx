@@ -136,6 +136,27 @@ export default function Kapcsolat() {
         eyebrow="Kapcsolat"
         title="Beszéljünk az autójáról"
         intro="Kérdése van, vagy időpontot egyeztetne? Hívjon minket, írjon e-mailt, vagy küldje el üzenetét az űrlapon – munkanapokon igyekszünk minél előbb válaszolni."
+        aside={
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ember">
+              Márkafüggetlen szerviz
+            </p>
+            <h2 className="mt-2 font-heading text-[18px] font-semibold text-white">
+              Szervizelt autómárkák
+            </h2>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {CAR_BRANDS.map((brand) => (
+                <li
+                  key={brand}
+                  className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/85"
+                >
+                  <CarFront className="h-3.5 w-3.5 shrink-0 text-brand-ember" aria-hidden="true" />
+                  {brand}
+                </li>
+              ))}
+            </ul>
+          </div>
+        }
       />
 
       <section className="container-page py-14 sm:py-20">
@@ -176,7 +197,7 @@ export default function Kapcsolat() {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div>
             <div className="rounded-xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-55px_rgba(11,31,58,0.55)] sm:p-8">
               <h2 className="font-heading text-[22px] font-semibold tracking-tight text-brand">
                 Írjon nekünk
@@ -258,29 +279,6 @@ export default function Kapcsolat() {
                 </form>
               )}
             </div>
-
-            <aside className="rounded-xl border border-brand-line bg-white p-6 sm:p-7">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ember">
-                Márkafüggetlen szerviz
-              </p>
-              <h2 className="mt-2 font-heading text-[20px] font-semibold tracking-tight text-brand">
-                A legtöbb népszerű márkát vállaljuk
-              </h2>
-              <p className="mt-2 text-[14px] leading-relaxed text-brand-engine">
-                Személyautók széles köréhez biztosítunk szervizelést és javítást.
-              </p>
-              <ul className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {CAR_BRANDS.map((brand) => (
-                  <li
-                    key={brand}
-                    className="flex min-h-11 min-w-0 items-center gap-2 rounded-lg border border-brand-silver/80 bg-brand-cream px-2.5 py-2 text-[12px] font-semibold text-brand sm:text-[13px]"
-                  >
-                    <CarFront className="h-4 w-4 shrink-0 text-brand-ember" aria-hidden="true" />
-                    <span className="truncate">{brand}</span>
-                  </li>
-                ))}
-              </ul>
-            </aside>
           </div>
         </div>
       </section>
