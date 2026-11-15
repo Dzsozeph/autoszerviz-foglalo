@@ -1,5 +1,6 @@
 import AdminGate from '@/components/admin/AdminGate';
 import AdminShell from '@/components/admin/AdminShell';
+import CegAdatProvider from '@/components/CegAdatProvider';
 import usePageMeta from '@/lib/usePageMeta';
 
 export default function Admin() {
@@ -11,8 +12,10 @@ export default function Admin() {
   });
 
   return (
-    <AdminGate>
-      <AdminShell />
-    </AdminGate>
+    <CegAdatProvider>
+      <AdminGate>
+        <AdminShell />
+      </AdminGate>
+    </CegAdatProvider>
   );
 }

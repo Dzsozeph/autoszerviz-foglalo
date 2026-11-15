@@ -32,6 +32,19 @@ export const hoursSummary = (cegadat) =>
 
 export const mapQuery = (cegadat) => cegadat.map_query || cegadat.address;
 
+export function openingHoursForDate(date, cegadat) {
+  const day = new Date(`${date}T00:00:00`).getDay();
+  const value = day === 0
+    ? cegadat.hours_sunday
+    : day === 6
+      ? cegadat.hours_saturday
+      : cegadat.hours_weekdays;
+  const match = String(value || '').match(/(\d{1,2}:\d{2})\s*[–-]\s*(\d{1,2}:\d{2})/);
+  if (!match) return null;
+  const normalize = (time) => (time.length === 4 ? `0${time}` : time);
+  return { open: normalize(match[1]), close: normalize(match[2]) };
+}
+
 const parseRange = (value) => {
   const match = String(value || '').match(/(\d{1,2}:\d{2})\s*[–-]\s*(\d{1,2}:\d{2})/);
   if (!match) return null;

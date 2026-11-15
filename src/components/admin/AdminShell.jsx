@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   LayoutDashboard,
   CalendarClock,
+  CalendarDays,
   Wrench,
   HelpCircle,
   Mail,
@@ -20,10 +21,12 @@ import FaqEditor from './FaqEditor';
 import MessagesTab from './MessagesTab';
 import AccessRequestsTab from './AccessRequestsTab';
 import CegAdatokTab from './CegAdatokTab';
+import CalendarTab from './CalendarTab';
 
 const BASE_TABS = [
   { key: 'dashboard', label: 'Áttekintés', icon: LayoutDashboard },
   { key: 'requests', label: 'Időpontkérések', icon: CalendarClock },
+  { key: 'calendar', label: 'Naptár', icon: CalendarDays },
   { key: 'services', label: 'Szolgáltatások', icon: Wrench },
   { key: 'faq', label: 'GYIK', icon: HelpCircle },
   { key: 'messages', label: 'Kapcsolati üzenetek', icon: Mail },
@@ -108,6 +111,7 @@ export default function AdminShell() {
             <DashboardTab onOpenRequests={() => setTab('requests')} onOpenAccess={() => setTab('access')} />
           )}
           {tab === 'requests' && <RequestsTab />}
+          {tab === 'calendar' && <CalendarTab />}
           {tab === 'services' && <ServicesEditor />}
           {tab === 'faq' && <FaqEditor />}
           {tab === 'messages' && <MessagesTab />}
