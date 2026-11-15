@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle, CarFront } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
 import ConsentField from '@/components/public/ConsentField';
@@ -11,6 +11,63 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const CAR_BRANDS = [
+  'Abarth',
+  'Acura',
+  'Alfa Romeo',
+  'Aston Martin',
+  'Audi',
+  'Bentley',
+  'BMW',
+  'BYD',
+  'Cadillac',
+  'Chevrolet',
+  'Citroën',
+  'Chrysler',
+  'Cupra',
+  'Dacia',
+  'Dodge',
+  'DS Automobiles',
+  'Fiat',
+  'Ford',
+  'Genesis',
+  'GMC',
+  'Honda',
+  'Hyundai',
+  'Infiniti',
+  'Isuzu',
+  'Jaguar',
+  'Jeep',
+  'Kia',
+  'KGM (SsangYong)',
+  'Land Rover',
+  'Lexus',
+  'Mazda',
+  'Maserati',
+  'McLaren',
+  'Mercedes-Benz',
+  'MG',
+  'MINI',
+  'Mitsubishi',
+  'Nissan',
+  'Opel',
+  'Peugeot',
+  'Polestar',
+  'Porsche',
+  'Renault',
+  'Rolls-Royce',
+  'SEAT',
+  'Škoda',
+  'Smart',
+  'Subaru',
+  'Suzuki',
+  'Tesla',
+  'Tata',
+  'Toyota',
+  'Volkswagen',
+  'Volvo',
+];
 
 export default function Kapcsolat() {
   const cegadat = useCegAdat();
@@ -119,86 +176,111 @@ export default function Kapcsolat() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-55px_rgba(11,31,58,0.55)] sm:p-8">
-            <h2 className="font-heading text-[22px] font-semibold tracking-tight text-brand">
-              Írjon nekünk
-            </h2>
-            <p className="mt-2 text-[15px] text-brand-engine">
-              Az üzenet a kapcsolati üzenetek között jelenik meg a szerviz munkatársainál.
-            </p>
+          <div className="space-y-6">
+            <div className="rounded-xl border border-brand-line bg-white p-7 shadow-[0_30px_70px_-55px_rgba(11,31,58,0.55)] sm:p-8">
+              <h2 className="font-heading text-[22px] font-semibold tracking-tight text-brand">
+                Írjon nekünk
+              </h2>
+              <p className="mt-2 text-[15px] text-brand-engine">
+                Az üzenet a kapcsolati üzenetek között jelenik meg a szerviz munkatársainál.
+              </p>
 
-            {sent ? (
-              <div className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-6">
-                <CheckCircle2 className="h-6 w-6 text-emerald-600" />
-                <p className="mt-3 font-heading text-[17px] font-semibold text-emerald-900">
-                  Köszönjük, megkaptuk az üzenetét!
-                </p>
-                <p className="mt-1 text-[14px] leading-[1.6] text-emerald-800">
-                  Munkatársunk a megadott e-mail-címen jelentkezik.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSent(false)}
-                  className="mt-4 inline-flex min-h-[44px] items-center rounded-full border border-emerald-600 px-5 text-[13px] font-semibold uppercase tracking-[0.1em] text-emerald-800 hover:bg-emerald-100"
-                >
-                  Új üzenet írása
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
-                <div>
-                  <Label htmlFor="c-name">Név</Label>
-                  <Input
-                    id="c-name"
-                    value={form.name}
-                    onChange={(e) => setField('name', e.target.value)}
-                    placeholder="Kovács Anna"
-                    className="mt-2 h-12"
-                  />
-                  {errors.name && <p className="mt-1 text-[13px] text-red-600">{errors.name}</p>}
+              {sent ? (
+                <div className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-6">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                  <p className="mt-3 font-heading text-[17px] font-semibold text-emerald-900">
+                    Köszönjük, megkaptuk az üzenetét!
+                  </p>
+                  <p className="mt-1 text-[14px] leading-[1.6] text-emerald-800">
+                    Munkatársunk a megadott e-mail-címen jelentkezik.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSent(false)}
+                    className="mt-4 inline-flex min-h-[44px] items-center rounded-full border border-emerald-600 px-5 text-[13px] font-semibold uppercase tracking-[0.1em] text-emerald-800 hover:bg-emerald-100"
+                  >
+                    Új üzenet írása
+                  </button>
                 </div>
-                <div>
-                  <Label htmlFor="c-email">E-mail</Label>
-                  <Input
-                    id="c-email"
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setField('email', e.target.value)}
-                    placeholder="anna@example.com"
-                    className="mt-2 h-12"
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
+                  <div>
+                    <Label htmlFor="c-name">Név</Label>
+                    <Input
+                      id="c-name"
+                      value={form.name}
+                      onChange={(e) => setField('name', e.target.value)}
+                      placeholder="Kovács Anna"
+                      className="mt-2 h-12"
+                    />
+                    {errors.name && <p className="mt-1 text-[13px] text-red-600">{errors.name}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="c-email">E-mail</Label>
+                    <Input
+                      id="c-email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setField('email', e.target.value)}
+                      placeholder="anna@example.com"
+                      className="mt-2 h-12"
+                    />
+                    {errors.email && <p className="mt-1 text-[13px] text-red-600">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="c-message">Üzenet</Label>
+                    <Textarea
+                      id="c-message"
+                      rows={6}
+                      value={form.message}
+                      onChange={(e) => setField('message', e.target.value)}
+                      placeholder="Írja le, miben segíthetünk…"
+                      className="mt-2"
+                    />
+                    {errors.message && <p className="mt-1 text-[13px] text-red-600">{errors.message}</p>}
+                  </div>
+                  <ConsentField
+                    id="contact-consent"
+                    checked={form.consent}
+                    onChange={(value) => setField('consent', value)}
+                    error={errors.consent}
                   />
-                  {errors.email && <p className="mt-1 text-[13px] text-red-600">{errors.email}</p>}
-                </div>
-                <div>
-                  <Label htmlFor="c-message">Üzenet</Label>
-                  <Textarea
-                    id="c-message"
-                    rows={6}
-                    value={form.message}
-                    onChange={(e) => setField('message', e.target.value)}
-                    placeholder="Írja le, miben segíthetünk…"
-                    className="mt-2"
-                  />
-                  {errors.message && <p className="mt-1 text-[13px] text-red-600">{errors.message}</p>}
-                </div>
-                <ConsentField
-                  id="contact-consent"
-                  checked={form.consent}
-                  onChange={(value) => setField('consent', value)}
-                  error={errors.consent}
-                />
-                {serverError && (
-                  <p className="rounded-lg bg-red-50 p-3 text-[13px] text-red-700">{serverError}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={sending || !form.consent}
-                  className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-brand-ember px-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.2)] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {sending ? 'Küldés folyamatban…' : 'Üzenet küldése'}
-                </button>
-              </form>
-            )}
+                  {serverError && (
+                    <p className="rounded-lg bg-red-50 p-3 text-[13px] text-red-700">{serverError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={sending || !form.consent}
+                    className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-brand-ember px-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.2)] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {sending ? 'Küldés folyamatban…' : 'Üzenet küldése'}
+                  </button>
+                </form>
+              )}
+            </div>
+
+            <aside className="rounded-xl border border-brand-line bg-white p-6 sm:p-7">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ember">
+                Márkafüggetlen szerviz
+              </p>
+              <h2 className="mt-2 font-heading text-[20px] font-semibold tracking-tight text-brand">
+                A legtöbb népszerű márkát vállaljuk
+              </h2>
+              <p className="mt-2 text-[14px] leading-relaxed text-brand-engine">
+                Személyautók széles köréhez biztosítunk szervizelést és javítást.
+              </p>
+              <ul className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {CAR_BRANDS.map((brand) => (
+                  <li
+                    key={brand}
+                    className="flex min-h-11 min-w-0 items-center gap-2 rounded-lg border border-brand-silver/80 bg-brand-cream px-2.5 py-2 text-[12px] font-semibold text-brand sm:text-[13px]"
+                  >
+                    <CarFront className="h-4 w-4 shrink-0 text-brand-ember" aria-hidden="true" />
+                    <span className="truncate">{brand}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 export default function PageHeader({ eyebrow, title, intro, children }) {
   return (
-    <section className="relative bg-brand text-white">
+    <section className="relative bg-[linear-gradient(313deg,rgb(216,118,61)_0%,rgba(0,0,0,1)_0%)] text-white">
       <div className="container-page py-14 sm:py-16">
         {eyebrow && (
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
