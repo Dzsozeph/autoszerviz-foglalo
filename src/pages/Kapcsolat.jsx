@@ -49,27 +49,20 @@ const CAR_LOGOS = [
   siBmw,
   siChevrolet,
   siCitroen,
-  siDacia,
   siFiat,
   siFord,
   siHonda,
   siHyundai,
-  siJeep,
   siKia,
   siMazda,
-  siMg,
   siMini,
   siMitsubishi,
   siNissan,
-  siOpel,
   siPeugeot,
   siRenault,
   siSeat,
   siSkoda,
   siSubaru,
-  siSuzuki,
-  siTesla,
-  siToyota,
   siVolkswagen,
   siVolvo,
 ];
@@ -150,13 +143,13 @@ export default function Kapcsolat() {
         aside={
           <ul
             aria-label="Szervizelt autómárkák"
-            className="grid grid-cols-5 justify-items-center gap-2 sm:grid-cols-6 sm:gap-3 lg:grid-cols-5 xl:grid-cols-6"
+            className="flex flex-wrap justify-center gap-x-2 gap-y-2"
           >
             {CAR_LOGOS.map((logo) => (
               <li
                 key={logo.slug}
                 title={logo.title}
-                className="flex h-11 w-11 items-center justify-center rounded-xl bg-white p-2 shadow-sm transition-transform hover:scale-105 sm:h-12 sm:w-12"
+                className="flex h-14 w-14 items-center justify-center rounded-lg bg-white p-2 shadow-sm transition-transform hover:scale-105"
               >
                 <svg
                   viewBox="0 0 24 24"
