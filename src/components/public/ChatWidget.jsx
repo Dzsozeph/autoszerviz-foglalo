@@ -106,12 +106,20 @@ useEffect(() => {
           className="fixed bottom-[148px] right-4 z-50 flex max-h-[min(560px,calc(100vh-200px))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-brand-silver bg-white shadow-[0_28px_70px_-24px_rgba(11,31,58,0.5)] sm:bottom-[92px] sm:right-6 sm:max-h-[min(560px,calc(100vh-140px))]"
         >
           <div className="flex items-center gap-3 bg-brand px-5 py-4 text-white">
-            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-white/20">
-  <img
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Ef7GIBCjIs0Tc_-WZFxFq1uAufwYsr_Wcl9BpLYIIEOFd9b2h1D_npfu&s=10"
-    alt="Virtuális asszisztens"
-    className="h-full w-full object-cover"
-  />
+            <div className="relative h-10 w-10 shrink-0">
+  <div className="h-full w-full overflow-hidden rounded-full border-2 border-white/20">
+    <img
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Ef7GIBCjIs0Tc_-WZFxFq1uAufwYsr_Wcl9BpLYIIEOFd9b2h1D_npfu&s=10"
+      alt="Virtuális asszisztens"
+      className="h-full w-full object-cover"
+    />
+  </div>
+
+  {/* Zöld online jelzés */}
+  <span className="absolute bottom-0 right-0 flex h-3 w-3">
+    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+    <span className="relative inline-flex h-3 w-3 rounded-full border-2 border-white bg-green-500" />
+  </span>
 </div>
             <div className="min-w-0 flex-1">
               <p className="truncate font-heading text-[15px] font-semibold">Virtuális asszisztens</p>
