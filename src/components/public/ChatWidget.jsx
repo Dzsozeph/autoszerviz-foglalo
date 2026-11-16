@@ -56,9 +56,13 @@ export default function ChatWidget() {
           className="fixed bottom-[148px] right-4 z-50 flex max-h-[min(560px,calc(100vh-200px))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-brand-silver bg-white shadow-[0_28px_70px_-24px_rgba(11,31,58,0.5)] sm:bottom-[92px] sm:right-6 sm:max-h-[min(560px,calc(100vh-140px))]"
         >
           <div className="flex items-center gap-3 bg-brand px-5 py-4 text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-ember/15 text-brand-ember">
-              <MessageCircle className="h-5 w-5" />
-            </span>
+            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-white/20">
+  <img
+    src="/assistant.jpg"
+    alt="Virtuális asszisztens"
+    className="h-full w-full object-cover"
+  />
+</div>
             <div className="min-w-0 flex-1">
               <p className="truncate font-heading text-[15px] font-semibold">Virtuális asszisztens</p>
               <p className="text-[12px] text-white/65">{cegadat.name} · minta oldal</p>
