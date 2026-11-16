@@ -206,7 +206,7 @@ useEffect(() => {
   <X className="h-6 w-6" />
 ) : (
   <img
-    src="https://cdn.pixabay.com/photo/2023/08/31/05/25/ai-generated-8224427_640.png"
+    src="https://media.easy-peasy.ai/56dc5465-4437-4512-b056-6d5ecef89abf/3f95425e-22be-4210-bb73-b51cc6d42447.png"
     alt="Chat"
     className="h-full w-full rounded-full object-cover"
   />
