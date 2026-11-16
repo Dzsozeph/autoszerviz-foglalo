@@ -88,9 +88,15 @@ useEffect(() => {
       }}
       className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-ember px-4 py-3 text-sm font-semibold text-white"
     >
-      Beszélgetés indítása
+       Beszélgetés indítása
       <ArrowRight className="h-4 w-4" />
     </button>
+
+    {/* A chatbuborék farkincája */}
+    <div
+      className="absolute -bottom-2 right-7 h-4 w-4 rotate-45 border-r border-b border-brand-silver bg-white"
+    />
+
   </div>
 )}
       {open && (
