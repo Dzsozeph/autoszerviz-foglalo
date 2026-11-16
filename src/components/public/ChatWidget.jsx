@@ -148,7 +148,7 @@ export default function ChatWidget() {
   <X className="h-6 w-6" />
 ) : (
   <img
-    src="/assistant.jpg"
+    src="https://cdn.pixabay.com/photo/2023/08/31/05/25/ai-generated-8224427_640.png"
     alt="Chat"
     className="h-full w-full rounded-full object-cover"
   />
