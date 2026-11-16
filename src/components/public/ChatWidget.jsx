@@ -203,6 +203,15 @@ useEffect(() => {
     className="h-full w-full rounded-full object-cover"
   />
 )}
+{!open && (
+  <span
+    aria-hidden="true"
+    className="absolute right-0 top-0 flex h-4 w-4"
+  >
+    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+    <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-white bg-green-500" />
+  </span>
+)}
       </button>
     </>
   );
