@@ -46,9 +46,53 @@ export default function ChatWidget() {
     event.preventDefault();
     send();
   };
+const [showPopup, setShowPopup] = useState(false);
 
+useEffect(() => {
+  if (open) return;
+
+  const timer = setTimeout(() => {
+    setShowPopup(true);
+  }, 4000);
+
+  return () => clearTimeout(timer);
+}, [open]);
   return (
     <>
+    {showPopup && !open && (
+  <div className="fixed bottom-36 right-5 z-50 w-[320px] animate-in slide-in-from-bottom-3 fade-in duration-500 rounded-2xl border border-brand-silver bg-white p-5 shadow-2xl">
+
+    <button
+      onClick={() => setShowPopup(false)}
+      className="absolute right-3 top-3 text-gray-400"
+      aria-label="Bezárás"
+    >
+      <X className="h-4 w-4" />
+    </button>
+
+    <p className="mb-2 font-semibold text-brand">
+      Kérdése van? Segítünk! 👋
+    </p>
+
+    <p className="mb-4 text-sm leading-relaxed text-gray-600">
+      Virtuális asszisztensünk készséggel válaszol
+      kérdéseire, segít szolgáltatásaink megismerésében
+      és az időpontfoglalásban.
+      Miben segíthetünk Önnek?
+    </p>
+
+    <button
+      onClick={() => {
+        setShowPopup(false);
+        setOpen(true);
+      }}
+      className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-ember px-4 py-3 text-sm font-semibold text-white"
+    >
+      Beszélgetés indítása
+      <ArrowRight className="h-4 w-4" />
+    </button>
+  </div>
+)}
       {open && (
         <div
           role="dialog"
