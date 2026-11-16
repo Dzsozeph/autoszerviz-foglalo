@@ -137,7 +137,7 @@ export default function Hero() {
               </p>
               <Link
                 to="/idopont"
-                className="group inline-flex min-h-[52px] items-center gap-3 rounded-full bg-brand-ember px-8 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all hover:shadow-[0_0_0_5px_rgba(249,115,22,0.22)]"
+                className="group inline-flex min-h-[32px] sm:min-h-[52px] items-center gap-3 rounded-full bg-brand-ember px-8 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all hover:shadow-[0_0_0_5px_rgba(249,115,22,0.22)]"
               >
                 Időpontot kérek
                 <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" strokeWidth={1.6} />
