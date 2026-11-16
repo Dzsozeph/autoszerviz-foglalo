@@ -58,7 +58,7 @@ export default function ChatWidget() {
           <div className="flex items-center gap-3 bg-brand px-5 py-4 text-white">
             <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-white/20">
   <img
-    src="/assistant.jpg"
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Ef7GIBCjIs0Tc_-WZFxFq1uAufwYsr_Wcl9BpLYIIEOFd9b2h1D_npfu&s=10"
     alt="Virtuális asszisztens"
     className="h-full w-full object-cover"
   />
