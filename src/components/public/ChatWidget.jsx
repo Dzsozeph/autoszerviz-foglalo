@@ -60,7 +60,6 @@ useEffect(() => {
   return (
     <>
     {showPopup && !open && (
-      
   <div className="fixed bottom-[90px] right-5 z-50 w-[320px] animate-in slide-in-from-bottom-3 fade-in duration-700 rounded-2xl border border-brand-silver bg-white p-5 shadow-2xl relative">
 
     <button
