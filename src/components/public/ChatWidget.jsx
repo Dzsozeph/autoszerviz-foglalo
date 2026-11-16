@@ -200,7 +200,7 @@ useEffect(() => {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Chat bezárása' : 'Chat megnyitása'}
         aria-expanded={open}
-        className="fixed bottom-[76px] right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-ember text-white shadow-[0_14px_34px_-10px_rgba(249,115,22,0.8)] transition-transform hover:scale-105 sm:bottom-5 sm:right-6 sm:h-16 sm:w-16"
+        className="fixed bottom-[100px] right-4 sm:right-5 md:bottom-[110px] md:right-6 lg:bottom-[100px] lg:right-6 z-[100] w-[calc(100vw-32px)] sm:w-[320px] animate-in slide-in-from-bottom-3 fade-in duration-700 rounded-2xl border border-brand-silver bg-white p-5 shadow-2xl"
       >
         {open ? (
   <X className="h-6 w-6" />
