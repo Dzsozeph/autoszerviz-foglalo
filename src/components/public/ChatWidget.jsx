@@ -109,7 +109,7 @@ useEffect(() => {
             <div className="relative h-10 w-10 shrink-0">
   <div className="h-full w-full overflow-hidden rounded-full border-2 border-white/20">
     <img
-      src="https://img.magnific.com/premium-photo/woman-wearing-headset-with-word-it_1059423-8089.jpg?semt=ais_hybrid&w=740&q=80"
+      src="https://media.easy-peasy.ai/56dc5465-4437-4512-b056-6d5ecef89abf/3f95425e-22be-4210-bb73-b51cc6d42447.png"
       alt="Virtuális asszisztens"
       className="h-full w-full object-cover"
     />
@@ -206,7 +206,7 @@ useEffect(() => {
   <X className="h-6 w-6" />
 ) : (
   <img
-    src="https://img.magnific.com/premium-photo/woman-wearing-headset-with-word-it_1059423-8089.jpg?semt=ais_hybrid&w=740&q=80"
+    src="https://media.easy-peasy.ai/56dc5465-4437-4512-b056-6d5ecef89abf/3f95425e-22be-4210-bb73-b51cc6d42447.png"
     alt="Chat"
     className="h-full w-full rounded-full object-cover"
   />
