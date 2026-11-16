@@ -109,7 +109,7 @@ useEffect(() => {
             <div className="relative h-10 w-10 shrink-0">
   <div className="h-full w-full overflow-hidden rounded-full border-2 border-white/20">
     <img
-      src="https://media.easy-peasy.ai/56dc5465-4437-4512-b056-6d5ecef89abf/3f95425e-22be-4210-bb73-b51cc6d42447.png"
+      src="https://www.abby.com/wp-content/uploads/2025/05/Rectangle-52-1.png"
       alt="Virtuális asszisztens"
       className="h-full w-full object-cover"
     />
@@ -206,7 +206,7 @@ useEffect(() => {
   <X className="h-6 w-6" />
 ) : (
   <img
-    src="https://media.easy-peasy.ai/56dc5465-4437-4512-b056-6d5ecef89abf/3f95425e-22be-4210-bb73-b51cc6d42447.png"
+    src="https://www.abby.com/wp-content/uploads/2025/05/Rectangle-52-1.png"
     alt="Chat"
     className="h-full w-full rounded-full object-cover"
   />
