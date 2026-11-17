@@ -209,7 +209,7 @@ export default function Hero() {
   </svg>
 
   <span className="text-[10px] font-medium tracking-wide text-white/80">
-    Vélemények megtekintése
+    Kattints a véleményekért
   </span>
 </div>
 </button>
