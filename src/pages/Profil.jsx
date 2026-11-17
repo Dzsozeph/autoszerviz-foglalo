@@ -84,38 +84,39 @@ export default function Profil() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Saját fiók"
-        title={`Üdvözöljük${displayName !== 'Ügyfél' ? `, ${displayName}` : ''}!`}
-        intro="Itt megtekintheti a fiókjához tartozó adatokat, időpontkéréseit és számláit."
+      <div className="container-page flex items-center justify-between gap-6 py-10 sm:py-14">
+  <div>
+    <p className="text-sm font-semibold uppercase tracking-widest text-brand-ember">
+      Saját fiók
+    </p>
+    <h1 className="mt-2 font-heading text-3xl font-bold text-brand sm:text-4xl">
+      Üdvözöljük{displayName !== 'Ügyfél' ? `, ${displayName}` : ''}!
+    </h1>
+    <p className="mt-3 max-w-xl text-sm leading-6 text-brand-engine sm:text-base">
+      Itt megtekintheti a fiókjához tartozó adatokat, időpontkéréseit és számláit.
+    </p>
+  </div>
+
+  <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-line bg-brand-sand shadow-md sm:h-20 sm:w-20">
+    {profile?.avatar_url ? (
+      <img
+        src={profile.avatar_url}
+        alt="Profilkép"
+        className="h-full w-full object-cover"
       />
+    ) : (
+      <span className="font-heading text-2xl font-bold text-brand-ember sm:text-3xl">
+        {displayName.charAt(0).toUpperCase()}
+      </span>
+    )}
+  </div>
+</div>
 
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="space-y-6">
             <InfoCard icon={UserRound} title="Fiókadatai">
-            <div className="mb-6 flex flex-col items-center text-center">
-  <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-brand-sand shadow-lg ring-2 ring-brand-line">
-    {profile?.avatar_url ? (
-      <img
-        src={profile.avatar_url}
-        alt={`${displayName} profilképe`}
-        className="h-full w-full object-cover"
-      />
-    ) : (
-      <span className="font-heading text-3xl font-semibold text-brand-ember">
-        {displayName.charAt(0).toUpperCase()}
-      </span>
-    )}
-  </div>
-
-  <h3 className="mt-3 font-heading text-lg font-semibold text-brand">
-    {displayName}
-  </h3>
-  <p className="mt-1 text-sm text-brand-engine">
-    Ügyfélfiók
-  </p>
-</div>
+            
               <dl className="space-y-4">
                 <div>
                   <dt className="text-[12px] font-semibold uppercase tracking-[0.12em] text-brand-engine">
