@@ -147,49 +147,72 @@ export default function Hero() {
           </div>
 
           {/* Google értékelési sáv - hover nélkül */}
-          <button
-            type="button"
-            onClick={() => setReviewsOpen(true)}
-            aria-haspopup="dialog"
-            aria-label="Google-értékelések megtekintése"
-            className="absolute left-1/2 top-[-20px] z-20 flex h-[45px] w-[230px] max-w-full -translate-x-1/2 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 p-0 shadow-xl backdrop-blur-md lg:left-[35%] lg:top-[calc(50%+40px)] lg:h-[50px] lg:w-[230px] lg:translate-x-0 lg:rounded-2xl"
-          >
-            <div className="flex w-full items-center justify-center gap-2 px-2">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4 shrink-0"
-                style={{ fill: `#${siGoogle.hex}` }}
-                aria-hidden="true"
-              >
-                <path d={siGoogle.path} />
-              </svg>
+          
+<button
+  type="button"
+  onClick={() => setReviewsOpen(true)}
+  aria-haspopup="dialog"
+  aria-label="Google-értékelések megtekintése"
+  className="group absolute left-1/2 top-[-20px] z-20 w-[230px] max-w-full -translate-x-1/2 lg:left-[35%] lg:top-[calc(50%+40px)] lg:translate-x-0"
+>
+  <div className="relative z-10 flex h-[45px] w-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 shadow-xl backdrop-blur-md transition-colors duration-200 group-hover:bg-[#202020] lg:h-[50px] lg:rounded-2xl">
+    <div className="flex w-full items-center justify-center gap-2 px-2">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4 shrink-0"
+        style={{ fill: `#${siGoogle.hex}` }}
+        aria-hidden="true"
+      >
+        <path d={siGoogle.path} />
+      </svg>
 
-              {reviews?.rating != null ? (
-                <RatingStars rating={reviews.rating} size="h-3 w-3" />
-              ) : (
-                <span className="text-sm text-white/60">–</span>
-              )}
+      {reviews?.rating != null ? (
+        <RatingStars rating={reviews.rating} size="h-3 w-3" />
+      ) : (
+        <span className="text-sm text-white/60">–</span>
+      )}
 
-              <span className="text-[12px] font-bold text-white">
-                {reviews?.rating != null
-                  ? reviews.rating.toLocaleString('hu-HU', {
-                      minimumFractionDigits: 1,
-                      maximumFractionDigits: 1,
-                    })
-                  : '–'}
-              </span>
+      <span className="text-[12px] font-bold text-white">
+        {reviews?.rating != null
+          ? reviews.rating.toLocaleString('hu-HU', {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            })
+          : '–'}
+      </span>
 
-              <span className="text-[10px] text-white/75">
-                {reviews?.userRatingCount != null
-                  ? `${reviews.userRatingCount.toLocaleString('hu-HU')} értékelés`
-                  : 'Betöltés…'}
-              </span>
-            </div>
+      <span className="text-[10px] text-white/75">
+        {reviews?.userRatingCount != null
+          ? `${reviews.userRatingCount.toLocaleString('hu-HU')} értékelés`
+          : 'Betöltés…'}
+      </span>
+    </div>
 
-            <span className="text-[9px] font-medium tracking-wide text-white/65">
-              Google-értékelések
-            </span>
-          </button>
+    <span className="text-[9px] font-medium tracking-wide text-white/65">
+      Google-értékelések
+    </span>
+  </div>
+
+  {/* Hover jelzés */}
+  <div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[#171717]/95 px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+    <span className="text-[10px] font-medium tracking-wide text-white/80">
+      Vélemények megtekintése
+    </span>
+    <svg
+      className="mt-1 h-3 w-3 text-orange-500"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </div>
+</button>
+
         </div>
       </div>
 
