@@ -77,7 +77,7 @@ export default function Kapcsolat() {
       });
       setForm({ name: '', email: '', message: '', consent: false });
       setSent(true);
-    } catch (error) {
+    } catch {
       setServerError('Az üzenet küldése nem sikerült. Kérjük, próbálja újra, vagy hívjon minket telefonon.');
     } finally {
       setSending(false);
@@ -90,30 +90,6 @@ export default function Kapcsolat() {
         eyebrow="Kapcsolat"
         title="Beszéljünk az autójáról"
         intro="Kérdése van, vagy időpontot egyeztetne? Hívjon minket, írjon e-mailt, vagy küldje el üzenetét az űrlapon – munkanapokon igyekszünk minél előbb válaszolni."
-        aside={
-          <ul
-            aria-label="Szervizelt autómárkák"
-            className="flex flex-wrap justify-center gap-x-2 gap-y-2"
-          >
-            {CAR_LOGOS.map((logo) => (
-              <li
-                key={logo.slug}
-                title={logo.title}
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-white p-2 shadow-sm transition-transform hover:scale-105"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-label={logo.title}
-                  className="h-full w-full"
-                  style={{ fill: `#${logo.hex}` }}
-                >
-                  <path d={logo.path} />
-                </svg>
-              </li>
-              ))}
-          </ul>
-        }
       />
 
       <section className="container-page py-14 sm:py-20">
