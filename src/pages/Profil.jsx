@@ -84,31 +84,37 @@ export default function Profil() {
 
   return (
     <>
-      <div className="container-page flex items-center justify-between gap-6 py-10 sm:py-14">
-  <div>
-    <p className="text-sm font-semibold uppercase tracking-widest text-brand-ember">
-      Saját fiók
-    </p>
-    <h1 className="mt-2 font-heading text-3xl font-bold text-brand sm:text-4xl">
-      Üdvözöljük{displayName !== 'Ügyfél' ? `, ${displayName}` : ''}!
-    </h1>
-    <p className="mt-3 max-w-xl text-sm leading-6 text-brand-engine sm:text-base">
-      Itt megtekintheti a fiókjához tartozó adatokat, időpontkéréseit és számláit.
-    </p>
-  </div>
+<div className="container-page py-8 sm:py-12">
+  <div className="relative overflow-hidden rounded-3xl border border-brand-line bg-brand-sand px-6 py-8 shadow-[0_20px_50px_-35px_rgba(11,31,58,0.35)] sm:px-10 sm:py-10">
+    <div className="flex items-center justify-between gap-5">
+      <div className="min-w-0">
+        <p className="text-sm font-semibold uppercase tracking-widest text-brand-ember">
+          Saját fiók
+        </p>
 
-  <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-line bg-brand-sand shadow-md sm:h-20 sm:w-20">
-    {profile?.avatar_url ? (
-      <img
-        src={profile.avatar_url}
-        alt="Profilkép"
-        className="h-full w-full object-cover"
-      />
-    ) : (
-      <span className="font-heading text-2xl font-bold text-brand-ember sm:text-3xl">
-        {displayName.charAt(0).toUpperCase()}
-      </span>
-    )}
+        <h1 className="mt-3 font-heading text-3xl font-bold text-brand sm:text-4xl">
+          Üdvözöljük{displayName !== 'Ügyfél' ? `, ${displayName}` : ''}!
+        </h1>
+
+        <p className="mt-3 max-w-xl text-sm leading-6 text-brand-engine sm:text-base">
+          Itt megtekintheti a fiókjához tartozó adatokat, időpontkéréseit és számláit.
+        </p>
+      </div>
+
+      <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-white shadow-lg ring-1 ring-brand-line sm:h-24 sm:w-24">
+        {profile?.avatar_url ? (
+          <img
+            src={profile.avatar_url}
+            alt="Profilkép"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <span className="font-heading text-2xl font-bold text-brand-ember sm:text-4xl">
+            {displayName.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </div>
+    </div>
   </div>
 </div>
 
