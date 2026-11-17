@@ -134,12 +134,8 @@ export default function Hero() {
 
           <div className="flex min-w-0 flex-col gap-8">
 
-            {/* Felső sor: Prémium autószerviz felirat + Google értékelések */}
+            {/* Google értékelési sáv a Prémium felirat fölött */}
             <div className="flex flex-col items-start gap-3">
-
-              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
-                Prémium autószerviz · {cegadat.city}
-              </p>
 
               {/* Google értékelési sáv */}
               <button
@@ -147,7 +143,7 @@ export default function Hero() {
                 onClick={() => setReviewsOpen(true)}
                 aria-haspopup="dialog"
                 aria-label="Google-értékelések megtekintése"
-                className="group relative z-20 ml-4 -translate-y-1 w-[230px] max-w-full shrink-0"
+                className="group relative z-20 w-[230px] max-w-full shrink-0"
               >
                 <div className="relative z-10 flex h-[45px] w-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 shadow-xl backdrop-blur-md transition-colors duration-200 group-hover:bg-[#202020] lg:h-[40px]">
 
@@ -208,6 +204,12 @@ export default function Hero() {
                   </span>
                 </div>
               </button>
+
+              {/* Prémium autószerviz felirat */}
+              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
+                Prémium autószerviz · {cegadat.city}
+              </p>
+
             </div>
 
             <h1 className="font-heading text-[clamp(2.35rem,7.2vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
