@@ -196,7 +196,7 @@ export default function Hero() {
   {/* Hover jelzés */}
   <div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[#171717]/95 px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
     <span className="text-[10px] font-medium tracking-wide text-white/80">
-      Vélemények megtekintése
+      Kattints a véleményekért
     </span>
     <svg
       className="mt-1 h-3 w-3 text-orange-500"
