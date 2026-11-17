@@ -38,8 +38,8 @@ export default function Szolgaltatasok() {
   title="Minden fontos javítás egy helyen"
   intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
   backgroundImage="https://i.ibb.co/9337qQDv/service.webp"
-
-      />
+  backgroundSize="contain"
+/>
 
       <section className="container-page py-14 sm:py-20">
         {loading ? (
