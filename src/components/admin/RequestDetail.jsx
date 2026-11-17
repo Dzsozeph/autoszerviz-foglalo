@@ -284,7 +284,7 @@ export default function RequestDetail({
 
   return (
     <Dialog open={!!request} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+      <DialogContent className="h-[90dvh] max-h-[90dvh] w-[calc(100vw-2rem)] max-w-5xl overflow-y-auto overscroll-y-contain">
         <DialogHeader>
           <DialogTitle className="font-heading text-[20px] text-brand">
             {request.customer_name} · {request.license_plate}
