@@ -37,7 +37,7 @@ export default function Szolgaltatasok() {
   eyebrow="Szolgáltatások"
   title="Minden fontos javítás egy helyen"
   intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
-  backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
+  backgroundImage="https://i.ibb.co/Pzm9dHbC/45033a90-d7b5-4ff6-9561-1b932b8a9a8d.png"
 
       />
 
