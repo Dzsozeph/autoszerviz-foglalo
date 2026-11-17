@@ -38,9 +38,9 @@ export default function Gyik() {
   return (
     <>
       <PageHeader
-  eyebrow="Szolgáltatások"
-  title="Minden fontos javítás egy helyen"
-  intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
+  eyebrow="gyik"
+  title="Gyakori kérdések"
+  intro="AÖsszegyűjtöttük, amit a leggyakrabban kérdeznek tőlünk az időpontkérésről, az árakról és a javítás menetéről."
   backgroundImage="https://i.ibb.co/GGrSF5D/q.jpg"
   backgroundSize="contain"
 />
