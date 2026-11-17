@@ -295,7 +295,7 @@ export default function Hero() {
                 type="button"
                 onClick={loadReviews}
                 disabled={reviewsLoading}
-                className="inline-flex min-h-9 items-center gap-2 border border-red-300 px-3 text-[12px] font-semibold hover:bg-red-100 disabled:opacity-50"
+                className="inline-flex min-h-9 items-center gap-2 rounded-full border border-red-300 px-3 text-[12px] font-semibold hover:bg-red-100 disabled:opacity-50"
               >
                 <RefreshCw className="h-3.5 w-3.5" /> Újrapróbálás
               </button>
