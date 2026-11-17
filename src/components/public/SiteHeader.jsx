@@ -71,14 +71,14 @@ export default function SiteHeader() {
           </Link>
           <Link
             to="/register"
-            className="inline-flex min-h-[40px] ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5 hover:border-b-2"
+            className="inline-flex min-h-[35px] ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5 hover:border-b-2"
           >
             <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
             Regisztráció
           </Link>
           <Link
             to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-            className="inline-flex min-h-[40px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50 "
+            className="inline-flex min-h-[35px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50 "
           >
             <UserRound className="h-4 w-4" aria-hidden="true" />
             <span className="max-w-[140px] truncate" title={profileLabel}>
