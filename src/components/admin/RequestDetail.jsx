@@ -46,6 +46,7 @@ export default function RequestDetail({
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [editing, setEditing] = useState(false);
+  const [creatingInvoice, setCreatingInvoice] = useState(false);
   const [draft, setDraft] = useState(EMPTY_DRAFT);
 
   useEffect(() => {
@@ -130,6 +131,32 @@ export default function RequestDetail({
 
   const setField = (field, value) => setDraft((current) => ({ ...current, [field]: value }));
 
+  const createInvoice = async () => {
+    if (!request?.email || creatingInvoice) return;
+    setCreatingInvoice(true);
+    setMessage('');
+    try {
+      const response = await base44.functions.invoke('createInvoice', {
+        bookingId: request.id,
+        amount: 47500,
+      });
+      const data = response.data || {};
+      if (data.error) {
+        throw new Error(data.message || 'A számla kiállítása nem sikerült.');
+      }
+
+      setMessage(
+        data.emailSent
+          ? `Számla elküldve: ${data.invoice?.invoice_number || 'TESZT'} – e-mailben is megérkezett az ügyfélnek.`
+          : 'A számla létrejött, de az e-mail küldése nem sikerült.'
+      );
+    } catch (error) {
+      setMessage(error.message || 'A számla kiállítása nem sikerült.');
+    } finally {
+      setCreatingInvoice(false);
+    }
+  };
+
   return (
     <Dialog open={!!request} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
@@ -179,6 +206,17 @@ export default function RequestDetail({
             onChange={(status) => onStatusChange(request.id, status)}
             disabled={false}
           />
+        </div>
+
+        <div className="mt-4 flex justify-end">
+          <button
+            type="button"
+            disabled={creatingInvoice || !request.email}
+            onClick={createInvoice}
+            className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-full bg-brand-ember px-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-white disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {creatingInvoice ? 'Számla kiállítása…' : 'Számla kiállítása'}
+          </button>
         </div>
 
         {editing ? (

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, X, Send, ArrowRight } from 'lucide-react';
+import { X, Send, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useCegAdat } from '@/components/CegAdatProvider';
 

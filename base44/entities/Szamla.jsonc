@@ -1,0 +1,88 @@
+{
+  "name": "Szamla",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string",
+      "title": "Foglalás azonosító"
+    },
+    "invoice_number": {
+      "type": "string",
+      "title": "Számlaszám"
+    },
+    "customer_name": {
+      "type": "string",
+      "title": "Ügyfél neve"
+    },
+    "email": {
+      "type": "string",
+      "title": "Ügyfél e-mail"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefonszám"
+    },
+    "service": {
+      "type": "string",
+      "title": "Szolgáltatás"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Bruttó összeg"
+    },
+    "currency": {
+      "type": "string",
+      "title": "Pénznem",
+      "default": "HUF"
+    },
+    "status": {
+      "type": "string",
+      "title": "Státusz",
+      "enum": ["issued", "sent", "failed"],
+      "default": "issued"
+    },
+    "pdf_url": {
+      "type": "string",
+      "title": "PDF URL"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Megjegyzés"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "E-mail küldés ideje"
+    }
+  },
+  "required": [
+    "booking_id",
+    "invoice_number",
+    "customer_name",
+    "email",
+    "amount",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
