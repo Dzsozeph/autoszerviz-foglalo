@@ -85,7 +85,7 @@ export default function Profil() {
   return (
     <>
 <div className="container-page py-8 sm:py-12">
-  <div className="relative overflow-hidden rounded-3xl border border-brand-line bg-brand-sand px-6 py-8 shadow-[0_20px_50px_-35px_rgba(11,31,58,0.35)] sm:px-10 sm:py-10">
+  <div className="relative overflow-hidden rounded-3xl border border-brand-line bg-brand-sand px-6 py-8 shadow-[0_20px_50px_-35px_#9E4B10] sm:px-10 sm:py-10">
     <div className="flex items-center justify-between gap-5">
       <div className="min-w-0">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand-ember">
