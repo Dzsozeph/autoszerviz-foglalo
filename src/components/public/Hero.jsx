@@ -169,9 +169,20 @@ export default function Hero() {
       <span className="text-sm text-white/60">–</span>
     )}
 
-    <span className="text-[11px] text-white/75">
-      ({reviews?.userRatingCount?.toLocaleString('hu-HU') ?? '…'})
-    </span>
+    <span className="text-[12px] font-bold text-white">
+  {reviews?.rating != null
+    ? reviews.rating.toLocaleString('hu-HU', {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      })
+    : '–'}
+</span>
+
+<span className="text-[10px] text-white/75">
+  {reviews?.userRatingCount != null
+    ? `${reviews.userRatingCount.toLocaleString('hu-HU')} értékelés`
+    : 'Értékelések betöltése…'}
+</span>
   </div>
 
   <span className="text-[9px] font-medium tracking-wide text-white/65">
