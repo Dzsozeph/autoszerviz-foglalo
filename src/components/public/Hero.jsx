@@ -233,10 +233,21 @@ export default function Hero() {
     background: `
       linear-gradient(
         to right,
-        transparent 0%,
-        rgba(0,0,0,0.05) 20%,
-        rgba(0,0,0,0.35) 55%,
-        rgba(0,0,0,0.65) 100%
+        #000000 0%,
+        rgba(0,0,0,0.95) 8%,
+        rgba(0,0,0,0.65) 25%,
+        rgba(0,0,0,0.15) 55%,
+        transparent 80%
+      ),
+      linear-gradient(
+        to top,
+        rgba(0,0,0,0.8) 0%,
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        transparent 35%,
+        rgba(148,64,0,0.18) 100%
       )
     `,
   }}
