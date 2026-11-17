@@ -40,7 +40,29 @@ export default async function (req) {
     const customers = email
       ? await base44.asServiceRole.entities.Ugyfel.filter({ email }, { limit: 1 })
       : { items: [] };
+    const invoicesPage = email
+      ? await base44.asServiceRole.entities.Szamla.filter(
+          { email },
+          { sort: '-created_date', limit: 100 }
+        )
+      : { items: [] };
     const customer = (customers.items || customers)[0];
+    const invoices = (invoicesPage.items || invoicesPage)
+      .filter((invoice) => invoice.email?.trim().toLowerCase() === email)
+      .map((invoice) => ({
+        id: invoice.id,
+        invoice_number: invoice.invoice_number,
+        customer_name: invoice.customer_name,
+        service: invoice.service,
+        amount: invoice.amount,
+        currency: invoice.currency || 'HUF',
+        status: invoice.status,
+        pdf_url: invoice.pdf_url,
+        notes: invoice.notes,
+        sent_at: invoice.sent_at,
+        last_email_error: invoice.last_email_error,
+        created_date: invoice.created_date,
+      }));
 
     const requests = new Map();
     for (const request of [
@@ -64,6 +86,7 @@ export default async function (req) {
       requests: [...requests.values()].sort((a, b) =>
         (b.created_date || '').localeCompare(a.created_date || '')
       ),
+      invoices,
     });
   } catch (error) {
     console.error('Profiladatok betöltési hiba', { message: error?.message });

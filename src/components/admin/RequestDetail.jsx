@@ -174,11 +174,17 @@ export default function RequestDetail({
         throw new Error(data.message || 'A számla kiállítása nem sikerült.');
       }
 
-      setMessage(
-        data.emailSent
-          ? `Számla elküldve: ${data.invoice?.invoice_number || 'TESZT'} – e-mailben megérkezett az ügyfélnek.`
-          : 'A számla létrejött, de az e-mail küldése nem sikerült.'
-      );
+      if (data.emailStatus === 'failed' || data.emailSent === false) {
+        setMessage(
+          `A számla rögzítve, de az e-mail nem ment ki: ${data.emailError || 'ismeretlen küldési hiba'}. Javítsa a hibát, majd próbálja újra.`
+        );
+      } else if (data.emailStatus === 'already_sent') {
+        setMessage(`Ez a számla már elküldésre került (${data.invoice?.invoice_number || 'TESZT'}).`);
+      } else if (data.emailSent === true) {
+        setMessage(`E-mail küldése sikeres (${data.invoice?.invoice_number || 'TESZT'}).`);
+      } else {
+        setMessage('A küldés eredménye nem ellenőrizhető. Ellenőrizze a számlák listáját, mielőtt újra próbálkozik.');
+      }
     } catch (error) {
       setMessage(error.message || 'A számla kiállítása nem sikerült.');
     } finally {

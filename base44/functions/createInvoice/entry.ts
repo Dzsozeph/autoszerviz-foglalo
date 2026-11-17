@@ -15,6 +15,30 @@ function sanitizeText(value, fallback = '') {
   return String(value).trim() || fallback;
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function getItemsText(items, service, amount) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return `- ${service}: ${amount.toLocaleString('hu-HU')} Ft`;
+  }
+
+  return items
+    .map((item) => {
+      const name = sanitizeText(item?.name, 'Tétel');
+      const quantity = Number(item?.quantity ?? 1);
+      const price = Number(item?.price ?? 0);
+      return `- ${name}: ${Number.isFinite(quantity) ? quantity : 1} db × ${Number.isFinite(price) ? price.toLocaleString('hu-HU') : 0} Ft`;
+    })
+    .join('\n');
+}
+
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -67,11 +91,16 @@ export default async function (req) {
       { limit: 20 }
     );
     const existing = (existingPage?.items || existingPage || []).find((invoice) => invoice.booking_id === bookingId);
-    if (existing) {
-      return Response.json({ ok: true, duplicate: true, invoice: existing, emailSent: false });
+    if (existing?.status === 'sent') {
+      return Response.json({
+        ok: true,
+        invoice: existing,
+        emailSent: true,
+        emailStatus: 'already_sent',
+      });
     }
 
-    const pdfUrl = sanitizeText(body.pdfUrl, `https://example.test/invoices/${invoiceNumber}.pdf`);
+    const pdfUrl = sanitizeText(body.pdfUrl, '');
     const invoiceData = {
       booking_id: bookingId,
       invoice_number: invoiceNumber,
@@ -84,84 +113,89 @@ export default async function (req) {
       status: 'issued',
       pdf_url: pdfUrl,
       notes: notes || `Foglalás: ${sanitizeText(booking.preferred_date, '')} ${sanitizeText(booking.preferred_time, '')}`.trim(),
-      sent_at: new Date().toISOString(),
     };
 
-    const invoice = await base44.asServiceRole.entities.Szamla.create(invoiceData);
-
-    const itemLines = Array.isArray(body.items) && body.items.length > 0
-      ? body.items
-          .map((item) => {
-            const name = sanitizeText(item?.name, 'Tétel');
-            const quantity = Number(item?.quantity ?? 1);
-            const price = Number(item?.price ?? 0);
-            return `- ${name}: ${Number.isFinite(quantity) ? quantity : 1} db × ${Number.isFinite(price) ? price.toLocaleString('hu-HU') : 0} Ft`;
-          })
-          .join('\n')
-      : `- ${serviceName}: ${finalAmount.toLocaleString('hu-HU')} Ft`;
-
-    const subject = `Számla – ${invoiceNumber}`;
+    if (existing?.invoice_number) invoiceData.invoice_number = existing.invoice_number;
+    const invoice = existing
+      ? await base44.asServiceRole.entities.Szamla.update(existing.id, invoiceData)
+      : await base44.asServiceRole.entities.Szamla.create(invoiceData);
+    const invoiceEmail = sanitizeText(invoice.email, email).toLowerCase();
+    const invoiceName = sanitizeText(invoice.customer_name, finalCustomerName);
+    const invoiceService = sanitizeText(invoice.service, serviceName);
+    const invoiceAmount = Number(invoice.amount);
+    const invoiceNotes = sanitizeText(invoice.notes, '');
+    const invoiceNumberToSend = sanitizeText(invoice.invoice_number, invoiceNumber);
+    const itemLines = getItemsText(body.items, invoiceService, invoiceAmount);
     const plainBody = [
-      `Tisztelt ${finalCustomerName}!`,
+      `Tisztelt ${invoiceName}!`,
       '',
-      `A ${invoiceNumber} számlaszámmal kiállított számla az alábbi javításért érkezett: ${serviceName}.`,
+      `A ${invoiceNumberToSend} számú tesztszámla az alábbi javításról készült: ${invoiceService}.`,
       '',
-      'Számlatétel:',
+      'Számlatételek:',
       itemLines,
       '',
-      `Fizetendő összeg: ${finalAmount.toLocaleString('hu-HU')} Ft`,
-      `PDF megtekintése: ${pdfUrl}`,
+      `Fizetendő összeg: ${invoiceAmount.toLocaleString('hu-HU')} Ft`,
+      invoiceNotes ? `Megjegyzés: ${invoiceNotes}` : '',
+      invoice.pdf_url ? `Dokumentum: ${invoice.pdf_url}` : '',
       '',
-      'Köszönjük a bizalmat!',
+      'Ez teszt számla, nem hivatalos bizonylat.',
       'Profi Autószerviz',
-    ].join('\n');
+    ].filter(Boolean).join('\n');
 
     const htmlBody = [
-      `<p>Tisztelt ${finalCustomerName}!</p>`,
-      `<p>A ${invoiceNumber} számlaszámmal kiállított számla az alábbi javításért érkezett: <strong>${serviceName}</strong>.</p>`,
-      `<p><strong>Számlatétel:</strong><br/>${itemLines.replace(/\n/g, '<br/>')}</p>`,
-      `<p><strong>Fizetendő összeg:</strong> ${finalAmount.toLocaleString('hu-HU')} Ft</p>`,
-      `<p><a href="${pdfUrl}">PDF megtekintése</a></p>`,
-      '<p>Köszönjük a bizalmat!<br/>Profi Autószerviz</p>',
+      `<p>Tisztelt ${escapeHtml(invoiceName)}!</p>`,
+      `<p>A <strong>${escapeHtml(invoiceNumberToSend)}</strong> számú tesztszámla az alábbi javításról készült: <strong>${escapeHtml(invoiceService)}</strong>.</p>`,
+      `<p><strong>Számlatételek:</strong><br/>${escapeHtml(itemLines).replaceAll('\n', '<br/>')}</p>`,
+      `<p><strong>Fizetendő összeg:</strong> ${invoiceAmount.toLocaleString('hu-HU')} Ft</p>`,
+      invoiceNotes ? `<p><strong>Megjegyzés:</strong> ${escapeHtml(invoiceNotes)}</p>` : '',
+      invoice.pdf_url ? `<p><a href="${escapeHtml(invoice.pdf_url)}">Dokumentum megtekintése</a></p>` : '',
+      '<p><strong>Ez teszt számla, nem hivatalos bizonylat.</strong></p>',
+      '<p>Profi Autószerviz</p>',
     ].join('');
 
     try {
       const emailResult = await base44.asServiceRole.integrations.Core.SendEmail({
-        to: email,
-        subject,
-        body: plainBody,
+        to: invoiceEmail,
+        subject: `Számla – ${invoiceNumberToSend}`,
+        text: plainBody,
         html: htmlBody,
       });
 
-      const sendSuccessful = emailResult && emailResult.success !== false && emailResult.ok !== false;
-      await base44.asServiceRole.entities.Szamla.update(invoice.id, {
-        status: sendSuccessful ? 'sent' : 'failed',
-        sent_at: new Date().toISOString(),
+      if (emailResult?.success === false || emailResult?.ok === false) {
+        throw new Error(emailResult.reason || emailResult.error || 'A levelezőszolgáltató elutasította az e-mailt.');
+      }
+
+      const sentAt = new Date().toISOString();
+      const updatedInvoice = await base44.asServiceRole.entities.Szamla.update(invoice.id, {
+        status: 'sent',
+        sent_at: sentAt,
+        last_email_error: '',
       });
 
       return Response.json({
         ok: true,
-        invoice: {
-          ...invoice,
-          status: sendSuccessful ? 'sent' : 'failed',
-          sent_at: new Date().toISOString(),
-        },
-        emailSent: sendSuccessful,
+        invoice: updatedInvoice || { ...invoice, status: 'sent', sent_at: sentAt },
+        emailSent: true,
+        emailStatus: 'sent',
       });
     } catch (emailError) {
-      await base44.asServiceRole.entities.Szamla.update(invoice.id, {
+      const emailErrorMessage = emailError?.message || 'Az e-mail küldése nem sikerült.';
+      const updatedInvoice = await base44.asServiceRole.entities.Szamla.update(invoice.id, {
         status: 'failed',
-        sent_at: new Date().toISOString(),
+        last_email_error: emailErrorMessage,
       });
 
       return Response.json({
         ok: false,
-        invoice,
+        invoice: updatedInvoice || { ...invoice, status: 'failed', last_email_error: emailErrorMessage },
         emailSent: false,
-        error: emailError?.message || 'email_failed',
-      }, { status: 500 });
+        emailStatus: 'failed',
+        emailError: emailErrorMessage,
+        message: 'A számla rögzítve, de az e-mail küldése nem sikerült. A küldés újrapróbálható.',
+      });
     }
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    console.error('Számla létrehozási hiba', { message: error?.message });
+    return Response.json({ error: error.message || 'invoice_creation_failed' }, { status: 500 });
   }
 }

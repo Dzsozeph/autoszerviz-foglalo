@@ -35,6 +35,7 @@ export default function Profil() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [requests, setRequests] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -54,6 +55,7 @@ export default function Profil() {
         if (data.error) throw new Error(data.error);
         setProfile(data.profile || null);
         setRequests(data.requests || []);
+        setInvoices(data.invoices || []);
       })
       .catch(() => {
         if (active) setError('A profiladatok betöltése nem sikerült. Próbálja újra később.');
@@ -73,6 +75,7 @@ export default function Profil() {
   const handleLogout = () => {
     setProfile(null);
     setRequests([]);
+    setInvoices([]);
     setError('');
     logout(false);
     navigate('/', { replace: true });
@@ -83,7 +86,7 @@ export default function Profil() {
       <PageHeader
         eyebrow="Saját fiók"
         title={`Üdvözöljük${displayName !== 'Ügyfél' ? `, ${displayName}` : ''}!`}
-        intro="Itt megtekintheti a fiókjához tartozó adatokat és az időpontkérései állapotát."
+        intro="Itt megtekintheti a fiókjához tartozó adatokat, időpontkéréseit és számláit."
       />
 
       <section className="container-page py-12 sm:py-16">
@@ -123,10 +126,75 @@ export default function Profil() {
             </InfoCard>
 
             <InfoCard icon={FileText} title="Számlák">
-              <p className="text-[14px] leading-6 text-brand-engine">
-                A számlák online megjelenítése még nincs bekötve a rendszerbe. Amint a számlakezelés
-                elérhető lesz, itt találja majd a dokumentumait.
-              </p>
+              {loading ? (
+                <div className="flex items-center gap-2 py-4 text-[14px] text-brand-engine">
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  Betöltés…
+                </div>
+              ) : error ? (
+                <p className="text-[14px] leading-6 text-brand-engine">
+                  A számlák jelenleg nem tölthetők be.
+                </p>
+              ) : invoices.length === 0 ? (
+                <p className="text-[14px] leading-6 text-brand-engine">
+                  Ehhez az e-mail-címhez még nem tartozik számla.
+                </p>
+              ) : (
+                <ul className="divide-y divide-brand-silver">
+                  {invoices.map((invoice) => (
+                    <li key={invoice.id} className="py-4 first:pt-0 last:pb-0">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <p className="font-semibold text-brand">
+                            {invoice.invoice_number || 'Számla'}
+                          </p>
+                          <p className="mt-1 text-[13px] text-brand-engine">
+                            {invoice.service || 'Szerviz szolgáltatás'}
+                          </p>
+                        </div>
+                        <span
+                          className={`rounded-full border px-3 py-1 text-[12px] font-semibold ${
+                            invoice.status === 'sent'
+                              ? 'border-green-200 bg-green-50 text-green-800'
+                              : invoice.status === 'failed'
+                                ? 'border-red-200 bg-red-50 text-red-700'
+                                : 'border-brand-line bg-brand-silver text-brand'
+                          }`}
+                        >
+                          {invoice.status === 'sent'
+                            ? 'Elküldve'
+                            : invoice.status === 'failed'
+                              ? 'Küldés sikertelen'
+                              : 'Kiállítva'}
+                        </span>
+                      </div>
+                      <p className="mt-3 text-[14px] font-semibold text-brand">
+                        {Number(invoice.amount || 0).toLocaleString('hu-HU')} {invoice.currency || 'HUF'}
+                      </p>
+                      {invoice.notes && (
+                        <p className="mt-2 whitespace-pre-line text-[13px] leading-5 text-brand-engine">
+                          {invoice.notes}
+                        </p>
+                      )}
+                      {invoice.status === 'failed' && invoice.last_email_error && (
+                        <p className="mt-2 text-[13px] text-red-700">
+                          E-mail küldési hiba: {invoice.last_email_error}
+                        </p>
+                      )}
+                      {invoice.pdf_url && (
+                        <a
+                          href={invoice.pdf_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-3 inline-flex text-[13px] font-semibold text-brand-ember underline"
+                        >
+                          Dokumentum megtekintése
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </InfoCard>
           </div>
 

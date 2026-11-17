@@ -63,6 +63,10 @@ For testing only, set the server-side `GOOGLE_REVIEWS_MOCK` secret to `true`. Th
 
 A projektben a számlázási logika alapja a `src/lib/invoice.js` modul. Az alapértelmezett szolgáltató a mock provider, így a fejlesztés és a tesztfutások nem igényelnek valódi Számlázz.hu fiókot.
 
+- A számlázás admin foglalásrészletéből indítható; az ügyfél, címzett e-mail, szolgáltatás, összeg és megjegyzés mezők szerkeszthetők.
+- A Base44 beépített `SendEmail` integrációja a számlát HTML és szöveges tartalommal küldi. Az admin felület a sikeres, már korábban elküldött és sikertelen küldést külön jelzi; sikertelen számlánál az újrapróbálás ugyanazt a rekordot használja.
+- A bejelentkezett ügyfél profiljának Számlák panelje kizárólag az aktuális fiók e-mail-címéhez tartozó számlákat listázza.
+- A Base44 korlátozza a nem regisztrált címzetteknek küldött leveleket: ehhez fizetős csomag és ellenőrzött saját domain szükséges. A küldési hibák az admin felületen és az alkalmazásnaplókban ellenőrizhetők.
 - a számlaösszeg számítása bruttó alapján történik, 2 tizedesnyi kerekítéssel,
 - a 27%-os ÁFA-s példa pontosan a következő eredményt adja: nettó `37 401,57 Ft`, ÁFA `10 098,43 Ft`, bruttó `47 500 Ft`,
 - a mock provider címkézi a dokumentumot `TESZT SZÁMLA – NEM HIVATALOS DOKUMENTUM` felirattal,

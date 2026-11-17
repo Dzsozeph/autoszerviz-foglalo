@@ -53,6 +53,10 @@
       "type": "string",
       "format": "date-time",
       "title": "E-mail küldés ideje"
+    },
+    "last_email_error": {
+      "type": "string",
+      "title": "Utolsó e-mail küldési hiba"
     }
   },
   "required": [
