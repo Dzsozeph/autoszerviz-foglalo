@@ -162,11 +162,10 @@ const Sidebar = React.forwardRef(
       return (
         <div
           className={cn(
-            "relative flex h-full w-[--sidebar-width] flex-col overflow-hidden",
-            "bg-[rgba(5,5,8,0.88)] backdrop-blur-[32px]",
+            "flex h-full w-[--sidebar-width] flex-col",
+            "bg-[rgba(8,9,12,0.92)] backdrop-blur-2xl",
             "border-r border-white/[0.08]",
             "text-sidebar-foreground",
-            "shadow-[8px_0_40px_rgba(0,0,0,0.45)]",
             className
           )}
           ref={ref}
@@ -189,11 +188,11 @@ const Sidebar = React.forwardRef(
             data-mobile="true"
             className={cn(
               "w-[--sidebar-width] p-0",
-              "bg-[rgba(5,5,8,0.94)]",
-              "backdrop-blur-[36px]",
+              "bg-[rgba(5,6,9,0.94)]",
+              "backdrop-blur-2xl",
               "border-white/[0.10]",
               "text-sidebar-foreground",
-              "shadow-[0_0_70px_rgba(0,0,0,0.8)]",
+              "shadow-[0_0_60px_rgba(0,0,0,0.65)]",
               "[&>button]:hidden"
             )}
             style={{
@@ -201,11 +200,8 @@ const Sidebar = React.forwardRef(
             }}
             side={side}
           >
-            <div className="relative flex h-full w-full flex-col overflow-hidden">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.045] via-transparent to-black/[0.15]" />
-              <div className="relative z-10 flex min-h-0 h-full flex-col">
-                {children}
-              </div>
+            <div className="flex h-full w-full flex-col">
+              {children}
             </div>
           </SheetContent>
         </Sheet>
@@ -255,19 +251,16 @@ const Sidebar = React.forwardRef(
             data-sidebar="sidebar"
             className={cn(
               "relative flex h-full w-full flex-col overflow-hidden",
-              "bg-[rgba(5,5,8,0.82)]",
-              "backdrop-blur-[32px]",
-              "border border-white/[0.09]",
-              "shadow-[0_12px_55px_rgba(0,0,0,0.65)]",
-              "before:pointer-events-none before:absolute before:inset-0",
-              "before:bg-gradient-to-br before:from-white/[0.055]",
-              "before:via-transparent before:to-black/[0.12]",
+              "bg-[rgba(8,9,12,0.84)]",
+              "backdrop-blur-2xl",
+              "border border-white/[0.08]",
+              "shadow-[0_8px_40px_rgba(0,0,0,0.45)]",
               "group-data-[variant=floating]:rounded-2xl",
               "group-data-[variant=floating]:border-white/[0.12]",
-              "group-data-[variant=floating]:shadow-[0_20px_70px_rgba(0,0,0,0.75)]"
+              "group-data-[variant=floating]:shadow-[0_12px_50px_rgba(0,0,0,0.55)]"
             )}
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.025] via-transparent to-black/[0.12]" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.035] via-transparent to-black/[0.10]" />
             <div className="relative z-10 flex min-h-0 h-full flex-col">
               {children}
             </div>
@@ -291,17 +284,15 @@ const SidebarTrigger = React.forwardRef(
         variant="ghost"
         size="icon"
         className={cn(
-          "h-10 w-10 rounded-xl",
-          "bg-white/[0.035]",
-          "backdrop-blur-2xl",
-          "border border-white/[0.10]",
-          "text-white/65",
-          "shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
-          "transition-all duration-300 ease-out",
-          "hover:bg-white/[0.09]",
-          "hover:text-white",
-          "hover:border-white/[0.20]",
-          "hover:shadow-[0_0_25px_rgba(255,255,255,0.07)]",
+          "h-9 w-9 rounded-xl",
+          "border border-white/[0.08]",
+          "bg-white/[0.04]",
+          "text-white/70 backdrop-blur-xl",
+          "shadow-[0_4px_16px_rgba(0,0,0,0.25)]",
+          "transition-all duration-300",
+          "hover:bg-white/[0.10]",
+          "hover:text-white hover:border-white/[0.16]",
+          "hover:shadow-[0_0_20px_rgba(255,255,255,0.06)]",
           "active:scale-95",
           className
         )}
@@ -343,8 +334,8 @@ const SidebarRail = React.forwardRef(
           "absolute inset-y-0 z-20 hidden w-4",
           "-translate-x-1/2 transition-all ease-linear",
           "after:absolute after:inset-y-0 after:left-1/2",
-          "after:w-[2px] after:transition-all after:duration-300",
-          "hover:after:bg-white/25",
+          "after:w-[2px] after:transition-colors",
+          "hover:after:bg-white/20",
           "group-data-[side=left]:-right-4",
           "group-data-[side=right]:left-0",
           "[[data-side=left]_&]:cursor-w-resize",
@@ -353,7 +344,7 @@ const SidebarRail = React.forwardRef(
           "[[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
           "group-data-[collapsible=offcanvas]:translate-x-0",
           "group-data-[collapsible=offcanvas]:after:left-full",
-          "group-data-[collapsible=offcanvas]:hover:bg-white/[0.025]",
+          "group-data-[collapsible=offcanvas]:hover:bg-white/[0.03]",
           "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
           "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
           className
@@ -396,15 +387,13 @@ const SidebarInput = React.forwardRef(
         ref={ref}
         data-sidebar="input"
         className={cn(
-          "h-10 w-full rounded-xl",
-          "bg-white/[0.035]",
-          "border border-white/[0.09]",
+          "h-9 w-full rounded-xl",
+          "bg-white/[0.04] border border-white/[0.08]",
           "text-white placeholder:text-white/30",
           "backdrop-blur-xl shadow-none",
-          "transition-all duration-300",
           "focus-visible:ring-2 focus-visible:ring-white/20",
-          "focus-visible:border-white/[0.22]",
-          "focus-visible:bg-white/[0.06]",
+          "focus-visible:border-white/[0.18]",
+          "transition-all duration-300",
           className
         )}
         {...props}
@@ -423,7 +412,7 @@ const SidebarHeader = React.forwardRef(
         data-sidebar="header"
         className={cn(
           "relative flex flex-col gap-2 p-3",
-          "border-b border-white/[0.07]",
+          "border-b border-white/[0.06]",
           className
         )}
         {...props}
@@ -442,7 +431,7 @@ const SidebarFooter = React.forwardRef(
         data-sidebar="footer"
         className={cn(
           "relative flex flex-col gap-2 p-3",
-          "border-t border-white/[0.07]",
+          "border-t border-white/[0.06]",
           className
         )}
         {...props}
@@ -460,7 +449,7 @@ const SidebarSeparator = React.forwardRef(
         ref={ref}
         data-sidebar="separator"
         className={cn(
-          "mx-3 w-auto bg-white/[0.07]",
+          "mx-3 w-auto bg-white/[0.08]",
           className
         )}
         {...props}
@@ -584,7 +573,7 @@ const SidebarMenu = React.forwardRef(
       ref={ref}
       data-sidebar="menu"
       className={cn(
-        "flex w-full min-w-0 flex-col gap-1.5",
+        "flex w-full min-w-0 flex-col gap-1",
         className
       )}
       {...props}
@@ -610,34 +599,33 @@ SidebarMenuItem.displayName = "SidebarMenuItem"
 const sidebarMenuButtonVariants = cva(
   `
   peer/menu-button
-  relative flex w-full items-center gap-3
+  relative flex w-full items-center gap-2
   overflow-hidden rounded-xl
-  px-3 py-2.5
-  text-left text-sm text-white/55
+  px-3 py-2
+  text-left text-sm text-white/65
   outline-none border border-transparent
   transition-all duration-300 ease-out
 
-  hover:bg-white/[0.055]
+  hover:bg-white/[0.07]
   hover:text-white
-  hover:border-white/[0.09]
-  hover:shadow-[0_4px_24px_rgba(255,255,255,0.035)]
+  hover:border-white/[0.08]
+  hover:shadow-[0_4px_20px_rgba(0,0,0,0.25)]
 
   focus-visible:ring-2
   focus-visible:ring-white/20
 
   active:scale-[0.985]
-  active:bg-white/[0.09]
+  active:bg-white/[0.10]
 
   disabled:pointer-events-none
   disabled:opacity-40
 
   data-[active=true]:bg-gradient-to-r
-  data-[active=true]:from-white/[0.13]
-  data-[active=true]:via-white/[0.07]
-  data-[active=true]:to-transparent
+  data-[active=true]:from-white/[0.14]
+  data-[active=true]:to-white/[0.04]
   data-[active=true]:border-white/[0.12]
   data-[active=true]:text-white
-  data-[active=true]:shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_24px_rgba(255,255,255,0.04)]
+  data-[active=true]:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_20px_rgba(0,0,0,0.2)]
 
   group-has-[[data-sidebar=menu-action]]/menu-item:pr-8
   aria-disabled:pointer-events-none
@@ -646,7 +634,7 @@ const sidebarMenuButtonVariants = cva(
   data-[state=open]:bg-white/[0.07]
   data-[state=open]:text-white
 
-  group-data-[collapsible=icon]:!size-10
+  group-data-[collapsible=icon]:!size-9
   group-data-[collapsible=icon]:!p-2
 
   [&>span:last-child]:truncate
@@ -654,10 +642,6 @@ const sidebarMenuButtonVariants = cva(
   [&>svg]:shrink-0
   [&>svg]:transition-all
   [&>svg]:duration-300
-  [&>svg]:text-white/55
-
-  hover:[&>svg]:text-white
-  data-[active=true]:[&>svg]:text-white
   `,
   {
     variants: {
@@ -665,14 +649,14 @@ const sidebarMenuButtonVariants = cva(
         default: "",
         outline: `
           bg-white/[0.025]
-          border-white/[0.09]
-          hover:bg-white/[0.07]
+          border-white/[0.08]
+          hover:bg-white/[0.08]
           hover:border-white/[0.15]
         `,
       },
       size: {
-        default: "h-11 text-sm",
-        sm: "h-9 text-xs",
+        default: "h-10 text-sm",
+        sm: "h-8 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
       },
     },
@@ -735,10 +719,10 @@ const SidebarMenuButton = React.forwardRef(
           hidden={state !== "collapsed" || isMobile}
           className={cn(
             "z-50 rounded-xl",
-            "bg-[rgba(5,5,8,0.96)]",
+            "bg-[rgba(8,9,12,0.94)]",
             "backdrop-blur-2xl",
             "border border-white/[0.12]",
-            "text-white shadow-[0_8px_30px_rgba(0,0,0,0.6)]",
+            "text-white shadow-2xl",
             "px-3 py-2",
             "text-xs"
           )}
@@ -774,7 +758,6 @@ const SidebarMenuAction = React.forwardRef(
           "transition-all duration-300",
           "hover:bg-white/[0.10]",
           "hover:text-white",
-          "hover:shadow-[0_0_15px_rgba(255,255,255,0.06)]",
           "focus-visible:ring-2 focus-visible:ring-white/20",
           "after:absolute after:-inset-2 after:md:hidden",
           "peer-data-[size=sm]/menu-button:top-1",
@@ -802,9 +785,9 @@ const SidebarMenuBadge = React.forwardRef(
         "pointer-events-none absolute right-1",
         "flex h-5 min-w-5 select-none items-center justify-center",
         "rounded-md px-1",
-        "bg-white/[0.07]",
-        "border border-white/[0.08]",
-        "text-xs font-medium tabular-nums text-white/70",
+        "bg-white/[0.06]",
+        "border border-white/[0.06]",
+        "text-xs font-medium tabular-nums text-white/65",
         "peer-hover/menu-button:text-white",
         "peer-data-[active=true]/menu-button:text-white",
         "peer-data-[size=sm]/menu-button:top-1",
@@ -831,7 +814,7 @@ const SidebarMenuSkeleton = React.forwardRef(
         ref={ref}
         data-sidebar="menu-skeleton"
         className={cn(
-          "flex h-10 items-center gap-3 rounded-xl px-3",
+          "flex h-9 items-center gap-2 rounded-xl px-3",
           className
         )}
         {...props}
@@ -866,7 +849,7 @@ const SidebarMenuSub = React.forwardRef(
         "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1",
         "border-l border-white/[0.10]",
         "rounded-r-xl py-2 pl-3",
-        "bg-white/[0.02]",
+        "bg-white/[0.015]",
         "group-data-[collapsible=icon]:hidden",
         className
       )}
@@ -918,7 +901,7 @@ const SidebarMenuSubButton = React.forwardRef(
           "data-[active=true]:bg-white/[0.10]",
           "data-[active=true]:text-white",
           "data-[active=true]:border",
-          "data-[active=true]:border-white/[0.10]",
+          "data-[active=true]:border-white/[0.08]",
           "[&>span:last-child]:truncate",
           "[&>svg]:size-4",
           "[&>svg]:shrink-0",
