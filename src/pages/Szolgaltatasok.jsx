@@ -47,15 +47,7 @@ export default function Szolgaltatasok() {
     />
 
     {/* Kép lágyított szélekkel */}
-    <img
-      src="https://i.ibb.co/pBz1X1qj/45033a90-d7b5-4ff6-9561-1b932b8a9a8d.png"
-      alt="Autószerviz szolgáltatások"
-      className="block h-auto w-full object-contain brightness-[0.82] contrast-[1.05] saturate-[0.85]"
-      style={{
-        maskImage: "radial-gradient(ellipse 85% 85% at center, black 65%, transparent 100%)",
-        WebkitMaskImage: "radial-gradient(ellipse 85% 85% at center, black 65%, transparent 100%)"
-      }}
-    />
+    
   </div>
 }
       />
