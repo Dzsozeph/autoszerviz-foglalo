@@ -90,7 +90,7 @@ export default function Kapcsolat() {
   eyebrow="Időpontkérés"
   title="Kérjen időpontot online"
   intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
-  backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
+  backgroundImage="https://img-ik.cars.co.za/news-site-za/images/2020/07/germantrio_thumb.png?tr=w-1600,f-auto,q-80"
 />
       <section className="container-page py-14 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
