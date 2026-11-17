@@ -123,7 +123,7 @@ export default function SiteHeader() {
             <Link
               to="/register"
               onClick={() => setOpen(false)}
-              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 border border-brand-ember text-[15px] font-semibold text-brand-ember"
+              className="mt-2 flex min-h-[30x] items-center justify-center gap-2 border border-brand-ember text-[15px] font-semibold text-brand-ember"
             >
               <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
               Regisztráció
