@@ -94,6 +94,28 @@ export default function Profil() {
         <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="space-y-6">
             <InfoCard icon={UserRound} title="Fiókadatai">
+            <div className="mb-6 flex flex-col items-center text-center">
+  <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-brand-sand shadow-lg ring-2 ring-brand-line">
+    {profile?.avatar_url ? (
+      <img
+        src={profile.avatar_url}
+        alt={`${displayName} profilképe`}
+        className="h-full w-full object-cover"
+      />
+    ) : (
+      <span className="font-heading text-3xl font-semibold text-brand-ember">
+        {displayName.charAt(0).toUpperCase()}
+      </span>
+    )}
+  </div>
+
+  <h3 className="mt-3 font-heading text-lg font-semibold text-brand">
+    {displayName}
+  </h3>
+  <p className="mt-1 text-sm text-brand-engine">
+    Ügyfélfiók
+  </p>
+</div>
               <dl className="space-y-4">
                 <div>
                   <dt className="text-[12px] font-semibold uppercase tracking-[0.12em] text-brand-engine">
