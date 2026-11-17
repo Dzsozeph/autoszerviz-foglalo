@@ -40,7 +40,7 @@ export default function Gyik() {
       <PageHeader
   eyebrow="gyik"
   title="Gyakori kérdések"
-  intro="AÖsszegyűjtöttük, amit a leggyakrabban kérdeznek tőlünk az időpontkérésről, az árakról és a javítás menetéről."
+  intro="Összegyűjtöttük, amit a leggyakrabban kérdeznek tőlünk az időpontkérésről, az árakról és a javítás menetéről."
   backgroundImage="https://i.ibb.co/GGrSF5D/q.jpg"
   backgroundSize="contain"
 />
