@@ -137,12 +137,25 @@ export default function Hero() {
                 online néhány perc alatt – mi pedig visszajelzünk a lehetséges időponttal.
               </p>
               <Link
-                to="/idopont"
-                className="group inline-flex min-h-[52px] items-center gap-4 bg-brand-ember px-9 pr-7 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-orange-600 hover:shadow-[0_8px_30px_rgba(249,115,22,0.25)] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
-              >
-                Időpontot kérek
-                <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" strokeWidth={1.6} />
-              </Link>
+  to="/idopont"
+  className="group relative inline-flex min-h-[56px] items-center gap-5 overflow-hidden bg-brand-ember px-10 pr-8 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-500 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-[0_12px_35px_rgba(249,115,22,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-4 focus-visible:ring-offset-black [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
+>
+  {/* Animált fénycsík */}
+  <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+
+  {/* Felirat */}
+  <span className="relative z-10 transition-all duration-300 group-hover:tracking-[0.2em]">
+    Időpontot kérek
+  </span>
+
+  {/* Nyíl háttérrel */}
+  <span className="relative z-10 flex h-8 w-8 items-center justify-center bg-black/15 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-black/25">
+    <ArrowRight
+      className="h-[18px] w-[18px] transition-transform duration-300 group-hover:translate-x-1"
+      strokeWidth={1.8}
+    />
+  </span>
+</Link>
             </div>
           </div>
 
