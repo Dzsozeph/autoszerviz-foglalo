@@ -78,7 +78,7 @@ export default function SiteHeader() {
           </Link>
           <Link
             to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-            className="inline-flex min-h-[40px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50"
+            className="inline-flex min-h-[40px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50 hover:border-b-2 hover:border-orange-500"
           >
             <UserRound className="h-4 w-4" aria-hidden="true" />
             <span className="max-w-[140px] truncate" title={profileLabel}>
