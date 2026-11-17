@@ -34,22 +34,11 @@ export default function Szolgaltatasok() {
   return (
     <>
       <PageHeader
-        eyebrow="Szolgáltatások"
-        title="Minden fontos javítás egy helyen"
-        intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
-        aside={
-  <div className="relative isolate w-full min-w-0 lg:translate-x-16">
+  eyebrow="Időpontkérés"
+  title="Kérjen időpontot online"
+  intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
+  backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
 
-    {/* Finom narancssárga fény a kép mögött */}
-    <div
-      aria-hidden="true"
-      className="absolute inset-[12%] -z-10 rounded-full bg-orange-600/10 blur-[90px]"
-    />
-
-    {/* Kép lágyított szélekkel */}
-    
-  </div>
-}
       />
 
       <section className="container-page py-14 sm:py-20">
