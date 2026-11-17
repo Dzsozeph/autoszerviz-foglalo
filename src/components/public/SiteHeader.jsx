@@ -65,13 +65,13 @@ export default function SiteHeader() {
           <div className="flex items-center gap-3 relative xl:left-[250px]">
           <Link
             to="/idopont"
-            className="inline-flex min-h-[30px] -ml-8 shrink-0 items-center whitespace-nowrap bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)] hover:bg-orange-800 [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
+            className="inline-flex min-h-[30px] shrink-0 items-center whitespace-nowrap bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)] hover:bg-orange-800 [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
           >
             Időpontot kérek
           </Link>
           <Link
             to="/register"
-            className="inline-flex min-h-[54px] -ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5"
+            className="inline-flex min-h-[54px] ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5"
           >
             <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
             Regisztráció
