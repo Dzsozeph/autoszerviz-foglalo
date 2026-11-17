@@ -47,6 +47,14 @@ export default function RequestDetail({
   const [message, setMessage] = useState('');
   const [editing, setEditing] = useState(false);
   const [creatingInvoice, setCreatingInvoice] = useState(false);
+  const [invoiceForm, setInvoiceForm] = useState({
+    customerName: '',
+    customerEmail: '',
+    service: '',
+    amount: '0',
+    notes: '',
+    invoiceNumber: '',
+  });
   const [draft, setDraft] = useState(EMPTY_DRAFT);
 
   useEffect(() => {
@@ -54,6 +62,14 @@ export default function RequestDetail({
     setMessage('');
     setEditing(false);
     setDraft(request || EMPTY_DRAFT);
+    setInvoiceForm({
+      customerName: request?.customer_name || '',
+      customerEmail: request?.email || '',
+      service: request?.service || '',
+      amount: String(request?.amount || 47500),
+      notes: request?.problem_description || '',
+      invoiceNumber: '',
+    });
   }, [request?.id]);
 
   if (!request) return null;
@@ -131,14 +147,27 @@ export default function RequestDetail({
 
   const setField = (field, value) => setDraft((current) => ({ ...current, [field]: value }));
 
+  const updateInvoiceField = (field, value) => {
+    setInvoiceForm((current) => ({ ...current, [field]: value }));
+  };
+
   const createInvoice = async () => {
-    if (!request?.email || creatingInvoice) return;
+    if (!invoiceForm.customerEmail || creatingInvoice) {
+      setMessage('Az ügyfél e-mail címe kötelező a számla elküldéséhez.');
+      return;
+    }
+
     setCreatingInvoice(true);
     setMessage('');
     try {
       const response = await base44.functions.invoke('createInvoice', {
         bookingId: request.id,
-        amount: 47500,
+        customerName: invoiceForm.customerName || request.customer_name,
+        customerEmail: invoiceForm.customerEmail || request.email,
+        service: invoiceForm.service || request.service,
+        amount: Number(invoiceForm.amount) || 0,
+        notes: invoiceForm.notes || request.problem_description || '',
+        invoiceNumber: invoiceForm.invoiceNumber || undefined,
       });
       const data = response.data || {};
       if (data.error) {
@@ -147,7 +176,7 @@ export default function RequestDetail({
 
       setMessage(
         data.emailSent
-          ? `Számla elküldve: ${data.invoice?.invoice_number || 'TESZT'} – e-mailben is megérkezett az ügyfélnek.`
+          ? `Számla elküldve: ${data.invoice?.invoice_number || 'TESZT'} – e-mailben megérkezett az ügyfélnek.`
           : 'A számla létrejött, de az e-mail küldése nem sikerült.'
       );
     } catch (error) {
@@ -208,15 +237,66 @@ export default function RequestDetail({
           />
         </div>
 
-        <div className="mt-4 flex justify-end">
-          <button
-            type="button"
-            disabled={creatingInvoice || !request.email}
-            onClick={createInvoice}
-            className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-full bg-brand-ember px-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-white disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {creatingInvoice ? 'Számla kiállítása…' : 'Számla kiállítása'}
-          </button>
+        <div className="mt-4 rounded-xl border border-brand-silver bg-[#F8FAFC] p-4">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand-engine">
+              Számla adatai
+            </p>
+            <button
+              type="button"
+              disabled={creatingInvoice || !invoiceForm.customerEmail}
+              onClick={createInvoice}
+              className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-full bg-brand-ember px-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-white disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {creatingInvoice ? 'Számla kiállítása…' : 'Számla kiállítása'}
+            </button>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="text-[13px] font-medium text-brand-engine">
+              Ügyfél neve
+              <input
+                value={invoiceForm.customerName}
+                onChange={(event) => updateInvoiceField('customerName', event.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-brand-silver bg-white px-3 text-[14px] text-brand"
+              />
+            </label>
+            <label className="text-[13px] font-medium text-brand-engine">
+              E-mail
+              <input
+                type="email"
+                value={invoiceForm.customerEmail}
+                onChange={(event) => updateInvoiceField('customerEmail', event.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-brand-silver bg-white px-3 text-[14px] text-brand"
+              />
+            </label>
+            <label className="text-[13px] font-medium text-brand-engine">
+              Szolgáltatás
+              <input
+                value={invoiceForm.service}
+                onChange={(event) => updateInvoiceField('service', event.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-brand-silver bg-white px-3 text-[14px] text-brand"
+              />
+            </label>
+            <label className="text-[13px] font-medium text-brand-engine">
+              Összeg (Ft)
+              <input
+                type="number"
+                min="0"
+                value={invoiceForm.amount}
+                onChange={(event) => updateInvoiceField('amount', event.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-brand-silver bg-white px-3 text-[14px] text-brand"
+              />
+            </label>
+            <label className="text-[13px] font-medium text-brand-engine sm:col-span-2">
+              Számla megjegyzés / javítás leírása
+              <textarea
+                rows={3}
+                value={invoiceForm.notes}
+                onChange={(event) => updateInvoiceField('notes', event.target.value)}
+                className="mt-1 w-full rounded-lg border border-brand-silver bg-white p-3 text-[14px] text-brand"
+              />
+            </label>
+          </div>
         </div>
 
         {editing ? (
