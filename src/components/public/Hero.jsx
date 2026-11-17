@@ -225,13 +225,34 @@ export default function Hero() {
           fittingType="fill"
           fetchPriority="high"
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.4) 35%, transparent 65%)',
-          }}
-        />
+        
+{/* Fekete és narancs gradient overlay */}
+<div
+  className="absolute inset-0"
+  style={{
+    background: `
+      linear-gradient(
+        to right,
+        #000000 0%,
+        rgba(0,0,0,0.95) 8%,
+        rgba(0,0,0,0.65) 25%,
+        rgba(0,0,0,0.15) 55%,
+        transparent 80%
+      ),
+      linear-gradient(
+        to top,
+        rgba(0,0,0,0.8) 0%,
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        transparent 35%,
+        rgba(148,64,0,0.18) 100%
+      )
+    `,
+  }}
+/>
+
         <figcaption className="absolute bottom-4 right-6 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-orange-500 backdrop-blur">
           Minta fotó – bemutató célú
         </figcaption>
