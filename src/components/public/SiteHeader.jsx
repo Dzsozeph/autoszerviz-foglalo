@@ -100,7 +100,7 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-<div className="border-t border-white/10 bg-[linear-gradient(rgba(0,0,0,0.78),rgba(0,0,0,0.78)),url('https://i.ibb.co/XxK0kWVj/mobile2.jpg')] bg-cover bg-[position:120%_30%] backdrop-blur-xl shadow-2xl xl:hidden">          
+<div className="border-t border-white/10 bg-[linear-gradient(rgba(0,0,0,0.78),rgba(0,0,0,0.78)),url('https://i.ibb.co/XxK0kWVj/mobile2.jpg')] bg-contain bg-[position:120%_60%] backdrop-blur-xl shadow-2xl xl:hidden">          
 <nav aria-label="Mobil navigáció" className="container-page flex flex-col gap-1 py-3">
             {NAV.map((item) => (
               <NavLink
