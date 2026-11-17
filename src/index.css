@@ -112,88 +112,51 @@ html {
 }
 
 
-/* PREMIUM BLACK GLASS SIDEBAR */
 
-[data-sidebar="sidebar"] {
-  background: rgba(5, 6, 9, 0.82) !important;
-  color: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(255, 255, 255, 0.10) !important;
-  backdrop-filter: blur(28px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(150%) !important;
-  box-shadow:
-    inset 1px 0 0 rgba(255,255,255,0.04),
-    0 15px 50px rgba(0,0,0,0.45) !important;
+/* MOBILE SIDEBAR — PREMIUM BLACK GLASS */
+[data-sidebar="sidebar"][data-mobile="true"] {
+  background: rgba(5, 6, 10, 0.88) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  backdrop-filter: blur(32px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(160%) !important;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.65) !important;
 }
 
-[data-sidebar="menu-button"] {
-  background: rgba(255,255,255,0.035) !important;
-  color: rgba(255,255,255,0.72) !important;
-  border: 1px solid rgba(255,255,255,0.055) !important;
-  border-radius: 12px !important;
-  transition: all 250ms ease !important;
+/* A mobilmenü belső tartalma */
+[data-sidebar="sidebar"][data-mobile="true"] > div {
+  background: transparent !important;
 }
 
-[data-sidebar="menu-button"]:hover {
-  background: rgba(255,255,255,0.10) !important;
+/* Menü gombok */
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-button"] {
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 13px !important;
+  transition: all 0.25s ease !important;
+}
+
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-button"]:active,
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-button"]:hover {
+  background: rgba(255, 255, 255, 0.13) !important;
   color: #fff !important;
-  border-color: rgba(255,255,255,0.15) !important;
-  transform: translateX(2px);
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-[data-sidebar="menu-button"][data-active="true"] {
+/* Aktív menüpont */
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-button"][data-active="true"] {
   background: linear-gradient(
-    115deg,
-    rgba(255,255,255,0.17),
-    rgba(255,255,255,0.045)
+    120deg,
+    rgba(255, 255, 255, 0.19),
+    rgba(255, 255, 255, 0.055)
   ) !important;
   color: #fff !important;
-  border: 1px solid rgba(255,255,255,0.18) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    0 4px 18px rgba(0,0,0,0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
-[data-sidebar="menu-sub"] {
-  background: rgba(255,255,255,0.025) !important;
-  border-color: rgba(255,255,255,0.12) !important;
-  border-radius: 0 12px 12px 0 !important;
-}
-
-[data-sidebar="menu-sub-button"] {
-  color: rgba(255,255,255,0.58) !important;
-  border-radius: 9px !important;
-  transition: all 250ms ease !important;
-}
-
-[data-sidebar="menu-sub-button"]:hover,
-[data-sidebar="menu-sub-button"][data-active="true"] {
-  background: rgba(255,255,255,0.09) !important;
-  color: white !important;
-}
-
-[data-sidebar="header"],
-[data-sidebar="footer"] {
-  border-color: rgba(255,255,255,0.08) !important;
-}
-
-[data-sidebar="separator"] {
-  background: rgba(255,255,255,0.10) !important;
-}
-
-[data-sidebar="input"] {
-  background: rgba(255,255,255,0.045) !important;
-  color: white !important;
-  border-color: rgba(255,255,255,0.12) !important;
-}
-
-[data-sidebar="menu-badge"] {
-  background: rgba(255,255,255,0.09) !important;
-  color: white !important;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-[data-mobile="true"] {
-  background: rgba(5,6,9,0.96) !important;
-  backdrop-filter: blur(30px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(150%) !important;
+/* Almenük */
+[data-sidebar="sidebar"][data-mobile="true"] [data-sidebar="menu-sub"] {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
