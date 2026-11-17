@@ -232,7 +232,7 @@ export default function Hero() {
               'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.4) 35%, transparent 65%)',
           }}
         />
-        <figcaption className="absolute bottom-4 right-6 rounded-full bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-orange-500 backdrop-blur">
+        <figcaption className="absolute bottom-4 right-6  bg-brand/85 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-orange-500 backdrop-blur">
           Minta fotó – bemutató célú
         </figcaption>
       </figure>
