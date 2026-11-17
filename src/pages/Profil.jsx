@@ -168,7 +168,7 @@ export default function Profil() {
                 type="button"
                 onClick={() => setActiveSection(item.id)}
                 aria-pressed={isActive}
-                className={`flex min-h-[20px] flex-col items-center justify-center gap-1  border p-2 text-center transition-all ${
+                className={`flex min-h-[40px] flex-col items-center justify-center gap-1  border p-2 text-center transition-all ${
                   isActive
                     ? 'border-brand-ember bg-brand-ember text-white shadow-md'
                     : 'border-brand-line bg-white text-brand hover:bg-brand-sand'
