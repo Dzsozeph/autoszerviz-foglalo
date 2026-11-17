@@ -129,7 +129,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1700px] px-6 pt-8 lg:px-4 lg:pt-0">
+      <div className="relative z-10 mx-auto w-full max-w-[1700px] px-6 pt-2 lg:px-4 lg:pt-0">
         <div className="relative grid items-center gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] lg:gap-8 lg:py-16">
 
           <div className="flex min-w-0 flex-col gap-8">
