@@ -123,7 +123,7 @@ export default function SiteHeader() {
             <Link
               to="/register"
               onClick={() => setOpen(false)}
-              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-ember text-[15px] font-semibold text-brand-ember"
+              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 border border-brand-ember text-[15px] font-semibold text-brand-ember"
             >
               <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
               Regisztráció
@@ -131,7 +131,7 @@ export default function SiteHeader() {
             <Link
               to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
               onClick={() => setOpen(false)}
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
+              className="flex min-h-[48px] items-center justify-center gap-2  border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
             >
               <UserRound className="h-4 w-4" aria-hidden="true" />
               <span className="max-w-[220px] truncate" title={profileLabel}>
