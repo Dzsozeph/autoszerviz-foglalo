@@ -273,7 +273,7 @@ export default function Hero() {
                 onClick={loadReviews}
                 disabled={reviewsLoading}
                 aria-label="Értékelések frissítése"
-                className="ml-auto flex h-9 w-9 items-center justify-center border border-brand-silver text-brand hover:bg-brand-cream disabled:opacity-50"
+                className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-brand-silver text-brand hover:bg-brand-cream disabled:opacity-50"
               >
                 {reviewsLoading
                   ? <Loader2 className="h-4 w-4 animate-spin" />
@@ -295,7 +295,7 @@ export default function Hero() {
                 type="button"
                 onClick={loadReviews}
                 disabled={reviewsLoading}
-                className="inline-flex min-h-9 items-center gap-2 rounded-full border border-red-300 px-3 text-[12px] font-semibold hover:bg-red-100 disabled:opacity-50"
+                className="inline-flex min-h-9 items-center gap-2 border border-red-300 px-3 text-[12px] font-semibold hover:bg-red-100 disabled:opacity-50"
               >
                 <RefreshCw className="h-3.5 w-3.5" /> Újrapróbálás
               </button>
