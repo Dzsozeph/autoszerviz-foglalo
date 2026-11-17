@@ -234,10 +234,13 @@ export default function Hero() {
       linear-gradient(
         to right,
         #000000 0%,
-        rgba(0,0,0,0.95) 8%,
-        rgba(0,0,0,0.65) 25%,
-        rgba(0,0,0,0.15) 55%,
-        transparent 80%
+        rgba(0,0,0,0.98) 5%,
+        rgba(0,0,0,0.90) 15%,
+        rgba(0,0,0,0.75) 25%,
+        rgba(0,0,0,0.50) 38%,
+        rgba(0,0,0,0.25) 48%,
+        rgba(0,0,0,0.08) 58%,
+        transparent 68%
       ),
       linear-gradient(
         to top,
