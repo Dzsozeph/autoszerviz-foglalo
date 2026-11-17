@@ -114,6 +114,17 @@ export default function SiteHeader() {
               </NavLink>
             ))}
             <Link
+              to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
+              onClick={() => setOpen(false)}
+              className="flex min-h-[48px] w-48 mx-auto items-center justify-center gap-2  border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
+            >
+              <UserRound className="h-4 w-4" aria-hidden="true" />
+              <span className="max-w-[220px] truncate" title={profileLabel}>
+                {profileLabel}
+              </span>
+            </Link>
+            <Link
+            
               to="/idopont"
               onClick={() => setOpen(false)}
               className="mt-2 flex min-h-[48px] items-center justify-center bg-brand-ember text-[12px] font-semibold uppercase tracking-[0.08em] text-white"
@@ -128,16 +139,7 @@ export default function SiteHeader() {
               <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
               Regisztráció
             </Link>
-            <Link
-              to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-              onClick={() => setOpen(false)}
-              className="flex min-h-[48px] w-48 mx-auto items-center justify-center gap-2  border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
-            >
-              <UserRound className="h-4 w-4" aria-hidden="true" />
-              <span className="max-w-[220px] truncate" title={profileLabel}>
-                {profileLabel}
-              </span>
-            </Link>
+            
           </nav>
         </div>
       )}
