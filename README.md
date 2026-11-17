@@ -59,6 +59,26 @@ The homepage loads current rating and review data from Google Places API (New). 
 
 For testing only, set the server-side `GOOGLE_REVIEWS_MOCK` secret to `true`. The function then returns five clearly labeled, fabricated reviews and does not read `GOOGLE_PLACES_API_KEY` or call Google. Before production, disable the mock by deleting the `GOOGLE_REVIEWS_MOCK` secret or setting it to `false`; configure `GOOGLE_PLACES_API_KEY` for live reviews. Mock reviews are marked in the UI and must not be presented as real customer feedback.
 
+## Számlázási modul (mock alapértelmezetten)
+
+A projektben a számlázási logika alapja a `src/lib/invoice.js` modul. Az alapértelmezett szolgáltató a mock provider, így a fejlesztés és a tesztfutások nem igényelnek valódi Számlázz.hu fiókot.
+
+- a számlaösszeg számítása bruttó alapján történik, 2 tizedesnyi kerekítéssel,
+- a 27%-os ÁFA-s példa pontosan a következő eredményt adja: nettó `37 401,57 Ft`, ÁFA `10 098,43 Ft`, bruttó `47 500 Ft`,
+- a mock provider címkézi a dokumentumot `TESZT SZÁMLA – NEM HIVATALOS DOKUMENTUM` felirattal,
+- a provider factory támogatja a `mock` és a `szamlazz` választási lehetőséget,
+- a szolgáltatói hibakezelés és az állapotátmenetek a modulhoz kapcsolódnak.
+
+A teljes működés ellenőrzéséhez futtasd a projektben a következőket:
+
+```bash
+npm install
+npm test
+npm run lint
+```
+
+A tesztkörnyezet a `vitest` keretrendszerre épül. A valódi Számlázz.hu bekötéshez a produkcióban a `szamlazz` providerre kell váltani, és az API kulcsot szerveroldalon kell titkosítani.
+
 ## Docs & Support
 
 GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)

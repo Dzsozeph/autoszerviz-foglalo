@@ -1,36 +1,9 @@
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, CheckCircle2, MessageCircle } from 'lucide-react';
 import {
-  siAudi,
-  siBmw,
-  siChevrolet,
-  siCitroen,
-  siDacia,
-  siFiat,
   siFacebook,
-  siFord,
-  siHonda,
   siInstagram,
-  siHyundai,
-  siJeep,
-  siKia,
-  siMazda,
-  siMg,
-  siMini,
-  siMitsubishi,
-  siNissan,
-  siOpel,
-  siPeugeot,
-  siRenault,
-  siSeat,
-  siSkoda,
-  siSubaru,
-  siSuzuki,
-  siTesla,
   siTiktok,
-  siToyota,
-  siVolkswagen,
-  siVolvo,
 } from 'simple-icons';
 import { base44 } from '@/api/base44Client';
 import PageHeader from '@/components/public/PageHeader';
@@ -43,29 +16,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-const CAR_LOGOS = [
-  siAudi,
-  siBmw,
-  siChevrolet,
-  siCitroen,
-  siFiat,
-  siFord,
-  siHonda,
-  siHyundai,
-  siKia,
-  siMazda,
-  siMini,
-  siMitsubishi,
-  siNissan,
-  siPeugeot,
-  siRenault,
-  siSeat,
-  siSkoda,
-  siSubaru,
-  siVolkswagen,
-  siVolvo,
-];
 
 const SOCIAL_LINKS = [
   { icon: siFacebook, href: 'https://www.facebook.com/' },

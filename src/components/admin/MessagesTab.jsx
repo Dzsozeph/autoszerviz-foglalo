@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Loader2, Inbox, Mail, Check, Trash2 } from 'lucide-react';
+import { Loader2, Inbox, Check, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { formatDateTimeHu } from '@/lib/booking';
 
