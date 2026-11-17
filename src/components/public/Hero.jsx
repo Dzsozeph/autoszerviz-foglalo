@@ -143,7 +143,7 @@ export default function Hero() {
                 onClick={() => setReviewsOpen(true)}
                 aria-haspopup="dialog"
                 aria-label="Google-értékelések megtekintése"
-                className="group relative z-20 -translate-y-8 lg:-translate-y-10 w-[230px] max-w-full shrink-0"
+                className="group relative z-20 lg:-translate-y-10 w-[230px] max-w-full shrink-0"
               >
                 <div className="relative z-10 flex h-[45px] w-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 shadow-xl backdrop-blur-md transition-colors duration-200 group-hover:bg-[#202020] lg:h-[40px]">
 
