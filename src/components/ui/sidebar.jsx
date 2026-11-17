@@ -890,7 +890,7 @@ const SidebarMenuSubButton = React.forwardRef(
         className={cn(
           "flex h-9 min-w-0 -translate-x-px",
           "items-center gap-2 overflow-hidden",
-          "rounded-lg px-3",
+          
           "text-white/50 text-sm",
           "outline-none",
           "transition-all duration-300",
