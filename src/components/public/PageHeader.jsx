@@ -16,7 +16,7 @@ export default function PageHeader({
             className="absolute inset-0 bg-cover"
 style={{
   backgroundImage: `url('${backgroundImage}')`,
-   backgroundPosition: 'right 300px bottom 25%',
+   backgroundPosition: 'left 300px bottom 25%',
 }}
            
           />
