@@ -135,7 +135,7 @@ export default function Hero() {
           <div className="flex min-w-0 flex-col gap-8">
 
             {/* Google értékelési sáv a Prémium felirat fölött */}
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col items-center gap-3 lg:items-start">
 
               {/* Google értékelési sáv */}
               <button
