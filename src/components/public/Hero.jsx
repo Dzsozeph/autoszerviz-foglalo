@@ -135,7 +135,7 @@ export default function Hero() {
           <div className="flex min-w-0 flex-col gap-8">
 
             {/* Felső sor: Prémium autószerviz felirat + Google értékelések */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+            <div className="flex flex-col items-start gap-3">
 
               <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
                 Prémium autószerviz · {cegadat.city}
