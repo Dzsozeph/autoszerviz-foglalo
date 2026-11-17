@@ -1,18 +1,27 @@
 
-export default function PageHeader({ eyebrow, title, intro, children, aside }) {
+export default function PageHeader({
+  eyebrow,
+  title,
+  intro,
+  children,
+  aside,
+  backgroundImage,
+}) {
   return (
     <section className="relative overflow-hidden bg-black text-white">
-      {/* Háttérkép */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[url('https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg')] bg-cover bg-center"
-      />
-
-      {/* Sötét átmenetes réteg az olvashatóságért */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.75)_55%,rgba(0,0,0,0.35)_100%)]"
-      />
+      {backgroundImage && (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('${backgroundImage}')` }}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.75)_55%,rgba(0,0,0,0.35)_100%)]"
+          />
+        </>
+      )}
 
       <div
         className={`container-page relative z-10 ${
@@ -27,17 +36,14 @@ export default function PageHeader({ eyebrow, title, intro, children, aside }) {
               {eyebrow}
             </p>
           )}
-
           <h1 className="mt-4 max-w-3xl font-heading text-[clamp(2rem,5vw,3.4rem)] font-semibold leading-[1.05] tracking-tight">
             {title}
           </h1>
-
           {intro && (
             <p className="mt-5 max-w-2xl text-[16px] leading-[1.65] text-white/75">
               {intro}
             </p>
           )}
-
           {children}
         </div>
 
