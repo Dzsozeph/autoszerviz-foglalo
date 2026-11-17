@@ -18,7 +18,7 @@ style={{
   backgroundImage: `url('${backgroundImage}')`,
   backgroundPosition: 'center 30%',
 }}
-            style={{ backgroundImage: `url('${backgroundImage}')` }}
+           
           />
           <div
             aria-hidden="true"
