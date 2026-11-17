@@ -34,9 +34,9 @@ export default function Szolgaltatasok() {
   return (
     <>
       <PageHeader
-  eyebrow="Időpontkérés"
-  title="Kérjen időpontot online"
-  intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
+  eyebrow="Szolgáltatások"
+  title="Minden fontos javítás egy helyen"
+  intro="Az olajcserétől a műszaki vizsgára felkészítésig a műhelyünkben márkafüggetlenül dolgozunk. Válassza ki a szükséges szolgáltatást, és kérjen időpontot néhány perc alatt."
   backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
 
       />
