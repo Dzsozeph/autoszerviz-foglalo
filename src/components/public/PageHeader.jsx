@@ -13,7 +13,11 @@ export default function PageHeader({
         <>
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover"
+style={{
+  backgroundImage: `url('${backgroundImage}')`,
+  backgroundPosition: 'center 30%',
+}}
             style={{ backgroundImage: `url('${backgroundImage}')` }}
           />
           <div
