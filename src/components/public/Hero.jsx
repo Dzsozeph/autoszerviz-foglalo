@@ -155,7 +155,7 @@ export default function Hero() {
   aria-label="Google-értékelések megtekintése"
   className="group absolute left-1/2 top-[-20px] z-20 w-[230px] max-w-full -translate-x-1/2 lg:left-[35%] lg:top-[calc(50%+40px)] lg:translate-x-0"
 >
-  <div className="relative z-10 flex h-[45px] w-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-full border border-white/15 bg-[#171717]/95 shadow-xl backdrop-blur-md transition-colors duration-200 group-hover:bg-[#202020] lg:h-[50px] lg:rounded-2xl">
+  <div className="relative z-10 flex h-[45px] w-full flex-col items-center justify-center gap-0.5 overflow-hidden border border-white/15 bg-[#171717]/95 shadow-xl backdrop-blur-md transition-colors duration-200 group-hover:bg-[#202020] lg:h-[50px]">
     <div className="flex w-full items-center justify-center gap-2 px-2">
       <svg
         viewBox="0 0 24 24"
