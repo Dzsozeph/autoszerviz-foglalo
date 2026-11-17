@@ -124,7 +124,31 @@ export default function Hero() {
         <div className="relative grid items-center gap-10 py-14 lg:min-h-[650px] lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] lg:gap-8 lg:py-16">
           <div className="flex min-w-0 flex-col gap-8">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-ember">
-            <button
+              Prémium autószerviz · {cegadat.city}
+            </p>
+
+            <h1 className="font-heading text-[clamp(2.35rem,7.2vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
+              Megbízható autószerviz, egyszerű időpontfoglalás.
+            </h1>
+
+            <div className="flex flex-col items-start gap-7">
+              <p className="max-w-[30rem] text-[16px] leading-[1.6] text-white/75">
+                Korszerű diagnosztika, tapasztalt szerelők és átlátható árajánlat. Kérjen időpontot
+                online néhány perc alatt – mi pedig visszajelzünk a lehetséges időponttal.
+              </p>
+              <Link
+                to="/idopont"
+                className="group inline-flex min-h-[52px] items-center gap-4 bg-brand-ember px-9 pr-7 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-orange-800 hover:shadow-[0_8px_30px_rgba(249,115,22,0.25)] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
+              >
+                Időpontot kérek
+                <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" strokeWidth={1.6} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Google értékelési sáv - hover nélkül */}
+          
+<button
   type="button"
   onClick={() => setReviewsOpen(true)}
   aria-haspopup="dialog"
@@ -189,31 +213,6 @@ export default function Hero() {
   </span>
 </div>
 </button>
-              Prémium autószerviz · {cegadat.city}
-            </p>
-
-            <h1 className="font-heading text-[clamp(2.35rem,7.2vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
-              Megbízható autószerviz, egyszerű időpontfoglalás.
-            </h1>
-
-            <div className="flex flex-col items-start gap-7">
-              <p className="max-w-[30rem] text-[16px] leading-[1.6] text-white/75">
-                Korszerű diagnosztika, tapasztalt szerelők és átlátható árajánlat. Kérjen időpontot
-                online néhány perc alatt – mi pedig visszajelzünk a lehetséges időponttal.
-              </p>
-              <Link
-                to="/idopont"
-                className="group inline-flex min-h-[52px] items-center gap-4 bg-brand-ember px-9 pr-7 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-orange-800 hover:shadow-[0_8px_30px_rgba(249,115,22,0.25)] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
-              >
-                Időpontot kérek
-                <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" strokeWidth={1.6} />
-              </Link>
-            </div>
-          </div>
-
-          {/* Google értékelési sáv - hover nélkül */}
-          
-
 
         </div>
       </div>
