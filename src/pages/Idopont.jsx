@@ -3,12 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { hu } from 'date-fns/locale';
 import { base44 } from '@/api/base44Client';
-<PageHeader
-  eyebrow="Kapcsolat"
-  title="Beszéljünk az autójáról"
-  intro="Kérdése van, vagy időpontot egyeztetne? Hívjon minket, írjon e-mailt, vagy küldje el üzenetét az űrlapon – munkanapokon igyekszünk minél előbb válaszolni."
-  backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
-/>
+import PageHeader from '@/components/public/PageHeader';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
