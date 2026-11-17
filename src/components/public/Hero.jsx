@@ -185,7 +185,7 @@ export default function Hero() {
                 </div>
 
                 {/* Hover jelzés */}
-                <div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[linear-gradient(270deg,rgba(245,102,0,1)_0%,rgba(0,0,0,1)_91%)] px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                <div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[#171717]/95 px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
                   <svg
                     className="mb-1 h-3 w-3 text-orange-500"
                     viewBox="0 0 24 24"
@@ -224,7 +224,7 @@ export default function Hero() {
 
               <Link
                 to="/idopont"
-                className="group inline-flex min-h-[52px] items-center gap-4 bg-brand-ember px-9 pr-7 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-orange-800 hover:shadow-[0_8px_30px_rgba(249,115,22,0.25)] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
+                className="group inline-flex min-h-[52px] items-center gap-4 bg-[linear-gradient(270deg,rgba(245,102,0,1)_0%,rgba(0,0,0,1)_91%)] px-9 pr-7 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:shadow-[0_8px_30px_rgba(249,115,22,0.35)] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]"
               >
                 Időpontot kérek
                 <ArrowRight
