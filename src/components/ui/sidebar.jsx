@@ -163,7 +163,7 @@ const Sidebar = React.forwardRef(
         <div
           className={cn(
             "flex h-full w-[--sidebar-width] flex-col",
-            "bg-[rgba(0, 0, 0, 0.92)] backdrop-blur-2xl",
+            "bg-[rgba(0, 0, 0, 1)] backdrop-blur-2xl",
             "border-r border-white/[0.08]",
             "text-sidebar-foreground",
             className
