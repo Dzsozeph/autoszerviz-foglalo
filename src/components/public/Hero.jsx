@@ -217,7 +217,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <figure className="pointer-events-none relative mt-10 h-[350px] w-full overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:z-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:[clip-path:polygon(32%_0%,100%_0%,100%_100%,0%_100%)]">
+      <figure className="pointer-events-none relative mt-10 h-[350px] w-full overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:z-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:[clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)]">
         <Image
           src={HERO_IMAGE}
           alt="Modern autó motortere közelről, kék és narancs megvilágítással"
