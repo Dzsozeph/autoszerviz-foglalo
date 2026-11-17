@@ -71,7 +71,7 @@ export default function SiteHeader() {
           </Link>
           <Link
             to="/register"
-            className="inline-flex min-h-[40px] ml-16 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5"
+            className="inline-flex min-h-[40px] ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5"
           >
             <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
             Regisztráció
