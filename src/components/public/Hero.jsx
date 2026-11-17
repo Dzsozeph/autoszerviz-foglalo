@@ -193,24 +193,25 @@ export default function Hero() {
     </span>
   </div>
 
-  {/* Hover jelzés */}
-  <div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[#171717]/95 px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-    <span className="text-[10px] font-medium tracking-wide text-white/80">
-      Kattints a véleményekért
-    </span>
-    <svg
-      className="mt-1 h-3 w-3 text-orange-500"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  </div>
+ {/* Hover jelzés */}
+<div className="pointer-events-none absolute left-1/2 top-[calc(100%-5px)] z-0 flex w-[205px] -translate-x-1/2 -translate-y-2 flex-col items-center rounded-b-xl border border-t-0 border-white/15 bg-[#171717]/95 px-3 pb-2.5 pt-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+  <svg
+    className="mb-1 h-3 w-3 text-orange-500"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m18 15-6-6-6 6" />
+  </svg>
+
+  <span className="text-[10px] font-medium tracking-wide text-white/80">
+    Vélemények megtekintése
+  </span>
+</div>
 </button>
 
         </div>
