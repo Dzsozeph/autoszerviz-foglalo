@@ -4,6 +4,7 @@ import {
   ArrowRight,
   CalendarClock,
   CarFront,
+  Download,
   FileText,
   Loader2,
   LogOut,
@@ -148,6 +149,9 @@ export default function Profil() {
                           <p className="font-semibold text-brand">
                             {invoice.invoice_number || 'Számla'}
                           </p>
+                          <span className="mt-1 inline-flex rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-orange-800">
+                            Minta · nem hivatalos
+                          </span>
                           <p className="mt-1 text-[13px] text-brand-engine">
                             {invoice.service || 'Szerviz szolgáltatás'}
                           </p>
@@ -171,6 +175,21 @@ export default function Profil() {
                       <p className="mt-3 text-[14px] font-semibold text-brand">
                         {Number(invoice.amount || 0).toLocaleString('hu-HU')} {invoice.currency || 'HUF'}
                       </p>
+                      <p className="mt-1 text-[12px] text-brand-engine">
+                        Nettó {Number(invoice.net_amount || 0).toLocaleString('hu-HU')} Ft · ÁFA {Number(invoice.vat_amount || 0).toLocaleString('hu-HU')} Ft
+                      </p>
+                      {invoice.items?.length > 0 && (
+                        <ul className="mt-3 space-y-1 text-[12px] text-brand-engine">
+                          {invoice.items.map((item, index) => (
+                            <li key={`${invoice.id}-${index}`} className="flex justify-between gap-3">
+                              <span>
+                                {item.name} · {item.quantity} {item.unit} · {Math.round(Number(item.vat_rate) * 100)}% ÁFA
+                              </span>
+                              <span className="shrink-0">{Number(item.gross_amount || 0).toLocaleString('hu-HU')} Ft</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                       {invoice.notes && (
                         <p className="mt-2 whitespace-pre-line text-[13px] leading-5 text-brand-engine">
                           {invoice.notes}
@@ -181,15 +200,22 @@ export default function Profil() {
                           E-mail küldési hiba: {invoice.last_email_error}
                         </p>
                       )}
-                      {invoice.pdf_url && (
+                      {invoice.pdf_url ? (
                         <a
                           href={invoice.pdf_url}
                           target="_blank"
                           rel="noreferrer"
                           className="mt-3 inline-flex text-[13px] font-semibold text-brand-ember underline"
                         >
-                          Dokumentum megtekintése
+                          <Download className="mr-2 inline h-4 w-4" aria-hidden="true" />
+                          Minta PDF megnyitása
                         </a>
+                      ) : (
+                        <p className="mt-3 text-[12px] text-brand-engine">
+                          {invoice.pdf_error
+                            ? 'A PDF-link most nem érhető el. Frissítse az oldalt, vagy lépjen kapcsolatba az ügyfélszolgálattal.'
+                            : 'Ehhez a régebbi számlához nem tartozik letölthető PDF.'}
+                        </p>
                       )}
                     </li>
                   ))}

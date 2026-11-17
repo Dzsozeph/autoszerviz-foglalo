@@ -30,6 +30,36 @@
       "type": "number",
       "title": "Bruttó összeg"
     },
+    "net_amount": {
+      "type": "number",
+      "title": "Nettó összeg"
+    },
+    "vat_amount": {
+      "type": "number",
+      "title": "ÁFA összege"
+    },
+    "items": {
+      "type": "array",
+      "title": "Számlatételek",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit": { "type": "string" },
+          "gross_unit_price": { "type": "number" },
+          "vat_rate": { "type": "number" },
+          "net_amount": { "type": "number" },
+          "vat_amount": { "type": "number" },
+          "gross_amount": { "type": "number" }
+        }
+      }
+    },
+    "pdf_uri": {
+      "type": "string",
+      "title": "Privát minta PDF azonosító"
+    },
     "currency": {
       "type": "string",
       "title": "Pénznem",

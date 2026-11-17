@@ -43,25 +43,51 @@ export default async function (req) {
     const invoicesPage = email
       ? await base44.asServiceRole.entities.Szamla.filter(
           { email },
-          { sort: '-created_date', limit: 100 }
+          { sort: '-created_date', limit: 20 }
         )
       : { items: [] };
     const customer = (customers.items || customers)[0];
-    const invoices = (invoicesPage.items || invoicesPage)
+    const invoices = await Promise.all((invoicesPage.items || invoicesPage)
       .filter((invoice) => invoice.email?.trim().toLowerCase() === email)
-      .map((invoice) => ({
-        id: invoice.id,
-        invoice_number: invoice.invoice_number,
-        customer_name: invoice.customer_name,
-        service: invoice.service,
-        amount: invoice.amount,
-        currency: invoice.currency || 'HUF',
-        status: invoice.status,
-        pdf_url: invoice.pdf_url,
-        notes: invoice.notes,
-        sent_at: invoice.sent_at,
-        last_email_error: invoice.last_email_error,
-        created_date: invoice.created_date,
+      .map(async (invoice) => {
+        let pdfUrl = invoice.pdf_url || '';
+        let pdfError = false;
+        if (invoice.pdf_uri) {
+          try {
+            const signedFile = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({
+              file_uri: invoice.pdf_uri,
+              expires_in: 3600,
+            });
+            if (!signedFile?.signed_url) {
+              throw new Error('A fájlszolgáltatás nem adott vissza letöltési linket.');
+            }
+            pdfUrl = signedFile.signed_url;
+          } catch (error) {
+            pdfError = true;
+            console.error('Számla PDF link létrehozása nem sikerült', {
+              invoiceId: invoice.id,
+              message: error?.message,
+            });
+          }
+        }
+        return {
+          id: invoice.id,
+          invoice_number: invoice.invoice_number,
+          customer_name: invoice.customer_name,
+          service: invoice.service,
+          amount: invoice.amount,
+          net_amount: invoice.net_amount,
+          vat_amount: invoice.vat_amount,
+          items: invoice.items || [],
+          currency: invoice.currency || 'HUF',
+          status: invoice.status,
+          pdf_url: pdfUrl,
+          pdf_error: pdfError,
+          notes: invoice.notes,
+          sent_at: invoice.sent_at,
+          last_email_error: invoice.last_email_error,
+          created_date: invoice.created_date,
+        };
       }));
 
     const requests = new Map();

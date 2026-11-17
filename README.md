@@ -63,9 +63,11 @@ For testing only, set the server-side `GOOGLE_REVIEWS_MOCK` secret to `true`. Th
 
 A projektben a számlázási logika alapja a `src/lib/invoice.js` modul. Az alapértelmezett szolgáltató a mock provider, így a fejlesztés és a tesztfutások nem igényelnek valódi Számlázz.hu fiókot.
 
-- A számlázás admin foglalásrészletéből indítható; az ügyfél, címzett e-mail, szolgáltatás, összeg és megjegyzés mezők szerkeszthetők.
-- A Base44 beépített `SendEmail` integrációja a számlát HTML és szöveges tartalommal küldi. Az admin felület a sikeres, már korábban elküldött és sikertelen küldést külön jelzi; sikertelen számlánál az újrapróbálás ugyanazt a rekordot használja.
-- A bejelentkezett ügyfél profiljának Számlák panelje kizárólag az aktuális fiók e-mail-címéhez tartozó számlákat listázza.
+- A számlázás admin foglalásrészletéből indítható; több munkadíj- és alkatrésztétel, mennyiség, bruttó egységár és 0/5/18/27%-os ÁFA-kulcs adható meg.
+- Az ÁFA, nettó és bruttó összegek tételenként és összesítve jelennek meg. A rendszer Unicode betűkészlettel PDF számlamintát készít, privát tárhelyen tárolja, és csatolja a Base44 `SendEmail` leveléhez.
+- A számla minden PDF- és email-megjelenése jól láthatóan jelzi, hogy minta, nem valódi és nem hivatalos bizonylat. Cégazonosítókat vagy hivatalos számlaszámot nem hamisít.
+- Az admin felületen a sikeres, már korábban elküldött és sikertelen küldés külön visszajelzést és toast értesítést kap; sikertelen számlánál az újrapróbálás ugyanazt a rekordot használja.
+- A bejelentkezett ügyfél profiljának Számlák panelje kizárólag az aktuális fiók e-mail-címéhez tartozó számlákat listázza, privát PDF-linkkel.
 - A Base44 korlátozza a nem regisztrált címzetteknek küldött leveleket: ehhez fizetős csomag és ellenőrzött saját domain szükséges. A küldési hibák az admin felületen és az alkalmazásnaplókban ellenőrizhetők.
 - a számlaösszeg számítása bruttó alapján történik, 2 tizedesnyi kerekítéssel,
 - a 27%-os ÁFA-s példa pontosan a következő eredményt adja: nettó `37 401,57 Ft`, ÁFA `10 098,43 Ft`, bruttó `47 500 Ft`,
