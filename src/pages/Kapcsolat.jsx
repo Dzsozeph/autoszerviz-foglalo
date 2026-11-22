@@ -86,12 +86,12 @@ export default function Kapcsolat() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Kapcsolat"
-        title="Beszéljünk az autójáról"
-        intro="Kérdése van, vagy időpontot egyeztetne? Hívjon minket, írjon e-mailt, vagy küldje el üzenetét az űrlapon – munkanapokon igyekszünk minél előbb válaszolni."
-      />
-
+            <PageHeader
+  eyebrow="Időpontkérés"
+  title="Kérjen időpontot online"
+  intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
+  backgroundImage="https://img-ik.cars.co.za/news-site-za/images/2020/07/germantrio_thumb.png?tr=w-1600,f-auto,q-80"
+/>
       <section className="container-page py-14 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>

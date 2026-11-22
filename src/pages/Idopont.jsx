@@ -230,9 +230,11 @@ export default function Idopont() {
   return (
     <>
       <PageHeader
-        eyebrow="Időpontkérés"
-        title="Kérjen időpontot online"
-        intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe." />
+  eyebrow="Időpontkérés"
+  title="Kérjen időpontot online"
+  intro="Töltse ki az alábbi űrlapot, és munkatársunk hamarosan visszajelez a lehetséges időponttal. Az űrlap kitöltése néhány percet vesz igénybe."
+  backgroundImage="https://i.ibb.co/5gX5dY5C/Whats-App-Image-2026-11-17-at-20-54-12.jpg"
+/>
       
 
       <section className="container-page py-14 sm:py-20">

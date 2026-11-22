@@ -38,10 +38,12 @@ export default function Gyik() {
   return (
     <>
       <PageHeader
-        eyebrow="GYIK"
-        title="Gyakori kérdések"
-        intro="Összegyűjtöttük, amit a leggyakrabban kérdeznek tőlünk az időpontkérésről, az árakról és a javítás menetéről."
-      />
+  eyebrow="gyik"
+  title="Gyakori kérdések"
+  intro="Összegyűjtöttük, amit a leggyakrabban kérdeznek tőlünk az időpontkérésről, az árakról és a javítás menetéről."
+  backgroundImage="https://i.ibb.co/GGrSF5D/q.jpg"
+  backgroundSize="contain"
+/>
 
       <section className="container-page py-14 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">

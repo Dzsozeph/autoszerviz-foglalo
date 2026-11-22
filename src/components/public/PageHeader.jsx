@@ -1,9 +1,34 @@
 
-export default function PageHeader({ eyebrow, title, intro, children, aside }) {
+export default function PageHeader({
+  eyebrow,
+  title,
+  intro,
+  children,
+  aside,
+  backgroundImage,
+}) {
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(313deg,rgb(216,118,61)_0%,rgba(0,0,0,1)_0%)] text-white">
+    <section className="relative overflow-hidden bg-black text-white">
+      {backgroundImage && (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-cover"
+style={{
+  backgroundImage: `url('${backgroundImage}')`,
+   backgroundPosition: 'left 700px bottom 25%',
+}}
+           
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.75)_55%,rgba(0,0,0,0.35)_100%)]"
+          />
+        </>
+      )}
+
       <div
-        className={`container-page ${
+        className={`container-page relative z-10 ${
           aside
             ? 'grid grid-cols-1 items-center gap-8 py-12 sm:py-16 lg:grid-cols-[0.8fr_1.7fr] lg:gap-10'
             : 'py-14 sm:py-16'
@@ -35,7 +60,7 @@ export default function PageHeader({ eyebrow, title, intro, children, aside }) {
 
       <div
         aria-hidden="true"
-        className="h-[2px] w-full bg-gradient-to-r from-brand-ember/0 via-brand-honey/70 to-brand-ember/0"
+        className="relative z-10 h-[2px] w-full bg-gradient-to-r from-brand-ember/0 via-brand-honey/70 to-brand-ember/0"
       />
     </section>
   );
