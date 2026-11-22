@@ -62,23 +62,23 @@ export default function SiteHeader() {
             <Phone className="h-4 w-4" />
             {cegadat.phone}
           </a>
-          <div className="flex items-center gap-3 relative xl:left-[250px] ">
+          <div className="flex items-center gap-3 relative xl:left-[250px]">
           <Link
             to="/idopont"
-            className="inline-flex min-h-[35px] shrink-0 items-center whitespace-nowrap bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)] hover:bg-orange-700"
+            className="inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-full bg-brand-ember px-5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white transition-shadow hover:shadow-[0_0_0_4px_rgba(249,115,22,0.18)]"
           >
             Időpontot kérek
           </Link>
           <Link
             to="/register"
-            className="inline-flex min-h-[35px] ml-8 items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5 hover:border-b-2"
+            className="inline-flex min-h-[44px] items-center gap-2 shadow-sm border border-brand-ember px-4 text-[13px] font-semibold text-brand-ember transition-colors hover:bg-brand-ember/5"
           >
             <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
             Regisztráció
           </Link>
           <Link
             to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-            className="inline-flex min-h-[35px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50 "
+            className="inline-flex min-h-[44px] items-center gap-2 border border-brand-line px-4 text-[13px] font-semibold text-brand transition-colors hover:bg-brand-silver/50"
           >
             <UserRound className="h-4 w-4" aria-hidden="true" />
             <span className="max-w-[140px] truncate" title={profileLabel}>
@@ -100,8 +100,8 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-<div className="border-t border-white/10 bg-[linear-gradient(rgba(0,0,0,0.78),rgba(0,0,0,0.78)),url('https://i.ibb.co/XxK0kWVj/mobile2.jpg')] bg-cover bg-[position:100%_60%] backdrop-blur-xl shadow-2xl xl:hidden">          
-<nav aria-label="Mobil navigáció" className="container-page flex flex-col gap-1 py-3">
+        <div className="border-t border-white/10 bg-[#151515]/[98%] backdrop-blur-xl shadow-2xl xl:hidden">
+          <nav aria-label="Mobil navigáció" className="container-page flex flex-col gap-1 py-3">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
@@ -114,33 +114,30 @@ export default function SiteHeader() {
               </NavLink>
             ))}
             <Link
-              to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
-              onClick={() => setOpen(false)}
-              className="flex min-h-[48px] w-48 mx-auto items-center rounded-full justify-center gap-2  border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
-            >
-              <UserRound className="h-4 w-4" aria-hidden="true" />
-              <span className="max-w-[220px] truncate" title={profileLabel}>
-                {profileLabel}
-              </span>
-            </Link>
-            
-            <Link
-            
               to="/idopont"
               onClick={() => setOpen(false)}
-              className="mt-2 flex min-h-[48px] items-center justify-center bg-brand-ember text-[12px] font-semibold uppercase tracking-[0.08em] text-white"
+              className="mt-2 flex min-h-[48px] items-center justify-center rounded-lg bg-brand-ember text-[15px] font-semibold uppercase tracking-[0.08em] text-white"
             >
               Időpontot kérek
             </Link>
             <Link
               to="/register"
               onClick={() => setOpen(false)}
-              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 border border-brand-ember text-[15px] font-semibold text-brand-ember"
+              className="mt-2 flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-brand-ember text-[15px] font-semibold text-brand-ember"
             >
               <UserRoundPlus className="h-4 w-4" aria-hidden="true" />
               Regisztráció
             </Link>
-            
+            <Link
+              to={isAuthenticated ? '/profil' : '/login?returnTo=%2Fprofil'}
+              onClick={() => setOpen(false)}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-white/15 text-[15px] font-semibold text-white/85 hover:bg-white/10"
+            >
+              <UserRound className="h-4 w-4" aria-hidden="true" />
+              <span className="max-w-[220px] truncate" title={profileLabel}>
+                {profileLabel}
+              </span>
+            </Link>
           </nav>
         </div>
       )}

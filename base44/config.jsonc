@@ -2,7 +2,7 @@
   "name": "base44-app",
   "site": {
     "installCommand": "npm install",
-    "buildCommand": "npx base44 build",
+    "buildCommand": "npm run build",
     "serveCommand": "npm run dev",
     "outputDirectory": "./dist"
   }
